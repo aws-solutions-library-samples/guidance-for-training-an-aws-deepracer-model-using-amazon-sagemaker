@@ -1,7 +1,6 @@
-## AWS Deepracer Labs
-
-A self-paced workshop designed to allow you to get hands on with building a real-time data platform using serverless technologies such as Kinesis Firehose, AWS Lambda and Amazon Elasticsearch.
+## AWS Deepracer Workshop
+A hands-on workshop to introduce developers to AWS DeepRacer at re:Invent 2018.
 
 ## License Summary
 
-This sample code is made available under a modified MIT license. See the LICENSE file.
+This sample code is made available under Apache 2.0
