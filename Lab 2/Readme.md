@@ -20,7 +20,7 @@ Furthermore, the following three cells show examples of advanced reward function
 #Advanced Reward Function 1
 
 
-'''
+'''python
 
     def reward_function (on_track, x, y, distance_from_center, car_orientation, progress, steps, throttle, steering, track_width, waypoints, closest_waypoint):
 
