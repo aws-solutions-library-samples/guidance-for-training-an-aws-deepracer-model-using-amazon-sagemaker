@@ -20,8 +20,8 @@ Furthermore, the following three cells show examples of advanced reward function
 #Advanced Reward Function 1
 
 
-
-    def reward\_function (on\_track, x, y, distance\_from_center, car\_orientation, progress, steps, throttle, steering, track\_width, waypoints, closest\_waypoint):
+'''
+    def reward_function (on_track, x, y, distance_from_center, car_orientation, progress, steps, throttle, steering, track_width, waypoints, closest_waypoint):
 
         import math
 
@@ -45,13 +45,13 @@ Furthermore, the following three cells show examples of advanced reward function
             reward *= 0.8
 
         return float(reward)
-
+'''
 
 #Advanced Reward Function 2
 
 
-
-    def reward\_function (on\_track, x, y, distance\_from_center, car\_orientation, progress, steps, throttle, steering, track\_width, waypoints, closest\_waypoint):
+'''
+    def reward_function (on_track, x, y, distance_from_center, car_orientation, progress, steps, throttle, steering, track_width, waypoints, closest_waypoint):
 
         import math
 
@@ -75,14 +75,14 @@ Furthermore, the following three cells show examples of advanced reward function
             reward *= 0.8
 
         return float(reward)
-
+'''
 
 
 #Advanced Reward Function 3
 
+'''
 
-
-    def reward\_function (on\_track, x, y, distance\_from_center, car\_orientation, progress, steps, throttle, steering, track\_width, waypoints, closest\_waypoint):
+    def reward_function (on_track, x, y, distance_from_center, car_orientation, progress, steps, throttle, steering, track_width, waypoints, closest_waypoint):
 
         reward = 1e-3
         if distance_from_center >= 0.0 and distance_from_center <= 0.03:
@@ -97,3 +97,4 @@ Furthermore, the following three cells show examples of advanced reward function
             reward *= 0.80
 
         return reward
+'''
