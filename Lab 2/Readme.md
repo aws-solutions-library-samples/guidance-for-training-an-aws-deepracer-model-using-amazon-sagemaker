@@ -17,7 +17,8 @@ Furthermore, the following three cells show examples of advanced reward function
 
 ![Reward Function Variables](img/reward_vars.png)
 
-#Advanced Reward Function 1
+
+##Advanced Reward Function 1
 
 
 '''python
@@ -48,10 +49,11 @@ Furthermore, the following three cells show examples of advanced reward function
         return float(reward)
 '''
 
-#Advanced Reward Function 2
+
+##Advanced Reward Function 2
 
 
-'''
+'''python
 
     def reward_function (on_track, x, y, distance_from_center, car_orientation, progress, steps, throttle, steering, track_width, waypoints, closest_waypoint):
 
@@ -80,9 +82,10 @@ Furthermore, the following three cells show examples of advanced reward function
 '''
 
 
-#Advanced Reward Function 3
+##Advanced Reward Function 3
 
-'''
+
+'''python
 
     def reward_function (on_track, x, y, distance_from_center, car_orientation, progress, steps, throttle, steering, track_width, waypoints, closest_waypoint):
 
