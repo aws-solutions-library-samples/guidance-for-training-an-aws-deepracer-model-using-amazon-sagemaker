@@ -1,15 +1,17 @@
 # Lab 1: Reward Function Constructors Championship!
 
-## Overview
-The goal of lab 1 is to get you familiar with the reward functions used to create RL models for AWS DeepRacer. To this end we have created an informal competition called the Reward Function Constructors Championship, where your team will compete to win bragging rights. The competition will also give you an overview of the AWS DeepRacer simulator found in the AWS Console.
+
 
 #### Time breakdown
 
-- Presenter explains competition:                     2 minutes
-- Teams read lab content:                             8 minutes
-- Teams discuss reward function:                     10 minutes
-- Teams implement reward function and start training: 5 minutes
-- Total:                                             25 minutes
+- Presenter provides competition and covers competition :  2 minutes
+- Teams read lab content                                :  8 minutes
+- Teams discuss reward function                         : 10 minutes
+- Teams implement reward function and start training    :  5 minutes
+- Total                                                 : 25 minutes 
+
+## Overview
+The goal of lab 1 is to get you familiar with the reward functions used to create RL models for AWS DeepRacer. To this end we have created an informal competition called the Reward Function Constructors Championship, where your team will compete to win bragging rights. The competition will also give you an overview of the AWS DeepRacer simulator found in the AWS Console.
 
 
 ## Reward Function Championship Instructions
@@ -24,6 +26,8 @@ Please read through the following sections and when you are finished feel free t
 Tip: As you read through the next sections carefully consider what behavior do you want to incentivize to ensure your car stays on track and makes the turn. You will have to write your reward function using Python, but we provide three good examples to look at.
 
 Let's get going!
+
+
 
 ## Step 1: AWS Console
 Logon to the AWS Console using the account details provided to you.
