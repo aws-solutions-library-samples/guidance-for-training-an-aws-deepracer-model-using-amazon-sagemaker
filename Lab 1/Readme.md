@@ -12,25 +12,25 @@ The goal of lab 1 is to get you familiar with the reward functions used to creat
 - Total:                                             25 minutes
 
 
-## Step 1: Reward Function Championship
+## Reward Function Championship Instructions
 Form a team with the other attendees at your table. Your team needs to create a reward function that will power you car, and the first team to reach the middle of the hairpin (the next turn on the track) with screenshot proof wins. The following image shows you where the finish line is. Note the finish line won't be on the track, so if you get halfway through the hairpin that is it, take a screenshot and shout out!  
 
 
 ![RewardFunctionChallenge](img/StraightTrack.png)
 
-#### Instructions 
+
 Please read through the following sections and once done feel free to start discussing in your team which reward function you need to create to reach the objective. You will have 8 minutes to read the content, 10 minutes to debate the reward function and 5 minutes to implement it. Before you start training, nominate just one person to start training. Note we will continue with the workshop after the 25 minutes and this person will have to monitor the progress of training during the workshop. Everyone will get to implement their own reward function during lab 2.
 
 Tip: As you read through the next sections carefully consider what behavior do you want to incentivize to ensure your car stays on track and makes the turn. You will have to write your reward function using Python, but we provide three good examples to look at.
 
 Let's get going!
 
-## Step 2: AWS Console
+## Step 1: AWS Console
 Logon to the AWS Console using the account details provided to you.
 Navigate to AWS DeepRacer, https://aws.amazon.com/deepracer.
 From the AWS DeepRacer landing page, expand the pane on the left and select **Reinforcement learning.**
 
-## Step 3: Model List Page
+## Step 2: Model List Page
 This page gives a list of all the models you have created and each model's respective status.
 
 
@@ -42,7 +42,7 @@ Once you have created models you can use this page to view the status of the mod
 Choose **Create model**
 
 
-## Step 4: Create model
+## Step 3: Create model
 This page gives you the ability to create an RL model for AWS DeepRacer and start training. There are a few sections on the page, so let's look at each in detail.
 
 #### Model details
