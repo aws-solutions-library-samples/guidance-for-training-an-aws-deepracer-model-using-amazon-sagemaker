@@ -1,7 +1,7 @@
 # Lab 1: Reward Function Constructors Championship!
 
 ## Overview
-The goal of this lab is to get you familiar with the reward functions used to create RL models for AWS DeepRacer. To this end we have created an informal competition called the Reward Function Constructors Championship, where your team can win bragging rights. The competition will also give you an overview of the AWS DeepRacer simulator found in the AWS Console.
+The goal of lab 1 is to get you familiar with the reward functions used to create RL models for AWS DeepRacer. To this end we have created an informal competition called the Reward Function Constructors Championship, where your team will compete to win bragging rights. The competition will also give you an overview of the AWS DeepRacer simulator found in the AWS Console.
 
 #### Time breakdown
 Presenter explains competition:                     2 minutes
@@ -11,26 +11,26 @@ Teams implement reward function and start training: 5 minutes
 Total:                                             25 minutes
 
 ## Step 1: Reward Function Championship
-Form a team with the other attendees at your table. The tables will compete with each other. The challenge is to build a reward function that can can teach your team's car to drive from the starting point to the middle of the hairpin. The team whose car reaches middle of the hairpin first, whilst on track, and has a screenshot of the simulator as proof, wins (just shout out when you get there!). 
+Form a team with the other attendees at your table. Your team needs to create a reward function that will power you car, and the first team to reach the middle of the hairpin (the next turn on the track) with screenshot proof wins.  
+
 
 ![RewardFunctionChallenge](img/StraightTrack.png)
 
 #### Instructions 
+Please read through the following sections and once done feel free to start discussing in your team which reward function you need to create to reach the objective. You will have 8 minutes to read the content, 10 minutes to debate the reward function and 5 minutes to implement it. Before you start training, nominate just one person to start training. Note we will continue with the workshop after the 25 minutes and this person will have to monitor the progress of training during the workshop. Everyone will get to implement their own reward function during lab 2.
 
-
-Tip: scroll up to the reward function section and look at the advanced reward function examples. What behavior do you want to incentivize to ensure your car stays on track and completes the largest part of the track? You will have to write your reward function using Python in the reward function section, and validate that it works, before you can start training.
-
-At the end of your 10 minutes nominate a team member to implement and start training. You can specify a max. time stopping condition of 45 minutes before you start training. We will not need the full 45 minutes, and furthermore once a winner has been announced you can stop training. In 15 minutes times we will continue with the lab and workshop content, and thus would prefer if only one person is slightly distracted. Before you start training, please also note that it would be best to decrease the number of episodes between training to 5, and also decrease the number of epochs to 3. The last two changes will help your model get more training iterations during the time, which should be good for a straight track model. If you can find a reward function sooner, you can always start training sooner, and just terminate later.
+Tip: As you read through the next sections carefully consider what behavior do you want to incentivize to ensure your car stays on track and makes the turn. You will have to write your reward function using Python, but we provide three good examples to look at.
 
 Let's get going!
 
-## Step 1: AWS Console
+## Step 2: AWS Console
 Logon to the AWS Console using the account details provided to you.
 Navigate to AWS DeepRacer, https://aws.amazon.com/deepracer.
 From the AWS DeepRacer landing page, expand the pane on the left and select **Reinforcement learning.**
 
-## Step 2: Model List Page
+## Step 3: Model List Page
 This page gives a list of all the models you have created and each model's respective status.
+
 
 ![Model List Page](img/modellist.png)
 
@@ -40,7 +40,7 @@ Once you have created models you can use this page to view the status of the mod
 Choose **Create model**
 
 
-## Step 3: Create model
+## Step 4: Create model
 This page gives you the ability to create an RL model for AWS DeepRacer and start training. There are a few sections on the page, so let's look at each in detail.
 
 #### Model details
@@ -116,47 +116,9 @@ This is the last section before you start training. Here you can specify the max
 
 ![Stop conditions](img/stopping.png)
 
-## Step 4: Reward Function Constructors' Championship
-We are now going to start the Reward Function Constructors' Championship, a short exercise to help build your reward function intuition. The challenge is to build a reward function that can can teach your car to drive from the starting point to the start of the hairpin. Instructions follow below the image. The team whose car reaches the hairpin first, and has a screenshot of the simulator as proof, wins (just shout out when you get there!). 
+## Step 5: Reward Function Constructors' Championship
+Once you reach this section please discuss in your team the reward function you need to implement to reach the goal. You will have 10 minutes to create it and 5 minutes to implement and launch. 
+
 
 ![RewardFunctionChallenge](img/StraightTrack.png)
-
-#### Instructions 
-Form a team with the other attendees at your table. For the challenge you will have 10 minutes to come up with a reward function and 5 minutes to implement it and start training.
-
-Tip: scroll up to the reward function section and look at the advanced reward function examples. What behavior do you want to incentivize to ensure your car stays on track and completes the largest part of the track? You will have to write your reward function using Python in the reward function section, and validate that it works, before you can start training.
-
-At the end of your 10 minutes nominate a team member to implement and start training. You can specify a max. time stopping condition of 45 minutes before you start training. We will not need the full 45 minutes, and furthermore once a winner has been announced you can stop training. In 15 minutes times we will continue with the lab and workshop content, and thus would prefer if only one person is slightly distracted. Before you start training, please also note that it would be best to decrease the number of episodes between training to 5, and also decrease the number of epochs to 3. The last two changes will help your model get more training iterations during the time, which should be good for a straight track model. If you can find a reward function sooner, you can always start training sooner, and just terminate later.
-
-Let's get going!
-
-## Step 5: Model Training
-Training can take up to 6 minutes to initialize. We will cover the orchestration that happens after the first lab. 
-Once your model has started training you should see the following on the Model details page, which can be found when you select your model from the Model list page.
-
-![Training](img/training.png)
-
-The graph on the left is the TrainingRewardScore graph showing the cumulative reward your car receives for each episode. An episode is the number of steps from the car’s starting point and the next termination state (completing the track or going off track). As your model trains you should see the reward line increase, however expect it to fluctuate initially. Once the cumulative reward does not improve much for each subsequent episode it is an indication that the model is not learning anything new and has converged. 
-
-You can also visually inspect driving behavior by looking at the video stream from the simulator. You may notice that your car resets once it drives off the track. This is normal as the car is considered in a terminal state, and resetting it will restart a new episode. Furthermore, the car will reset at subsequent waypoints each time. This is done to help the car better explore the environment. Once you see your car successfully complete subsequent laps on the track, check to see if the reward graph is flattening out. This is a good indicator for you to stop training your model. In the event that your car is not completing the track and your model stops improving, as judged by the reward graph, consider stopping the training and proceed to tweak your model. 
-
-You can also inspect the Amazon SageMaker and AWS RoboMaker logs saved in Amazon CloudWatch. To access the logs you can select the 3 dots in the top right of your TrainingRewardScore graph, and select view logs or view in metrics. View logs will show you logs of the output from the Amazon SageMaker and AWS RoboMaker containers. They will contain more detailed information about your training job. 
-
-
-![Log widgets](img/training_widgets.png)
-
-Logs are stored in Amazon CloudWatch
-![Amazon CloudWatch](img/cloudwatch.png)
-
-Amazon SageMaker Log recorded during RL Training
-![Amazon SageMaker Log](img/sagemakerlogexample.png)
-
-## Step 6: Model Evaluation
-Once your model has finished training, you will evaluate it in the simulator. This can be done from the model details page and choosing **Start evaluation** from the Evaluation section on the model details page. Here you can select the track on which you will evaluate your model, and also how many laps you want to evaluate it for. 
-During evaluation your trained model will be used in the simulator to determine your lap time and lap progress.
-
-![Evaluation](img/Evaluation.png)
-
-
-
 
