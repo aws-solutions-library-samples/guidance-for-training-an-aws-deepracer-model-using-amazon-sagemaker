@@ -9,7 +9,7 @@
 
 ## Overview
 
-In this lab you will get 20 minutes to create the model you will be racing with at the MGM Speedway. You can always train another model afterwards, but make good use of the time and resources to come up with a great model. From the Reinforcement learning Model list [AWS DeepRacer](https://console.aws.amazon.com/deepracer/) page choose **Create model**. Proceed to name your model, leave all hyperparameter settings as they are, and focus your time on the reward function. While you can train your model for 60 minutes we recommend 150 minutes. Thus before you start training make sure to set the stopping time to 150 minutes. After you have started training we will continue with the workshop going under the hood of AWS DeepRacer.
+In this lab you will get 20 minutes to create the model you will be racing with at the MGM Speedway. You can always train another model afterwards, but make good use of the time and resources to come up with a great model. From the [AWS DeepRacer](https://console.aws.amazon.com/deepracer/) page choose **Create model**. Proceed to name your model, leave all hyperparameter settings as they are, and focus your time on the reward function. While you can train your model for 60 minutes we recommend 150 minutes. Thus before you start training make sure to set the stopping time to 150 minutes. After you have started training we will continue with the workshop going under the hood of AWS DeepRacer.
 
 While you don't have to start training your model after 20 minutes, it is advisable to try get to a point where you can start it as training will take the better part of an hour and you want to ensure you get to the MGM Speedway with your model on your USB stick.
 
