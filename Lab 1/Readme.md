@@ -124,3 +124,5 @@ Once you reach this section please discuss in your team the reward function you 
 
 ![RewardFunctionChallenge](img/StraightTrack.png)
 
+
+[Go back to Workshop](https://github.com/aws-samples/aws-deepracer-workshops/blob/master/README.md)
