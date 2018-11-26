@@ -103,3 +103,6 @@ Furthermore, the following three cells show examples of advanced reward function
 
         return reward
 '''
+
+
+[Go back to Workshop](https://github.com/aws-samples/aws-deepracer-workshops/blob/master/README.md)
