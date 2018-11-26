@@ -1,15 +1,22 @@
 # Lab 2: MGM Speedway Model
 
+#### Time breakdown
+
+- Presenter provides overview of Lab 2                      :  2 minutes
+- Individual create reward function and start training model: 20 minutes
+- Total                                                     : 22 minutes
+
+
 ## Overview
 
-In this lab you will get 20 minutes to create the model you will be racing with at the MGM Speedway. You can always train another model afterwards, but make good use of the time and resources to come up with a great model. From the Reinforcement learning page choose **Create model** and leave all hyperparameter settings as they are, and focus your time on the reward function. 
+In this lab you will get 20 minutes to create the model you will be racing with at the MGM Speedway. You can always train another model afterwards, but make good use of the time and resources to come up with a great model. From the Reinforcement learning Model list [AWS DeepRacer](https://console.aws.amazon.com/deepracer/) page choose **Create model**. Proceed to name your model, leave all hyperparameter settings as they are, and focus your time on the reward function. While you can train your model for 60 minutes we recommend 150 minutes. Thus before you start training make sure to set the stopping time to 150 minutes. After you have started training we will continue with the workshop going under the hood of AWS DeepRacer.
 
-While you don't have to start training your model after 20 minutes, it is advisable to try get to a point where you can as training will take the better part of an hour and you want to ensure you get to the MGM Speedway with your model on your USB stick.
+While you don't have to start training your model after 20 minutes, it is advisable to try get to a point where you can start it as training will take the better part of an hour and you want to ensure you get to the MGM Speedway with your model on your USB stick.
 
-Once your model training is completed, create a folder called "models" on your USB stick, download the model from the AWS DeepRacer console, and copy it to the models folder.
+Once your model training is completed, create a folder called "models" on your USB stick, download the model from the AWS DeepRacer console, and copy it to the models folder. You are then ready to race at the MGM Speedway.
 
 ### Reward Function Tips
-Tip 1: Start off looking at the advanced reward functions for inspiration. We provide a few examples below.
+Tip 1: Start by looking at the advanced reward functions for inspiration. We provide a few examples below.
 Tip 2: Think carefully through the driving behavior you want to incentivize and consider the trade-offs. For example, you can penalize your car for going slow, but if all your car can do is go fast, it may not be the best at taking turns.
 
 Here are the variables you can use in your logic. 
