@@ -13,7 +13,7 @@ The goal of lab 1 is to get you familiar with the reward functions used to creat
 
 
 ## Step 1: Reward Function Championship
-Form a team with the other attendees at your table. Your team needs to create a reward function that will power you car, and the first team to reach the middle of the hairpin (the next turn on the track) with screenshot proof wins.  
+Form a team with the other attendees at your table. Your team needs to create a reward function that will power you car, and the first team to reach the middle of the hairpin (the next turn on the track) with screenshot proof wins. The following image shows you where the finish line is. Note the finish line won't be on the track, so if you get halfway through the hairpin that is it, take a screenshot and shout out!  
 
 
 ![RewardFunctionChallenge](img/StraightTrack.png)
