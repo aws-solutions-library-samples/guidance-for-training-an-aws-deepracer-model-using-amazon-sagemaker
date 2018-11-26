@@ -1,9 +1,28 @@
 # Lab 1: Reward Function Constructors Championship!
 
 ## Overview
+The goal of this lab is to get you familiar with the reward functions used to create RL models for AWS DeepRacer. To this end we have created an informal competition called the Reward Function Constructors Championship, where your team can win bragging rights. The competition will also give you an overview of the AWS DeepRacer simulator found in the AWS Console.
 
-In this lab we will provide an overview of the AWS DeepRacer simulator found in the AWS Console. You will also get hands-on with the reward functions we use in AWS DeepRacer.
-You will form a team with fellow attendees at your table to take part in the **Reward Function Constructors Championship**.
+#### Time breakdown
+Presenter explains competition:                     2 minutes
+Teams read lab content:                             8 minutes
+Teams discuss reward function:                     10 minutes
+Teams implement reward function and start training: 5 minutes
+Total:                                             25 minutes
+
+## Step 1: Reward Function Championship
+Form a team with the other attendees at your table. The tables will compete with each other. The challenge is to build a reward function that can can teach your team's car to drive from the starting point to the middle of the hairpin. The team whose car reaches middle of the hairpin first, whilst on track, and has a screenshot of the simulator as proof, wins (just shout out when you get there!). 
+
+![RewardFunctionChallenge](img/StraightTrack.png)
+
+#### Instructions 
+
+
+Tip: scroll up to the reward function section and look at the advanced reward function examples. What behavior do you want to incentivize to ensure your car stays on track and completes the largest part of the track? You will have to write your reward function using Python in the reward function section, and validate that it works, before you can start training.
+
+At the end of your 10 minutes nominate a team member to implement and start training. You can specify a max. time stopping condition of 45 minutes before you start training. We will not need the full 45 minutes, and furthermore once a winner has been announced you can stop training. In 15 minutes times we will continue with the lab and workshop content, and thus would prefer if only one person is slightly distracted. Before you start training, please also note that it would be best to decrease the number of episodes between training to 5, and also decrease the number of epochs to 3. The last two changes will help your model get more training iterations during the time, which should be good for a straight track model. If you can find a reward function sooner, you can always start training sooner, and just terminate later.
+
+Let's get going!
 
 ## Step 1: AWS Console
 Logon to the AWS Console using the account details provided to you.
