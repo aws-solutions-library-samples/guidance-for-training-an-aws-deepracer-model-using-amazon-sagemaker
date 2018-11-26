@@ -5,15 +5,11 @@ The goal of lab 1 is to get you familiar with the reward functions used to creat
 
 #### Time breakdown
 
-Presenter explains competition:                     2 minutes
-
-Teams read lab content:                             8 minutes
-
-Teams discuss reward function:                     10 minutes
-
-Teams implement reward function and start training: 5 minutes
-
-Total:                                             25 minutes
+- Presenter explains competition:                     2 minutes
+- Teams read lab content:                             8 minutes
+- Teams discuss reward function:                     10 minutes
+- Teams implement reward function and start training: 5 minutes
+- Total:                                             25 minutes
 
 
 ## Step 1: Reward Function Championship
