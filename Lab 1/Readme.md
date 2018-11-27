@@ -21,7 +21,7 @@ Form a team with the other attendees at your table. Your team needs to create a 
 ![RewardFunctionChallenge](img/StraightTrack.png)
 
 
-Please read through the following sections and when you are finished feel free to start discussing in your team which reward function you need to create to reach the objective. You will have 8 minutes to read the content, 10 minutes to debate the reward function and 5 minutes to implement it. Before you start training, nominate just one person to start training. Note we will continue with the workshop after the 25 minutes and this person will have to monitor the progress of training during the workshop. Everyone will get to implement their own reward function during lab 2.
+Please read through the following sections and when you are finished feel free to start discussing in your team which reward function you need to create to reach the objective. You will have 13 minutes to read the content (so pace yourself), 10 minutes to debate the reward function and 5 minutes to implement it. Before you start training, nominate just one person to start training. We will continue with the workshop after the 30 minutes and this person will have to monitor the progress of training during the workshop. Everyone will get to implement their own reward function during lab 2.
 
 Tip: As you read through the next sections carefully consider what behavior do you want to incentivize to ensure your car stays on track and makes the turn. You will have to write your reward function using Python, but we provide three good examples to look at.
 
