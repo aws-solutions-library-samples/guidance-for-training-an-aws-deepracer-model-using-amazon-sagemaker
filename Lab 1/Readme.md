@@ -5,10 +5,10 @@
 #### Time breakdown
 
 - Presenter provides competition and covers competition :  2 minutes
-- Teams read lab content                                :  8 minutes
+- Teams read lab content                                : 13 minutes
 - Teams discuss reward function                         : 10 minutes
 - Teams implement reward function and start training    :  5 minutes
-- Total                                                 : 25 minutes 
+- Total                                                 : 30 minutes 
 
 ## Overview
 The goal of lab 1 is to get you familiar with the reward functions used to create RL models for AWS DeepRacer. To this end we have created an informal competition called the Reward Function Constructors Championship, where your team will compete to win bragging rights. The competition will also give you an overview of the AWS DeepRacer simulator found in the AWS Console.
