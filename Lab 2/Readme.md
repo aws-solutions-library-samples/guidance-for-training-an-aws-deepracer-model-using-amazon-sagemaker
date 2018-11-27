@@ -15,6 +15,11 @@ While you don't have to start training your model after 20 minutes, it is advisa
 
 Once your model training is completed, create a folder called "models" on your USB stick, download the model from the AWS DeepRacer console, and copy it to the models folder. You are then ready to race at the MGM Speedway.
 
+What you want to see during training is a TrainingRewardScore graph where the average monotonically increases. Once your car can complete one-and-a-half to two loops in the simulator your model should be good to take to the real car. The risk is that if you train too long you could just overfit and have a model that struggles to generalize in the real world. Using the provided reward functions and hyperparameters this should happen at around 2 to 2.5hours. The following image shows what a converging model TrainingRewardScore graph looks like. Note if you provide significant rewards,i.e. > 2 per step then your y-axis scale may be much larger.
+
+
+![Converge_Training](img/good_sim_training2.png.png)
+
 ### Reward Function Tips
 Tip 1: Start by looking at the advanced reward functions for inspiration. We provide a few examples below.
 Tip 2: Think carefully through the driving behavior you want to incentivize and consider the trade-offs. For example, you can penalize your car for going slow, but if all your car can do is go fast, it may not be the best at taking turns.
