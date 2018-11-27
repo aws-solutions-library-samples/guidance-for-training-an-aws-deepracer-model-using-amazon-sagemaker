@@ -18,6 +18,7 @@ Once your model training is completed, create a folder called "models" on your U
 ### Reward Function Tips
 Tip 1: Start by looking at the advanced reward functions for inspiration. We provide a few examples below.
 Tip 2: Think carefully through the driving behavior you want to incentivize and consider the trade-offs. For example, you can penalize your car for going slow, but if all your car can do is go fast, it may not be the best at taking turns.
+Tip 3: Use Python3 syntax for your reward function.
 
 Here are the variables you can use in your logic. 
 Furthermore, the following three cells show examples of advanced reward functions.
