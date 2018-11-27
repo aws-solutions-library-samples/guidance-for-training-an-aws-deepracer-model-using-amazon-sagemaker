@@ -73,7 +73,7 @@ Choose the re:Invent 2018 track and scroll to the next section.
 #### Reward function
 In RL, the reward function plays a **critical** role in training an RL model. The reward function directly impacts the behaviors that your model will learn, by determining which actions (from each specific state) lead to good outcomes and which actions lead to outcomes that should best be avoided. The reward function contains the “logic” to determine if an action was good or bad, and quantify it. For example, if your goal is for the car to finish a lap around a racetrack, rewarding the car for staying on the track, as opposed to going off the track, is a good starting point. An example of the logic used in a basic reward function that incentivizes the car for staying closer to the middle of the track can be seen in the Basic Reward function section.
 
-On the left-hand-side of the page, please expand the **Basic function** and choose **Insert code**. This action will copy the basic reward function code to the code editor on the right. **Note** that the code in the code editor on the right will be the reward function that is used to train your model.
+On the left-hand-side of the page, please expand the **Basic function** and choose **Insert code**. This action will copy the basic reward function code (Python3 syntax) to the code editor on the right. **Note** that the code in the code editor on the right will be the reward function that is used to train your model.
 
 
 ![Basic Reward Function](img/basic_reward.png)
@@ -97,6 +97,12 @@ The reward function in the code editor contains the following logic.
         
 ```
 Here we first create three bands around the track, using the three markers, and then proceed to reward the car more for driving in the narrow band as opposed to the medium or the wide band. Also note the differences in the size of the reward. We provide a reward of 1 for staying in the narrow band, 0.5 for staying in the medium band, and 0.1 for staying in the wide band. If we decrease the reward for the narrow band, or increase the reward for the medium band, we are essentially incentivizing the car to be use a larger portion of the track surface. This could come in handy, especially when there are sharp corners.
+
+The following reward heatmaps show the intensity of rewards received and how this is spread about the center line for a narrow band vs. a wide band.
+
+![Narrow Band Reward function](img/narrowband.png)
+
+![Wide Band Reward function](img/wideband.png)
 
 Here is a list of variables that you can use to build the logic for your reward function. Note that the reward function has to be written using Python syntax, and we've added a **Validate** button to help you check that your code is good before training begins. 
 
