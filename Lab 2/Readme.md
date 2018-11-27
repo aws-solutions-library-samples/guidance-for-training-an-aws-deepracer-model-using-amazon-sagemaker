@@ -18,7 +18,7 @@ Once your model training is completed, create a folder called "models" on your U
 What you want to see during training is a TrainingRewardScore graph where the average monotonically increases. Once your car can complete one-and-a-half to two loops in the simulator your model should be good to take to the real car. The risk is that if you train too long you could just overfit and have a model that struggles to generalize in the real world. Using the provided reward functions and hyperparameters this should happen at around 2 to 2.5hours. The following image shows what a converging model TrainingRewardScore graph looks like. Note if you provide significant rewards,i.e. > 2 per step then your y-axis scale may be much larger.
 
 
-![Converge_Training](img/good_sim_training2.png.png)
+![Converge_Training](img/good_sim_training2.png)
 
 ### Reward Function Tips
 Tip 1: Start by looking at the advanced reward functions for inspiration. We provide a few examples below.
