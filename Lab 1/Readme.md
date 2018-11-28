@@ -137,7 +137,7 @@ Once you reach this section please discuss in your team the reward function you 
 
 Here's an example of a good reward function, observe how it has consistent high rewards over a long
 period of time
-
+ 
 ![GoodRewards](img/good_reward_function.png)
 
 Here's an example of a bad reward function, observe how its spikey and has low rewards
