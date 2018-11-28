@@ -116,7 +116,7 @@ This is the last section before you start training. Here you can specify the max
 
 
 
-![Stop conditions](img/stopping.png)
+![Stop conditions](img/stopping1.png)
 
 ## Step 5: Reward Function Constructors' Championship
 Once you reach this section please discuss in your team the reward function you need to implement to reach the goal. You will have 15 minutes to create it, implement it, and launch. Before you start training, nominate just one person to start training. We will continue with the workshop after the 30 minutes expired and this person will have to monitor the progress of training during the workshop. Everyone will get to implement their own reward function during lab 2. The sooner you start training your model the sooner your car will reach the middle of the hairpin.
