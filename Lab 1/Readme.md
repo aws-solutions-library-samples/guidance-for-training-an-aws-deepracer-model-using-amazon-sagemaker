@@ -29,7 +29,7 @@ Let's get going!
 
 ## Step 1: AWS Console
 Logon to the AWS Console using the account details provided to you.
-Navigate to AWS DeepRacer, https://aws.amazon.com/deepracer.
+Navigate to AWS DeepRacer, https://console.aws.amazon.com/deepracer.
 From the AWS DeepRacer landing page, expand the pane on the left and select **Reinforcement learning.**
 
 ## Step 2: Model List Page
