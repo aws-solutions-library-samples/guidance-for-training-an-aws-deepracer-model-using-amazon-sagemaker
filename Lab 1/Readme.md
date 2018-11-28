@@ -14,7 +14,7 @@ The goal of lab 1 is to get you familiar with the reward functions used to creat
 
 
 ## Reward Function Championship Instructions
-Form a team with the other attendees at your table. Your team needs to engineer a reward function that will power you car, and the first team to reach the middle of the hairpin (the next turn on the track) with screenshot proof wins. The following image shows you where the finish line is. Note the finish line won't be on the track, so if you get halfway through the hairpin that is it, take a screenshot and shout out! 
+Form a team with the other attendees at your table. Your team needs to engineer a reward function that will power you car, and the first team to reach the middle of the hairpin (the next turn on the track) with screenshot proof wins. The following image shows you where the finish line is. Note the finish line won't be on the track, so if you get halfway through the hairpin that is it, take a screenshot and shout out! Since it takes 6 minutes to spin up the containers, please train your model for at least 15 minutes.
 
 
 ![RewardFunctionChallenge](img/StraightTrack.png)
