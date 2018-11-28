@@ -125,6 +125,13 @@ Once you reach this section please discuss in your team the reward function you 
 
 ![RewardFunctionChallenge](img/StraightTrack.png)
 
+Please scroll to the next section.
+**Don't start training yet please**
+
+[Go back to Workshop](https://github.com/aws-samples/aws-deepracer-workshops/blob/master/README.md)
+
+--- 
+
 #### Additional Reading: Algorithm settings
 This section controls the hyperparameters for your RL optimization algorithm. Please expand it. These hyperparameters have been optimized by our scientists, through lots of testing. That said you are more than welcome to change them. 
 
@@ -133,7 +140,4 @@ Training happens through an iterative process of simulation to gather experience
 
 ![Hyperparameters](img/hypers.png)
 
-Please scroll to the next section.
-**Don't start training yet please**
 
-[Go back to Workshop](https://github.com/aws-samples/aws-deepracer-workshops/blob/master/README.md)
