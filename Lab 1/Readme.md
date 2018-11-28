@@ -125,14 +125,14 @@ Once you reach this section please discuss in your team the reward function you 
 
 ![RewardFunctionChallenge](img/StraightTrack.png)
 
-Please scroll to the next section.
-**Don't start training yet please**
+
+Before you start training, nominate just one person to start training. We will continue with the workshop after the 30 minutes expired and this person will have to monitor the progress of training during the workshop. Everyone will get to implement their own reward function during lab 2.
 
 [Go back to Workshop](https://github.com/aws-samples/aws-deepracer-workshops/blob/master/README.md)
 
 --- 
 
-## Additional Reading
+## Additional Reading Not Required For Lab Purposes
 
 #### Reward Function Comparison
 
