@@ -28,7 +28,6 @@ Tip: As you read through the next sections carefully consider what behavior do y
 Let's get going!
 
 
-
 ## Step 1: AWS Console
 Logon to the AWS Console using the account details provided to you.
 Navigate to AWS DeepRacer, https://aws.amazon.com/deepracer.
@@ -108,18 +107,10 @@ Here is a list of variables that you can use to build the logic for your reward 
 
 ![Reward Function Variables](img/reward_vars.png)
 
-Please scroll to the next section, we will return to the reward function shortly.
-
 #### Algorithm settings
-This section controls the hyperparameters for your RL optimization algorithm. Please expand it. These hyperparameters have been optimized by our scientists, through lots of testing. That said you are more than welcome to change them. 
+This section controls the hyperparameters for your RL optimization algorithm. In the interest of
+time, for the first lab we can skip this section, our default values should suffice for the lab.
 
-Training happens through an iterative process of simulation to gather experience, followed by training on the experience to update your model, followed by simulation using the new model to get new experience, followed by training on the new experience to update your model and so forth. Initially your model does not have any knowledge of which actions will lead to good outcomes. It will choose actions at random as it explores the environment. Over time it will learn which actions are better and start to exploit these. How quickly it exploits or how long it explores is a trade-off that you have to make.
-
-
-![Hyperparameters](img/hypers.png)
-
-Please scroll to the next section.
-**Don't start training yet please**
 
 #### Stop conditions
 This is the last section before you start training. Here you can specify the maximum time your model will train for. Ideally you should put a number in this condition. You can always stop training early. Furthermore, if your mode stopped as a result of the condition, you can go to the model list screen, and clone your model to restart training using new parameters.
@@ -134,5 +125,15 @@ Once you reach this section please discuss in your team the reward function you 
 
 ![RewardFunctionChallenge](img/StraightTrack.png)
 
+#### Additional Reading: Algorithm settings
+This section controls the hyperparameters for your RL optimization algorithm. Please expand it. These hyperparameters have been optimized by our scientists, through lots of testing. That said you are more than welcome to change them. 
+
+Training happens through an iterative process of simulation to gather experience, followed by training on the experience to update your model, followed by simulation using the new model to get new experience, followed by training on the new experience to update your model and so forth. Initially your model does not have any knowledge of which actions will lead to good outcomes. It will choose actions at random as it explores the environment. Over time it will learn which actions are better and start to exploit these. How quickly it exploits or how long it explores is a trade-off that you have to make.
+
+
+![Hyperparameters](img/hypers.png)
+
+Please scroll to the next section.
+**Don't start training yet please**
 
 [Go back to Workshop](https://github.com/aws-samples/aws-deepracer-workshops/blob/master/README.md)
