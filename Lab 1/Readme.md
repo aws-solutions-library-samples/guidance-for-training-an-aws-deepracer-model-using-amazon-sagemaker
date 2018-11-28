@@ -132,7 +132,21 @@ Please scroll to the next section.
 
 --- 
 
-#### Additional Reading: Algorithm settings
+## Additional Reading
+
+#### Reward Function Comparison
+
+Here's an example of a good reward function, observe how it has consistent high rewards over a long
+period of time
+
+![GoodRewards](img/good_reward_function.png)
+
+Here's an example of a bad reward function, observe how its spikey and has low rewards
+
+![BadRewards](img/bad_reward_function.png)
+
+
+#### Algorithm settings
 This section controls the hyperparameters for your RL optimization algorithm. Please expand it. These hyperparameters have been optimized by our scientists, through lots of testing. That said you are more than welcome to change them. 
 
 Training happens through an iterative process of simulation to gather experience, followed by training on the experience to update your model, followed by simulation using the new model to get new experience, followed by training on the new experience to update your model and so forth. Initially your model does not have any knowledge of which actions will lead to good outcomes. It will choose actions at random as it explores the environment. Over time it will learn which actions are better and start to exploit these. How quickly it exploits or how long it explores is a trade-off that you have to make.
