@@ -34,7 +34,7 @@ Furthermore, the following three cells show examples of advanced reward function
 **Advanced Reward Function 1**
 
 
-'''python
+```python
 
     def reward_function (on_track, x, y, distance_from_center, car_orientation, progress, steps, throttle, steering, track_width, waypoints, closest_waypoint):
 
@@ -60,13 +60,13 @@ Furthermore, the following three cells show examples of advanced reward function
             reward *= 0.8
 
         return float(reward)
-'''
+```
 
 
 **Advanced Reward Function 2**
 
 
-'''python
+```python
 
     def reward_function (on_track, x, y, distance_from_center, car_orientation, progress, steps, throttle, steering, track_width, waypoints, closest_waypoint):
 
@@ -92,13 +92,13 @@ Furthermore, the following three cells show examples of advanced reward function
             reward *= 0.8
 
         return float(reward)
-'''
+```
 
 
 **Advanced Reward Function 3**
 
 
-'''python
+```python
 
     def reward_function (on_track, x, y, distance_from_center, car_orientation, progress, steps, throttle, steering, track_width, waypoints, closest_waypoint):
 
@@ -115,7 +115,7 @@ Furthermore, the following three cells show examples of advanced reward function
             reward *= 0.80
 
         return reward
-'''
+```
 
 
 [Go back to Workshop](https://github.com/aws-samples/aws-deepracer-workshops/blob/master/README.md)
