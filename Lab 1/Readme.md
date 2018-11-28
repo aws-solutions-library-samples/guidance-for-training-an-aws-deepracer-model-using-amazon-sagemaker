@@ -4,24 +4,23 @@
 
 #### Time breakdown
 
-- Presenter provides competition and covers competition :  2 minutes
-- Teams read lab content                                : 13 minutes
-- Teams discuss reward function                         : 10 minutes
-- Teams implement reward function and start training    :  5 minutes
-- Total                                                 : 30 minutes 
+- Presenter provides competition and covers competition                   :  2 minutes
+- Teams read lab content                                                  : 13 minutes
+- Teams discuss and implement your reward function and start training     : 15 minutes
+- Total                                                                   : 30 minutes 
 
 ## Overview
 The goal of lab 1 is to get you familiar with the reward functions used to create RL models for AWS DeepRacer. To this end we have created an informal competition called the Reward Function Constructors Championship, where your team will compete to win bragging rights. The competition will also give you an overview of the AWS DeepRacer simulator found in the AWS Console.
 
 
 ## Reward Function Championship Instructions
-Form a team with the other attendees at your table. Your team needs to create a reward function that will power you car, and the first team to reach the middle of the hairpin (the next turn on the track) with screenshot proof wins. The following image shows you where the finish line is. Note the finish line won't be on the track, so if you get halfway through the hairpin that is it, take a screenshot and shout out!  
+Form a team with the other attendees at your table. Your team needs to create a reward function that will power you car, and the first team to reach the middle of the hairpin (the next turn on the track) with screenshot proof wins. The following image shows you where the finish line is. Note the finish line won't be on the track, so if you get halfway through the hairpin that is it, take a screenshot and shout out! 
 
 
 ![RewardFunctionChallenge](img/StraightTrack.png)
 
 
-Please read through the following sections and when you are finished feel free to start discussing in your team which reward function you need to create to reach the objective. You will have 13 minutes to read the content (so pace yourself), 10 minutes to debate the reward function and 5 minutes to implement it. Before you start training, nominate just one person to start training. We will continue with the workshop after the 30 minutes and this person will have to monitor the progress of training during the workshop. Everyone will get to implement their own reward function during lab 2.
+Please read through the following sections and when you are finished feel free to start discussing in your team which reward function you need to create to reach the objective. You will have 13 minutes to read the content (so pace yourself), 15 minutes to debate and implement your reward function and kickoff training. Before you start training, nominate just one person to start training. We will continue with the workshop after the 30 minutes and this person will have to monitor the progress of training during the workshop. Everyone will get to implement their own reward function during lab 2.
 
 Tip: As you read through the next sections carefully consider what behavior do you want to incentivize to ensure your car stays on track and makes the turn. You will have to write your reward function using Python, but we provide three good examples to look at.
 
@@ -115,7 +114,7 @@ time, for the first lab we can skip this section, our default values should suff
 #### Stop conditions
 This is the last section before you start training. Here you can specify the maximum time your model will train for. Ideally you should put a number in this condition. You can always stop training early. Furthermore, if your mode stopped as a result of the condition, you can go to the model list screen, and clone your model to restart training using new parameters.
 
-**Don't start training yet please**
+
 
 ![Stop conditions](img/stopping.png)
 
