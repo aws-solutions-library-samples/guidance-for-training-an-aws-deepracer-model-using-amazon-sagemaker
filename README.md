@@ -13,6 +13,9 @@ The waypoints are like GPS location indicators for the car. The nearest waypoint
 
 ![waypoints](imgs/waypoints.png)
 
+## Reinvent Track with Dimensions
+![waypoints](imgs/reinvent_track_dimensions.png)
+
 ## License Summary
 
 This sample code is made available under a modified MIT license. See the LICENSE file.
