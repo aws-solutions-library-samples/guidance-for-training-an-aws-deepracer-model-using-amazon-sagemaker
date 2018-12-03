@@ -14,6 +14,8 @@ The waypoints are like GPS location indicators for the car. The nearest waypoint
 ![waypoints](imgs/waypoints.png)
 
 ## Reinvent Track with Dimensions
+To create your own track follow the details in the [Developer Documentation](https://docs.aws.amazon.com/deepracer/latest/developerguide/deepracer-build-your-track.html) 
+
 ![waypoints](imgs/reinvent_track_dimensions.png)
 
 ## License Summary
