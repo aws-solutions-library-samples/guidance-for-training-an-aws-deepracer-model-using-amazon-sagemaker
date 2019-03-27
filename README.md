@@ -9,11 +9,12 @@ If you want to learn mode, please also check out a new course by the AWS Trainin
 ## Resources
 
 [AWS DeepRacer League](http://www.deepracerleague.com/)
-[AWS Training and Certification course called "AWS DeepRacer: Driven by Reinforcement Learning"](https://kiku.aws.training/learningobject/wbc?id=32143)
-[AWS DeepRacer Forum]( https://forums.aws.amazon.com/forum.jspa?forumID=318)
-[AWS Developer Documentation](https://docs.aws.amazon.com/deepracer/latest/developerguide/deepracer-build-your-track.html) 
-[Visualization Notebook](https://github.com/aws-samples/aws-deepracer-workshops/blob/master/utils/DeepRacer%20Log%20Analysis.ipynb)
 
+[AWS Training and Certification course called "AWS DeepRacer: Driven by Reinforcement Learning"](https://kiku.aws.training/learningobject/wbc?id=32143)
+
+[AWS DeepRacer Forum]( https://forums.aws.amazon.com/forum.jspa?forumID=318)
+
+[AWS Developer Documentation](https://docs.aws.amazon.com/deepracer/index.html#lang/en_us) 
 
 ## License Summary
 
