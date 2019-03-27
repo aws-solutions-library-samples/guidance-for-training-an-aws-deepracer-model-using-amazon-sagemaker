@@ -31,7 +31,7 @@ The lab will provide detail on the various components in the AWS DeepRacer servi
 - For those eager to start training a job, our hint would be take your time and familiarize yourself with the concepts first, before starting model training. 
 - Please ask questions as you progress through the lab and feel free to have discussions at your table. 
 - Lastly, when you do start a training job, run it for at least 60 to 90 minutes (on the re:Invent track). It takes 6 minutes to spin up the services needed and your model needs time to explore the track before it will manage to complete a lap.
-- If you want to continue learning after the lab, please check out the new course by the AWS Training and Certification team, called [AWS DeepRacer: Driven by Reinforcement Learning](https://kiku.aws.training/learningobject/wbc?id=32143)
+- If you want to continue learning after the lab, please check out the new course by the AWS Training and Certification team, called [AWS DeepRacer: Driven by Reinforcement Learning](https://www.aws.training/learningobject/wbc?id=32143)
 
 # Section 1: Training your first model
 ## Step 1: Login to the AWS DeepRacer service
