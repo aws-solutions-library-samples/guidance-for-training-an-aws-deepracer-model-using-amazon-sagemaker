@@ -1,22 +1,19 @@
-## AWS Deepracer Workshop
-A hands-on workshop to introduce developers to AWS DeepRacer at re:Invent 2018.
+## AWS Deepracer Workshop Lab Github
 
-[Lab 1: 30 minutes](https://github.com/aws-samples/aws-deepracer-workshops/tree/master/Lab%201)
+This Github contains workshop labs that have presented at a number of AWS DeepRacer workshops. Please always refer to the latest workshop as we keep making changes.
 
-[Lab 2: 22 minutes](https://github.com/aws-samples/aws-deepracer-workshops/tree/master/Lab%202)
+The  latest [workshop]() is ran as part of the AWS DeepRacer League Summit Circuit races that will take place at selected AWS Summits. You can learn more about the AWS DeepRacer League [here](http://www.deepracerleague.com/). If you don't have the opportunity to attend one of the AWS Summits, you can still race in the Virtual Circuit.
 
-## Job Analysis and Visualization
+If you want to learn mode, please also check out a new course by the AWS Training and Certification team, called [AWS DeepRacer: Driven by Reinforcement Learning](https://kiku.aws.training/learningobject/wbc?id=32143)
+
+## Resources
+
+[AWS DeepRacer League](http://www.deepracerleague.com/)
+[AWS Training and Certification course called "AWS DeepRacer: Driven by Reinforcement Learning"](https://kiku.aws.training/learningobject/wbc?id=32143)
+[AWS DeepRacer Forum]( https://forums.aws.amazon.com/forum.jspa?forumID=318)
+[AWS Developer Documentation](https://docs.aws.amazon.com/deepracer/latest/developerguide/deepracer-build-your-track.html) 
 [Visualization Notebook](https://github.com/aws-samples/aws-deepracer-workshops/blob/master/utils/DeepRacer%20Log%20Analysis.ipynb)
 
-## Waypoints for re:Invent track
-The waypoints are like GPS location indicators for the car. The nearest waypoint can be found using the euclidean distance, but we have made this available in the reward function to make it easy. The labels (L = Left, R = Right,S = Straight) indicate the best action to take at those waypoints.
-
-![waypoints](imgs/waypoints.png)
-
-## Reinvent Track with Dimensions
-To create your own track follow the details in the [Developer Documentation](https://docs.aws.amazon.com/deepracer/latest/developerguide/deepracer-build-your-track.html) 
-
-![waypoints](imgs/reinvent_track_dimensions.png)
 
 ## License Summary
 
