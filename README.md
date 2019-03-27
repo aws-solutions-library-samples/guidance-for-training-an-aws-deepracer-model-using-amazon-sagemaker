@@ -2,7 +2,7 @@
 
 This Github contains workshop labs that have presented at a number of AWS DeepRacer workshops. Please always refer to the latest workshop as we keep making changes.
 
-The  latest [workshop]() is ran as part of the AWS DeepRacer League Summit Circuit races that will take place at selected AWS Summits. You can learn more about the AWS DeepRacer League [here](http://www.deepracerleague.com/). If you don't have the opportunity to attend one of the AWS Summits, you can still race in the Virtual Circuit.
+The  latest [workshop lab](https://github.com/aws-samples/aws-deepracer-workshops/tree/master/Workshops/2019-AWSSummits-AWSDeepRacerService/Lab1) is ran as part of the AWS DeepRacer League Summit Circuit races that will take place at selected AWS Summits. You can learn more about the AWS DeepRacer League [here](http://www.deepracerleague.com/). If you don't have the opportunity to attend one of the AWS Summits, you can still race in the Virtual Circuit.
 
 If you want to learn mode, please also check out a new course by the AWS Training and Certification team, called [AWS DeepRacer: Driven by Reinforcement Learning](https://kiku.aws.training/learningobject/wbc?id=32143)
 
