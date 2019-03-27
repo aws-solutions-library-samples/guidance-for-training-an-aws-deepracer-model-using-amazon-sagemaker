@@ -10,7 +10,7 @@ If you want to learn mode, please also check out a new course by the AWS Trainin
 
 [AWS DeepRacer League](http://www.deepracerleague.com/)
 
-[AWS Training and Certification course called "AWS DeepRacer: Driven by Reinforcement Learning"](https://kiku.aws.training/learningobject/wbc?id=32143)
+[AWS Training and Certification course called "AWS DeepRacer: Driven by Reinforcement Learning"](https://www.aws.training/learningobject/wbc?id=32143)
 
 [AWS DeepRacer Forum]( https://forums.aws.amazon.com/forum.jspa?forumID=318)
 
