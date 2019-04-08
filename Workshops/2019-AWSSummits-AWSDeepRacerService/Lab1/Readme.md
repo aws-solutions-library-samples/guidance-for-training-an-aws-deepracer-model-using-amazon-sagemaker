@@ -100,31 +100,34 @@ Hints
 
 - Your model will not perform an action that is not in the action space. Similarly, if your model is trained on a track that that never required the use of this action, for example turning won't be incentivized on a straight track, the model won't know how to use this action as it won't be incentivized to turn. Thus as you start thinking about building a robust model make sure you keep the action space and training track in mind.  
 - Specifying a fast speed or a wide steering angle is great, but you still need to think about your reward function and whether it makes sense to drive full-speed into a turn, or exhibit zig-zag behavior on a straight section of the track.
-- For real world racing you will have to play with the throttle in the webserver user interface of AWS DeepRacer to make sure your car is not driving faster than what it learned in the simulator.
+- For real world racing you will have to play with the speed in the webserver user interface of AWS DeepRacer to make sure your car is not driving faster than what it learned in the simulator.
 
 
 ## 3.4 Reward function
 In reinforcement learning, the reward function plays a **critical** role in training your models. The reward function is used to incentivize the driving behavior you want the agent to exhibit when using your trained RL model to make driving decisions. 
 
-The reward function evaluates the quality of an action's outcome, and reward the action accordingly. The reward is calculated in the simulation, during training, after each action is taken. You will provide the logic that goes into the reward function, using Python 3 syntax. In order to code this logic you have a number of measurements available from the simulation, exposed as variables.
+The reward function evaluates the quality of an action's outcome, and rewards the action accordingly. In practice the reward is calculated during training after each action is taken, and forms a key part of the experience (recall we spoke about state, action, next state, reward) used to train the model. You can build the reward function logic using a number of variables that are exposed by the simulator. These variables represent measurements of the car, such as steering angle and speed, the car in relation to the racetrack, such as (x, Y) coordinates, and the racetrack, such as waypoints. You can use these measurements to build your reward function logic in Python 3 syntax.
 
-The following list contains the variables you can use in your reward function. Note these are updated from time to time as our engineers and scientists find better ways of doing things, so adjust your previous reward functions accordingly. At the time of the Santa Clara workshop these variables and descriptions are correct in the AWS DeepRacer service in the AWS console. Thus please ignore the descriptions you may read in the AWS DeepRacer service, and make sure you use these variable names and descriptions. The most prominent difference is throttle and steering.
+The following table contains the variables you can use in your reward function. Note these are updated from time to time as our engineers and scientists find better ways of doing things, so adjust your previous reward functions accordingly. At the time of the Singapore Summit (10 April 2019) these variables and descriptions are correct in the AWS DeepRacer service in the AWS console. Always use the latest descriptions in the AWS DeepRacer service. Note, if you use the SageMaker RL notebook, you will have to look at the syntax used in the notebook itself.
 
 
-| Variable Name        | Type                     | Description                                                                                                                                                                                                                                                                                         |
+| Variable Name |How to call it       | Type                     | Description                                                                                                                                                                                                                                                                                         |
 |----------------------|--------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| on_track             | boolean                  | If any of the four wheels is on the track, track defined as the road surface and the border lines, then one_track is True. If all four wheels is off the track, then on_track is False. As soon as on_track is False the car will reset.                                                            |
-| x                    | Float                    | Returns the x coordinate of the center of the from axle of the car, in unit meters.                                                                                                                                                                                                                 |
-| y                    | Float                    | Returns the y coordinate of the center of the from axle of the car, in unit meters.                                                                                                                                                                                                                 |
-| distance_from_center | Float [0, track_width/2] | Absolute distance from the center of the track. Center of the track is determined by the line that links all center waypoints.                                                                                                                                                                      |
-| car_orientation      | Float (-pi,pi]           | Returns the direction the car is facing in radians. When car faces in direction of x increasing, with y constant, then return 0. When car faces in direction of y increasing, with x constant, then returns pi/2. When car faces in direction of y decreasing, with x constant, then returns -pi/2. |
-| progress             | Float [0,100]              | Percentage of the track complete.                                                                                                                                                                                                                                                                   |
-| steps                | Integer                  | Number of steps completed. One step is one (state, action, next state, reward tuple).                                                                                                                                                                                                               |
-| throttle             | Float                    | The desired speed of the car in meters per second. This should tie back to the selected action space.                                                                                                                                                                                                       |
-| steering             | Float                    | The desired steering of the car in radians. This should tie back to the selected action space, but using radians as opposed to degrees. Note that + angles indicate going left, and negative angles indicate going right. This is aligned with 2d geometric processing.                                                                                                                                                                    |
-| track_width          | Float                    | The width of the track, in unit meters.                                                                                                                                                                                                                                                             |
-| waypoints            | List                     | Ordered list of waypoints along the center of the track, each item containing the (x, y) coordinates of the waypoint. The list starts at zero                                                                                                                                                        |
-| closest_waypoint     | Integer                  | Index of the closest waypoint, as measured by straight-line distance. This waypoint can be behind or in-front of the car.                                                                                                                                                                           |
+| all_wheels_on_track | params['all_wheels_on_track']             | Boolean                  | If any of the four wheels is on the track, where track is defined as the road surface including the border lines, then all_wheels_on_track is True. If all four wheels is off the track, then all_wheels_on_track is False. As soon as all_wheels_on_track is False the car will reset.                                                            |
+| x                 |params['x']    | Float                    | Returns the x coordinate of the center of the from axle of the car, in unit meters.                                                                                                                                                                                                                 |
+| y               |params['y']      | Float                    | Returns the y coordinate of the center of the from axle of the car, in unit meters.                                                                                                                                                                                                                 |
+| distance_from_center | params['distance_from_center']  | Float [0, track_width/2] | Absolute distance from the center of the track. Center of the track is determined by the line that links all waypoints.                                                                                                                                                                      |
+| is_left_of_center | params['is_left_of_center']  | Boolean | A variable that indicates if the car is to the left of the center of the track.                                                                                                                                                                      |
+| heading |params['heading']      | Float (-pi,pi]           | Returns the heading the car is facing in radians. When the car faces the direction of the x-axis increasing (and y constant), then it will return 0. When the car faces the direction of the y-axis increasing (with x constant), then it will return pi/2. When the car faces the direction of the y-axis decreasing (with x constant), then it will return -pi/2. |
+ 
+ | is_reversed |params['is_reversed']      | Boolean           | A variable indicating whether the car is training in the original direction of the track, or the reverse direction of the trach. |
+| progress   |params['progress']           | Float [0,100]              | Percentage of the track complete. Progress of 100 indicates the lap is completed.                                                                                                                                                                                                                                                                   |
+| steps      |params['steps']           | Integer                  | Number of steps completed. One step is one (state, action, next state, reward tuple).                                                                                                                                                                                                               |
+| speed    |params['speed']          | Float                    | The desired speed of the car in meters per second. This should tie back to the selected action space.                                                                                                                                                                                                       |
+| steering_angle     |params['steering_angle']         | Float                    | The desired steering_angle of the car in radians. This should tie back to the selected action space, but using radians as opposed to degrees. Note that + angles indicate going left, and negative angles indicate going right. This is aligned with 2d geometric processing.                                                                                                                                                                    |
+| track_width  |params['track_width']         | Float                    | The width of the track, in unit meters.                                                                                                                                                                                                                                                             |
+| waypoints |params['waypoints']            | List                     | Ordered list of waypoints, that are spread around the track in the center of the track, with each item in the list being the (x, y) coordinate of the waypoint. The list starts at zero |
+| closest_waypoints |params['closest_waypoints'][0]     | Integer                  | Returns a list containing the nearest previous waypoint index, and the nearest next waypoint index. params['closest_waypoints'][0] returns the nearest previous waypoint index and params['closest_waypoints'][1] returns the nearest next waypoint index. |
 
 Here is a visual explanation of some of the reward function parameters.
 
@@ -142,80 +145,92 @@ Below we provide a few reward function examples.
 Here we first create three bands around the track, using the three markers, and then proceed to reward the car more for driving in the narrow band as opposed to the medium or the wide band. Also note the differences in the size of the reward. We provide a reward of 1 for staying in the narrow band, 0.5 for staying in the medium band, and 0.1 for staying in the wide band. If we decrease the reward for the narrow band, or increase the reward for the medium band, we are essentially incentivizing the car to be use a larger portion of the track surface. This could come in handy, especially when there are sharp corners.
 
 
-	def reward_function(on_track, x, y, distance_from_center, car_orientation, progress, steps, throttle, steering, track_width, waypoints, closest_waypoint):
-		marker_1 = 0.1 * track_width
-		marker_2 = 0.25 * track_width
-		marker_3 = 0.5 * track_width
-
-		reward = 1e-3
-		if distance_from_center <= marker_1:
-			reward = 1
-		elif distance_from_center <= marker_2:
+	def reward_function(params):
+		'''
+		Example of rewarding the agent to follow center line
+		'''
+		
+		# Calculate 3 marks that are farther and father away from the center line
+		marker_1 = 0.1 * params['track_width']
+		marker_2 = 0.25 * params['track_width']
+		marker_3 = 0.5 * params['track_width']
+		
+		# Give higher reward if the car is closer to center line and vice versa
+		if params['distance_from_center'] <= marker_1:
+			reward = 1.0
+		elif params['distance_from_center'] <= marker_2:
 			reward = 0.5
-		elif distance_from_center <= marker_3:
+		elif params['distance_from_center'] <= marker_3:
 			reward = 0.1
 		else:
-			reward = 1e-3  
+			reward = 1e-3  # likely crashed/ close to off track
+		
 		return float(reward)
-        
 
 Hint: Don't provide rewards equal to zero. The specific optimizer that we are using struggles when the reward given is zero. As such we initialize the reward with a small value. 
 
 **Example 2**:Advanced reward function that penalizes excessive steering and promotes centerline following.
 
 
-	def reward_function(on_track, x, y, distance_from_center, car_orientation, progress, steps, throttle, steering, track_width, waypoints, closest_waypoint):
+	def reward_function(params):
+		'''
+		Example that penalizes steering, which helps mitigate zig-zag behaviors
+		'''
 
-		import math
-		marker_1 = 0.1 * track_width
-		marker_2 = 0.25 * track_width
-		marker_3 = 0.5 * track_width
+		# Calculate 3 marks that are farther and father away from the center line
+		marker_1 = 0.1 * params['track_width']
+		marker_2 = 0.25 * params['track_width']
+		marker_3 = 0.5 * params['track_width']
 
-		reward = 1e-3
-		if distance_from_center <= marker_1:
+		# Give higher reward if the car is closer to center line and vice versa
+		if params['distance_from_center'] <= marker_1:
 			reward = 1
-		elif distance_from_center <= marker_2:
+		elif params['distance_from_center'] <= marker_2:
 			reward = 0.5
-		elif distance_from_center <= marker_3:
+		elif params['distance_from_center'] <= marker_3:
 			reward = 0.1
 		else:
-			reward = 1e-3 
+			reward = 1e-3  # likely crashed/ close to off track
 
-		# penalize reward if the car is steering way too much
-		# steering angle is in radians in the reward function
-		# assumes your action space maximum steering angle is 30 and you have a steering granularity of at least 5. We will penalize any steering action that requires more than 15 degrees, absolute.
-		ABS_STEERING_THRESHOLD = math.radians(15)
-		if abs(steering) > ABS_STEERING_THRESHOLD:
+		# Steering penality threshold, change the number based on your action space setting
+		ABS_STEERING_THRESHOLD = 15
+
+		# Penalize reward if the car is steering too much
+		if abs(params['steering_angle']) > ABS_STEERING_THRESHOLD:  # Only need the absolute steering angle
 			reward *= 0.5
 
-		return float(reward)        
+		return float(reward)
+		
 
 **Example 3**:Advanced reward function that penalizes going slow and promotes centerline following.
 
 
-	def reward_function(on_track, x, y, distance_from_center, car_orientation, progress, steps, throttle, steering, track_width, waypoints, closest_waypoint):
+	def reward_function(params):
+		'''
+		Example that penalizes slow driving. This create a non-linear reward function so it may take longer to learn.
+		'''
 
-		import math
-		marker_1 = 0.1 * track_width
-		marker_2 = 0.25 * track_width
-		marker_3 = 0.5 * track_width
+		# Calculate 3 marks that are farther and father away from the center line
+		marker_1 = 0.1 * params['track_width']
+		marker_2 = 0.25 * params['track_width']
+		marker_3 = 0.5 * params['track_width']
 
-		reward = 1e-3
-		if distance_from_center <= marker_1:
+		# Give higher reward if the car is closer to center line and vice versa
+		if params['distance_from_center'] <= marker_1:
 			reward = 1
-		elif distance_from_center <= marker_2:
+		elif params['distance_from_center'] <= marker_2:
 			reward = 0.5
-		elif distance_from_center <= marker_3:
+		elif params['distance_from_center'] <= marker_3:
 			reward = 0.1
 		else:
-			reward = 1e-3 
+			reward = 1e-3  # likely crashed/ close to off track
 
 		# penalize reward for the car taking slow actions
-		# throttle is in m/s
+		# speed is in m/s
 		# the below assumes your action space has a maximum speed of 5 m/s and speed granularity of 3
-		# we penalize any throttle less than 2m/s
-		THROTTLE_THRESHOLD = 2
-		if throttle < THROTTLE_THRESHOLD:
+		# we penalize any speed less than 2m/s
+		SPEED_THRESHOLD = 2
+		if params['speed'] < SPEED_THRESHOLD:
 			reward *= 0.5
 
 		return float(reward)
@@ -225,9 +240,9 @@ Using the above examples you can now proceed to craft your own reward function. 
 - You can use the waypoints to calculate the direction from one waypoint to the next.
 - You can use the right-hand rule from 2D gaming to determine on which side of the track you are on.
 - You can scale rewards exponentially, just cap them at 10,000.
-- Keep your action space in mind when using throttle and steering in your reward function
+- Keep your action space in mind when using speed and steering_angle in your reward function
 - To go from degrees to radians in python import math and then use math.radians(the degrees you want)
-- To keep track of episodes in the logs where your car manages to complete a lap, consider giving a finish bonus (aka reward += 10000) where progress = 100. This is because once the car completes a lap progress will not go beyond 100%, but the simulation will continue. The model will keep on training until it reaches the stopping time, but that does not imply the final model is the best model, especially when it comes to racing in the real world. This is a temporary workaround as we will solve.
+- To keep track of episodes in the logs where your car manages to complete a lap, consider giving a finish bonus (aka reward += 10000) where progress = 100. This is because once the car completes a lap progress will not go beyond 100, but the simulation will continue. The model will keep on training until it reaches the stopping time, but that does not imply the final model is the best model, especially when it comes to racing in the real world. This is a temporary workaround as we will solve.
 
 Once you are done creating your reward function be sure to use the **Validate** button to verify that your code syntax is good before training begins. When you start training this reward function will be stored in a file in your S3, but also make sure you copy and store it somewhere to ensure it is safe.
 
@@ -367,7 +382,7 @@ At this point you have to experiment and iterate on your reward function and hyp
 Hints:
 - Increase training time beyond. If your model can't reliably complete a lap try to extend your model training time.
 - Try modifying action space by increasing max speed to get faster lap times.
-- Tweak your reward function to incentivize your car to drive faster : you’ll want to specifically modify progress, steps and throttle variables.
+- Tweak your reward function to incentivize your car to drive faster : you’ll want to specifically modify progress, steps and speed variables.
 - Clone your model to leverage training experience. Please note that you will not be able to change action space once a model is cloned, otherwise the job will fail.
 
 ## Step 4: Analyze model performance by inspecting the RoboMaker logs
