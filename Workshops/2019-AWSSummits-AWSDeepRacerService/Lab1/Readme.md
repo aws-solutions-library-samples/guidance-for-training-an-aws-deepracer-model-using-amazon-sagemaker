@@ -251,7 +251,7 @@ Once you are done creating your reward function be sure to use the **Validate** 
 
 Here is my example reward function using the first example above.
 
-![rewardfunction](img/reward_function.png)
+![rewardfunction](img/NewReward.png)
 
 Please scroll to the next section.
 
