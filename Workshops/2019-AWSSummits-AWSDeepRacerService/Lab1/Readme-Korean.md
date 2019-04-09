@@ -124,7 +124,7 @@ Section 2에서 AWS DeepRacer League에 대한 자세한 내용을 제공할 예
 | steering_angle       | params['steering_angle']                                     | Float                    | Radian 단위의 원하는 자동차의 조향 각도. 이것은 선택된 action space와 관련있으며 (degree가 아니라) Radian으로 표현 됩니다. 양수(+) 각도는 왼쪽으로, 음수(-) 각도는 오른쪽으로 진행함을 나타냅니다. 이것은 2D 기하학적 처리와 관련 있습니다. |
 | track_width          | params['track_width']                                        | Float                    | 트랙의 폭 (미터 단위)                                        |
 | waypoints            | params['waypoints'] - 전제 리스트, params['waypoints'][i] 는 i 번째 waypoint | List                     | 트랙 중앙을 따라 있는 waypoint들의 (x,y) 좌표 목록(ordered list). 리스트의 인덱스는 0부터 시작함. |
-| closest_waypoints    | params['closest_waypoints'][0] 또는 params['closest_waypoints'][1] | Integer                  | 가까운 이전waypoint 인덱스와 가까운 다음 waypoint의 인덱스를 목록으로 반환합니다. params['closest_waypoints'][0] 는 가까운 이전 waypointㅇ,; 인덱스를 반환하고, params['closest_waypoints'][1] 는 가까운 다음 waypoint의 인덱스를 반환합니다. |
+| closest_waypoints    | params['closest_waypoints'][0] 또는 params['closest_waypoints'][1] | Integer                  | 가까운 이전waypoint 인덱스와 가까운 다음 waypoint의 인덱스를 목록으로 반환합니다. params['closest_waypoints'][0] 는 가까운 이전 waypoint의 인덱스를 반환하고, params['closest_waypoints'][1] 는 가까운 다음 waypoint의 인덱스를 반환합니다. |
 
 
 보상 함수에서 사용할 수 있는 변수들을 설명하는 그림입니다.
@@ -203,7 +203,7 @@ def reward_function(params):
 	return float(reward)      
 ```
 
-**Example 3**: 저속 주행에 페널티를 중심선을 따라가도록 유도하는 고급 보상 함수.
+**Example 3**: 저속 주행에 페널티를 주고, 중심선을 따라가도록 유도하는 고급 보상 함수.
 
 
 ```python
