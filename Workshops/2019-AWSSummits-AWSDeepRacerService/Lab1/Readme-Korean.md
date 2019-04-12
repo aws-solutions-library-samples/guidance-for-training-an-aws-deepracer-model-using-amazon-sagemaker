@@ -117,7 +117,7 @@ Section 2에서 AWS DeepRacer League에 대한 자세한 내용을 제공할 예
 | distance_from_center | params['distance_from_center']                               | Float [0, track_width/2] | 트랙 중심으로부터 절대 거리. 트랙의 중심은 모든 waypoint를 연결하는 선에 의해 결정됩니다. |
 | is_left_of_center    | params['is_left_of_center']                                  | Boolean                  | 자동차가 트랙의 중앙선 왼쪽에 있는지를 알려줍니다.           |
 | is_reversed          | params['is_reversed']                                        | Boolean                  | 이 변수는 트랙의 원래 방향으로 주행하면서 학습을 수행하는지, 반대 방향으로 주행하면서 학습을 하는지를 알려줍니다. |
-| heading              | params['heading']                                            | Float (-pi,pi]           | 자동차가 진행하고 있는 방향을 radian으로 알려줍니다. 자동차가 x-축이 증가하는 방향(즉, y축 값은 상수)을 보고 있다면, 리턴값은 pi/2가 됩니다. y-축의 값이 줄어드는 방향(x-축은 상수)을 바라고 있는 경우, -pi/2가 반환됩니다. |
+| heading              | params['heading']                                            | Float (-180,180]         | 자동차가 진행하고 있는 방향을  알려줍니다. 자동차가 x-축이 증가하는 방향(즉, y축 값은 상수)을 보고 있다면, 리턴값은 0가 됩니다. y-축이 증가하는 방향(x-축은 상수)을 바라보면 90이, y-축의 값이 줄어드는 방향(x-축은 상수)을 바라고 있는 경우, -90이 반환됩니다. |
 | progress             | params['progress']                                           | Float [0,100]            | 트랙 주행 완료 백분율. Progress가 100이면 한바퀴를 완주한 것을 의미합니다. |
 | steps                | params['steps']                                              | Integer                  | 완료된 스텝 수. 한 스텝은 (state, action, next state, reward)의 튜플 입니다. |
 | speed                | params['speed']                                              | Float                    | 초당 미터 단위의 자동차 속도. 이것은 선택된 action space와 관련 있습니다. |
