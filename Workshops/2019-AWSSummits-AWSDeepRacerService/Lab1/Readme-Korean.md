@@ -121,7 +121,7 @@ Section 2에서 AWS DeepRacer League에 대한 자세한 내용을 제공할 예
 | progress             | params['progress']                                           | Float [0,100]            | 트랙 주행 완료 백분율. Progress가 100이면 한바퀴를 완주한 것을 의미합니다. |
 | steps                | params['steps']                                              | Integer                  | 완료된 스텝 수. 한 스텝은 (state, action, next state, reward)의 튜플 입니다. |
 | speed                | params['speed']                                              | Float                    | 초당 미터 단위의 자동차 속도. 이것은 선택된 action space와 관련 있습니다. |
-| steering_angle       | params['steering_angle']                                     | Float                    | Radian 단위의 원하는 자동차의 조향 각도 (단위: degree). 이것은 선택된 action space와 관련 있습니다. 양수(+) 각도는 왼쪽으로, 음수(-) 각도는 오른쪽으로 진행함을 나타냅니다. 이것은 2D 기하학적 처리와 관련 있습니다. |
+| steering_angle       | params['steering_angle']                                     | Float                    | Degree 단위의 원하는 자동차의 조향 각도 (단위: degree). 이것은 선택된 action space와 관련 있습니다. 양수(+) 각도는 왼쪽으로, 음수(-) 각도는 오른쪽으로 진행함을 나타냅니다. 이것은 2D 기하학적 처리와 관련 있습니다. |
 | track_width          | params['track_width']                                        | Float                    | 트랙의 폭 (미터 단위)                                        |
 | waypoints            | params['waypoints'] - 전제 리스트, params['waypoints'][i] 는 i 번째 waypoint | List                     | 트랙 중앙을 따라 있는 waypoint들의 (x,y) 좌표 목록(ordered list). 리스트의 인덱스는 0부터 시작합니다. |
 | closest_waypoints    | params['closest_waypoints'][0] 또는 params['closest_waypoints'][1] | Integer                  | 가까운 이전waypoint 인덱스와 가까운 다음 waypoint의 인덱스를 목록으로 반환합니다. params['closest_waypoints'][0] 는 가까운 이전 waypoint의 인덱스를 반환하고, params['closest_waypoints'][1] 는 가까운 다음 waypoint의 인덱스를 반환합니다. |
