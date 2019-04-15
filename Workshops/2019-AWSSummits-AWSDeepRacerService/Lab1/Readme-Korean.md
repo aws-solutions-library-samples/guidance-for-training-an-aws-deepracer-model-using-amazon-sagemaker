@@ -81,7 +81,7 @@ Section 2에서 AWS DeepRacer League에 대한 자세한 내용을 제공할 예
 오늘의 Lab에서는 시간이 가능한 한 최대로 여러분들이 Summit에서 레이스를 참가를 위해 준비 될 수 있도록 도와드릴 예정입니다. re:Invent 2018 트랙을 선택하고 다음 섹션으로 스크롤하십시오.
 
 ## 3.3 Action space
-이 섹션에서는 학습 과정 및 실 주행에서 선택 할 수 있는 action space를 정의합니다. Action은 자동차가 취할 수 있는 스피드와 조향각의 조합입니다. AWS DeepRacer에서는 continuous action space가 아닌 discrete acation space를 사용합니다. 이 discrete action space를 정의하기 위해 최대 속도(maximum speed), 속도 레벨(speed levels), 최대 조향 각도(maximum steering angle), 그리고 조향 레벨 (steering levels) 을 지정하게 됩니다.
+이 섹션에서는 학습 과정 및 실 주행에서 선택 할 수 있는 action space를 정의합니다. Action은 자동차가 취할 수 있는 스피드와 조향각의 조합입니다. AWS DeepRacer에서는 continuous action space가 아닌 discrete action space를 사용합니다. 이 discrete action space를 정의하기 위해 최대 속도(maximum speed), 속도 레벨(speed levels), 최대 조향 각도(maximum steering angle), 그리고 조향 레벨 (steering levels) 을 지정하게 됩니다.
 
 ![action space](img/Action_Space.png)
 
