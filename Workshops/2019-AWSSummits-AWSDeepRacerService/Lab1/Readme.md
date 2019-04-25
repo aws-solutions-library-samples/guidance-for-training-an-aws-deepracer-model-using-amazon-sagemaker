@@ -122,7 +122,7 @@ The following table contains the variables you can use in your reward function. 
 | is_reversed          | params['is_reversed']                                                                 | Boolean                  | A variable indicating whether the car is training in the original direction of the track, or the reverse direction of the track.                                                                                                                                                                                                                                    |
 | heading              | params['heading']                                                                     | Float (-180,180]           | Returns the heading the car is facing in degrees. When the car faces the direction of the x-axis increasing (and y constant), then it will return 0. When the car faces the direction of the y-axis increasing (with x constant), then it will return 90. When the car faces the direction of the y-axis decreasing (with x constant), then it will return -90. |
 | progress             | params['progress']                                                                    | Float [0,100]            | Percentage of the track complete. Progress of 100 indicates the lap is completed.                                                                                                                                                                                                                                                                                   |
-| steps                | params['steps']                                                                       | Integer                  | Number of steps completed. One step is one (state, action, next state, reward tuple).                                                                                                                                                                                                                                                                               |
+| steps                | params['steps']                                                                       | Integer [0,inf]                 | Number of steps completed. One step is one (state, action, next state, reward tuple).                                                                                                                                                                                                                                                                               |
 | speed                | params['speed']                                                                       | Float                    | The desired speed of the car in meters per second. This should tie back to the selected action space.                                                                                                                                                                                                                                                               |
 | steering_angle       | params['steering_angle']                                                              | Float                    | The desired steering_angle of the car in degrees. This should tie back to the selected action space. Note that + angles indicate going left, and negative angles indicate going right. This is aligned with 2d geometric processing.                                                                                       |
 | track_width          | params['track_width']                                                                 | Float                    | The width of the track, in unit meters.                                                                                                                                                                                                                                                                                                                             |
@@ -309,15 +309,15 @@ To race in the Summit Circuit you must bring your trained AWS DeepRacer RL model
 ## Racing in the Virtual Circuit
 To race in the Virtual Circuit you will have to enter your models into each race, by submitting them via the AWS DeepRacer service in the AWS console. Virtual Circuit races can be seen in the [DeepRacer Virtual Circuit](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards) section in the AWS DeepRacer service.
 
-![VirtualCircuit](img/dcv.png)
+![VirtualCircuit](img/dvc.png)
 
 Scroll down for a list of open races
 
-![VirtualCircuitOpen](img/dcv-ll.png)
+![VirtualCircuitOpen](img/dvc-ll.png)
 
 To see more info on the race, select race information.
 
-![VirtualCircuitInfo](img/dcv-info.png)
+![VirtualCircuitInfo](img/dvc-info.png)
 
 Once you have a trained model, you can  submit it into the current open race. Your model will then be evaluated by the AWS DeepRacer service on the indicated competition track. After your model has been evaluated you will see your standing update if your lap time was better than your prior submission.
 
