@@ -9,7 +9,7 @@ The lab has four goals:
 
 1. familiarize you with the AWS DeepRacer service in the AWS console,
 2. explain the concepts needed to get you started training a model,
-3. explain how you can compete in the DeepRacer League, and
+3. explain how you can compete in the DeepRacer League, both the Virtual Circuit and the Summit Circuit, and
 4. explain how you can improve your model.
 
 The lab is split into three sections:
