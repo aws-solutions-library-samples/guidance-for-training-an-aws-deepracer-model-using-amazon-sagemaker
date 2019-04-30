@@ -329,6 +329,25 @@ Once you have a trained model, you can  submit it into the current open race. Yo
 
 Each race in the Virtual Circuit will have its own new competition track and it won't be possible to directly train on the competition tracks. Instead we will make a track available that will be similar in theme and design to each competition track, but not identical. This ensures that models have to generalize, and can't just be overfitted to the competition track. The fastest racer in each race in the Virtual Circuit will proceed to re:Invent and the top 10 at each race will win AWS DeepRacer cars.
 
+**Tip**: Since the DeepRacer service does not currently support importing models, you could manually import a model. To do this follow these steps:
+1. Download your trained model from your burner account, it will store as <model Name>.tar.gz. This file contains the model.pb file that has your network weights, and the model_metadata.json that has your model's action space. Please make sure you store your reward function and take note of the track you trained this model on.
+
+2. To import this model into your account, log into your account and go to AWS DeepRacer
+
+3. Start a 10 minute training job, using the same parameters you used in your burner account (track, action space, reward function, and hyperparameters)
+
+4. Once this job is completed, locate the model.tar.gz file associated with this training job
+
+5. Download the model.tar.gz file
+
+6. Unpack the file and replace the model.pb file with the model.pb file from your trained burner account model
+
+7. Repack all contents into model.tar.gz 
+
+8. Go back to the S3 bucket, select the model.tar.gz file in S3, select upload and replace the file in S3 with your new file.
+
+
+
 After each event in the Summit Circuit and in the Virtual Circuit, all racers that took part will receive points based on the time it took them to complete the race. Points will aggregate through the season, and at the end of the seasons the top point getters will be invited to take part at re:Invent. Please refer to the [terms and conditions insert link here](https://aws.amazon.com/deepracer/faqs/#AWS_DeepRacer_League) for more details. 
 
 # Section 3: Model training and improving your model
@@ -386,24 +405,6 @@ The interim models are stored as .pd files in a folder called DeepRacer-SageMake
 ![S3dr](img/s3_aws_deepracer.png)
 
 The AWS DeepRacer service can at the time of writing only reference one final model for each training job. However, should you want to swap out the model trained during the final training iteration, with any model trained in the training iterations running up to the final, you can simple swap out the model.pb file in the final model.tar.gz file. Note that you should not change the other files in the .tar.gz as this may render the model useless. Do this after your model has stopped training, or after you manually stopped training.
-
-**Tip**: Since the DeepRacer service does not currently support importing models, you could manually import a model. To do this follow these steps:
-1. Download your trained model from your burner account, it will store as <model Name>.tar.gz. This file contains the model.pb file that has your network weights, and the model_metadata.json that has your model's action space. Please make sure you store your reward function and take note of the track you trained this model on.
-
-2. To import this model into your account, log into your account and go to AWS DeepRacer
-
-3. Start a 10 minute training job, using the same parameters you used in your burner account (track, action space, reward function, and hyperparameters)
-
-4. Once this job is completed, locate the model.tar.gz file associated with this training job
-
-5. Download the model.tar.gz file
-
-6. Unpack the file and replace the model.pb file with the model.pb file from your trained burner account model
-
-7. Repack all contents into model.tar.gz 
-
-8. Go back to the S3 bucket, select the model.tar.gz file in S3, select upload and replace the file in S3 with your new file.
-
 
 ## 3.2: Evaluating the performance of your model
 
