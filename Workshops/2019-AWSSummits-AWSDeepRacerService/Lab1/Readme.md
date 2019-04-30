@@ -28,9 +28,10 @@ The lab will provide detail on the various components in the AWS DeepRacer servi
 
 
 # Hints
+- Please make sure you save your reward function, and download your trained model from the burner account. You will lose access to the account after the Summit, and the account will be wiped.
 - For those eager to start training a job, our hint would be take your time and familiarize yourself with the concepts first, before starting model training. 
 - Please ask questions as you progress through the lab and feel free to have discussions at your table. 
-- Lastly, when you do start a training job, run it for at least 60 to 90 minutes (on the re:Invent track). It takes 6 minutes to spin up the services needed and your model needs time to explore the track before it will manage to complete a lap.
+- Lastly, when you do start a training job, run it for at least 90 minutes (on the re:Invent track). It takes 6 minutes to spin up the services needed and your model needs time to explore the track before it will manage to complete a lap.
 - If you want to continue learning after the lab, please check out the new course by the AWS Training and Certification team, called [AWS DeepRacer: Driven by Reinforcement Learning](https://www.aws.training/learningobject/wbc?id=32143)
 
 # Section 1: Training your first model
@@ -294,6 +295,9 @@ Please specify 90 minutes and then select **Start training**. If there is an err
 
 Note 25 to 35 minutes of lab time should have elapsed by this point.
 
+Hint: Please make sure you save your reward function, and download your trained model from the burner account. You will lose access to the account after the Summit, and the account will be wiped.
+
+
 # Section 2: Competing in the AWS DeepRacer League
 The [AWS DeepRacer League](https://aws.amazon.com/deepracer/league/) is the world's first global autonomous racing league. The League will take place in 2019 in-person, at various selected locations, and online. Race and you stand to win one of many AWS DeepRacer prizes, or one of 47 paid trips to re:Invent 2019 where you will get to take part in the AWS DeepRacer Knockout Rounds. If you make it through the Knockouts you will get to race in the AWS DeepRacer Championship Cup. [Terms and conditions insert link here]() apply.
 
@@ -329,7 +333,7 @@ After each event in the Summit Circuit and in the Virtual Circuit, all racers th
 
 # Section 3: Model training and improving your model
 
-## Step 1: While your model is training
+## 3.1: While your model is training
 
 After your model has started training you can select it from the listed models. You can then see the how the training is progressing by looking at the total reward per episode graph, and also at the first person view from the car in the simulator. 
 
@@ -365,7 +369,7 @@ You can select your active simulation job from the list and then select the Gaze
 
 ![RoboMaker job details](img/aws_robomaker.png)
 
-This will open a new window showing you the simulation environment. Take care in this environment because any changes you make to it will affect your simulation in real time. Thus if you accidentally drag or rotate the vehicle or the environment, it may negatively affect your training job.
+This will open a new window showing you the simulation environment. **Take care in this environment because any changes you make to it will affect your simulation in real time. Thus if you accidentally drag or rotate the vehicle or the environment, it may negatively affect your training job.**
 
 ![RoboMaker simulator](img/robomaker_simulator.png) 
 
@@ -377,14 +381,31 @@ Amazon S3 will store the final model, that is referenced in the AWS DeepRacer se
 
 ![S3list](img/s3.png)
 
-The final model is stored as a .tar.gz file in a folder called DeepRacer-SageMaker-rlmdl-account number-date
+The final model is stored as model.tar.gz file in a folder called DeepRacer-SageMaker-rlmdl-account number-date in your DeepRacer S3 bucket. This location of this file is stored by the AWS DeepRacer service, so moving this file is not recommended. 
 The interim models are stored as .pd files in a folder called DeepRacer-SageMaker-RoboMaker-comm-account number-date
-
 ![S3dr](img/s3_aws_deepracer.png)
 
 The AWS DeepRacer service can at the time of writing only reference one final model for each training job. However, should you want to swap out the model trained during the final training iteration, with any model trained in the training iterations running up to the final, you can simple swap out the model.pb file in the final model.tar.gz file. Note that you should not change the other files in the .tar.gz as this may render the model useless. Do this after your model has stopped training, or after you manually stopped training.
 
-## Step 2: Evaluating the performance of your model
+**Tip**: Since the DeepRacer service does not currently support importing models, you could manually import a model. To do this follow these steps:
+1. Download your trained model from your burner account, it will store as <model Name>.tar.gz. This file contains the model.pb file that has your network weights, and the model_metadata.json that has your model's action space. Please make sure you store your reward function and take note of the track you trained this model on.
+
+2. To import this model into your account, log into your account and go to AWS DeepRacer
+
+3. Start a 10 minute training job, using the same parameters you used in your burner account (track, action space, reward function, and hyperparameters)
+
+4. Once this job is completed, locate the model.tar.gz file associated with this training job
+
+5. Download the model.tar.gz file
+
+6. Unpack the file and replace the model.pb file with the model.pb file from your trained burner account model
+
+7. Repack all contents into model.tar.gz 
+
+8. Go back to the S3 bucket, select the model.tar.gz file in S3, select upload and replace the file in S3 with your new file.
+
+
+## 3.2: Evaluating the performance of your model
 
 You may not have time in the workshop to do from step 2 onwards. Once your model training is complete you can start model evaluation. From your model details page, where you observed training, select **Start evaluation**. You can now select the track on which you want to evaluate the performance of your model and also the number of laps. Select the re:Invent 2018 track and 5 laps and select Start. 
 
@@ -392,11 +413,11 @@ Once done you should see something as follows.
 
 ![evaluation_done](img/evaluation_done.png)
 
-## Step 3: Race in the AWS DeepRacer League
+## 3.3: Race in the AWS DeepRacer League
 
-If you are happy with your model you can go race in the [Summit Circuit](https://aws.amazon.com/deepracer/summit-circuit/) or in the [Virtual Circuit](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards). You can submit your trained model into the Virtual Circuit's current open race [here](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards).
+If you are happy with your model you can go race in the [Summit Circuit](https://aws.amazon.com/deepracer/summit-circuit/) or right now in the [Virtual Circuit](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards). You can submit your trained model into the Virtual Circuit's current open race [here](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards).
 
-## Step 4: Iterating and improving your model
+## 3.4: Iterating and improving your model
 
 Based on the evaluation of the model you should have a good idea as to whether your model can complete the track reliably, and what the average lap time is. Note that for the Virtual Circuit races you will have to complete a certain number of laps consecutively with your model, and so focus on building a reliable model. The number of laps will be determined race by race.
 
@@ -408,7 +429,7 @@ Hints:
 - Tweak your reward function to incentivize your car to drive faster : you’ll want to specifically modify progress, steps and speed variables.
 - Clone your model to leverage training experience. Please note that you will not be able to change action space once a model is cloned, otherwise the job will fail.
 
-## Step 5: Analyze model performance by inspecting the RoboMaker logs
+## 3.5: Analyze model performance by inspecting the RoboMaker logs
 If you do want to go a step further, you can evaluate the performance of each model that was trained during the training job by inspecting the log file.
 
 To download the log file from CloudWatch you can use the following code with [Amazon CLI](https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html).  
