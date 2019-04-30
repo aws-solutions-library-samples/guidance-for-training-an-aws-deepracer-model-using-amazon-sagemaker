@@ -16,6 +16,11 @@ If you want to learn mode, please also check out a new course by the AWS Trainin
 
 [AWS Developer Documentation](https://docs.aws.amazon.com/deepracer/index.html#lang/en_us) 
 
+## Developer Tools
+
+[Log Analyzer and
+Visualizations](https://github.com/aws-samples/aws-deepracer-workshops/tree/master/log-analysis/)
+
 ## License Summary
 
 This sample code is made available under a modified MIT license. See the LICENSE file.
