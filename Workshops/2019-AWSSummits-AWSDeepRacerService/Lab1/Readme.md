@@ -329,24 +329,7 @@ Once you have a trained model, you can  submit it into the current open race. Yo
 
 Each race in the Virtual Circuit will have its own new competition track and it won't be possible to directly train on the competition tracks. Instead we will make a track available that will be similar in theme and design to each competition track, but not identical. This ensures that models have to generalize, and can't just be overfitted to the competition track. The fastest racer in each race in the Virtual Circuit will proceed to re:Invent and the top 10 at each race will win AWS DeepRacer cars.
 
-**Tip**: Since the DeepRacer service does not currently support importing models, you could manually import a model. To do this follow these steps:
-1. Download your trained model from your burner account, it will store as <model Name>.tar.gz. This file contains the model.pb file that has your network weights, and the model_metadata.json that has your model's action space. Please make sure you store your reward function and take note of the track you trained this model on.
-
-2. To import this model into your account, log into your account and go to AWS DeepRacer
-
-3. Start a 10 minute training job, using the same parameters you used in your burner account (track, action space, reward function, and hyperparameters)
-
-4. Once this job is completed, locate the model.tar.gz file associated with this training job
-
-5. Download the model.tar.gz file
-
-6. Unpack the file and replace the model.pb file with the model.pb file from your trained burner account model
-
-7. Repack all contents into model.tar.gz 
-
-8. Go back to the S3 bucket, select the model.tar.gz file in S3, select upload and replace the file in S3 with your new file.
-
-
+**Tip**: The DeepRacer service does not currently support importing models,  but you can still save your model.tar.gz file, as well as all model training artifacts. The final model is stored as model.tar.gz file in a folder called DeepRacer-SageMaker-rlmdl-account number-date in your DeepRacer S3 bucket. The interim models are stored as .pd files in a folder called DeepRacer-SageMaker-RoboMaker-comm-account number-date
 
 After each event in the Summit Circuit and in the Virtual Circuit, all racers that took part will receive points based on the time it took them to complete the race. Points will aggregate through the season, and at the end of the seasons the top point getters will be invited to take part at re:Invent. Please refer to the [terms and conditions insert link here](https://aws.amazon.com/deepracer/faqs/#AWS_DeepRacer_League) for more details. 
 
@@ -400,7 +383,7 @@ Amazon S3 will store the final model, that is referenced in the AWS DeepRacer se
 
 ![S3list](img/s3.png)
 
-The final model is stored as model.tar.gz file in a folder called DeepRacer-SageMaker-rlmdl-account number-date in your DeepRacer S3 bucket. This location of this file is stored by the AWS DeepRacer service, so moving this file is not recommended. 
+The final model is stored as model.tar.gz file in a folder called DeepRacer-SageMaker-rlmdl-account number-date in your DeepRacer S3 bucket.  
 The interim models are stored as .pd files in a folder called DeepRacer-SageMaker-RoboMaker-comm-account number-date
 ![S3dr](img/s3_aws_deepracer.png)
 
