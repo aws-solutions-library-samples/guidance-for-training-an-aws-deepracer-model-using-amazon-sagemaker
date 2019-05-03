@@ -113,8 +113,8 @@ Section 2에서 AWS DeepRacer League에 대한 자세한 내용을 제공할 예
 | 변수 이름            | 문법                                                         | 타입                     | 설명                                                         |
 | -------------------- | ------------------------------------------------------------ | ------------------------ | ------------------------------------------------------------ |
 | all_wheels_on_track  | params['all_wheels_on_track']                                | Boolean                  | 경계선을 포함한 도로의 표면으로 정의된 트랙 위에 4바퀴 모두 있는 경우, all_wheels_on_track의 값은 True입니다. 만약, 4바퀴 중 어느 하나라도 트랙을 벗어나면, all_wheels_on_track은 False가 됩니다. 4 개의 바퀴가 모두 트랙에서 벗어나면 자동차는 리셋됩니다. |
-| x                    | params['x']                                                  | Float                    | 자동차의 차축 중심의 x 좌표를 미터로 반환합니다.             |
-| y                    | params['y']                                                  | Float                    | 자동차의 차축 중심의 y 좌표를 미터로 반환합니다.             |
+| x                    | params['x']                                                  | Float                    | 자동차의 앞 차축 중심의 x 좌표를 미터로 반환합니다.          |
+| y                    | params['y']                                                  | Float                    | 자동차의 앞 차축 중심의 y 좌표를 미터로 반환합니다.          |
 | distance_from_center | params['distance_from_center']                               | Float [0, track_width/2] | 트랙 중심으로부터 절대 거리. 트랙의 중심은 모든 waypoint를 연결하는 선에 의해 결정됩니다. |
 | is_left_of_center    | params['is_left_of_center']                                  | Boolean                  | 자동차가 트랙의 중앙선 왼쪽에 있는지를 알려줍니다.           |
 | is_reversed          | params['is_reversed']                                        | Boolean                  | 이 변수는 트랙의 원래 방향으로 주행하면서 학습을 수행하는지, 반대 방향으로 주행하면서 학습을 하는지를 알려줍니다. |
