@@ -246,7 +246,6 @@ Using the above examples you can now proceed to craft your own reward function. 
 - You can use the right-hand rule from 2D gaming to determine on which side of the track you are on.
 - You can scale rewards exponentially, just cap them at 10,000.
 - Keep your action space in mind when using speed and steering_angle in your reward function
-- To keep track of episodes in the logs where your car manages to complete a lap, consider giving a finish bonus (aka reward += 10000) where progress = 100. This is because once the car completes a lap progress will not go beyond 100, but the simulation will continue. The model will keep on training until it reaches the stopping time, but that does not imply the final model is the best model, especially when it comes to racing in the real world. This is a temporary workaround as we will solve.
 
 Once you are done creating your reward function be sure to use the **Validate** button to verify that your code syntax is good before training begins. When you start training this reward function will be stored in a file in your S3, but also make sure you copy and store it somewhere to ensure it is safe.
 
