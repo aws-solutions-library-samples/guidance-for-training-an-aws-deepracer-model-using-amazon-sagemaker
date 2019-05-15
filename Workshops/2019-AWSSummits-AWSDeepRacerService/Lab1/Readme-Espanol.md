@@ -1,4 +1,4 @@
-# Laboratorio 1: ¡Construyamos un modelo AWS DeepRacer RL!
+# Lab 1: ¡Construyamos un modelo AWS DeepRacer RL!
 
 # Notas
 Buscamos continuamente mejorar el servicio AWS DeepRacer para ofrecer una mejor experiencia al cliente. Por lo tanto, consulte siempre el contenido del laboratorio más reciente en GitHub ya que el contenido anterior puede estar desactualizado. Si tiene alguna consulta técnica por favor pregunte a los facilitadores del taller, y para aquellos de ustedes que realizan el laboratorio desde su casa, por favor envíen sus preguntas al [Foro de AWS DeepRacer](https://forums.aws.amazon.com/forum.jspa?forumID=318).
@@ -26,7 +26,8 @@ El laboratorio proporcionará detalles sobre los distintos componentes del servi
 - Asegúrese de guardar su función de recompensa, y descargue su modelo entrenado con la cuenta temporal del taller. Perderá el acceso a esa cuenta después de la cumbre, y la cuenta se borrará.
 - Para aquellos que deseen comenzar a entrenar un modelo directamente, nuestra sugerencia sería tomarse su tiempo y familiarizarse con los conceptos primero, antes de comenzar la construcción de modelos.
 - Por favor, haga preguntas a medida que avanza a través del laboratorio y siéntase libre de tener discusiones en su mesa.
-- Por último, cuando comience un trabajo de entrenamiento, ejecútelo durante al menos 90 minutos (en la pista re:Invent). Se tarda 6 minutos en preparar los servicios necesarios y su modelo necesita tiempo para explorar la pista antes de que pueda completar una vuelta. - Si desea continuar aprendiendo después del laboratorio, consulte el nuevo curso del equipo de formación y certificación de AWS, denominado [AWS DeepRacer: impulsado por el Aprendizaje por Refuerzo](https://www.aws.training/learningobject/wbc?id=32143)
+- Por último, cuando comience un trabajo de entrenamiento, ejecútelo durante al menos 90 minutos (en la pista re:Invent). Se tarda 6 minutos en preparar los servicios necesarios y su modelo necesita tiempo para explorar la pista antes de que pueda completar una vuelta. 
+- Si desea continuar aprendiendo después del laboratorio, consulte el nuevo curso del equipo de formación y certificación de AWS, denominado [AWS DeepRacer: impulsado por el Aprendizaje por Refuerzo](https://www.aws.training/learningobject/wbc?id=32143)
 
 # Sección 1: Construcción de su primer modelo
 ## Paso 1: Inicie sesión en el servicio AWS DeepRacer
@@ -39,6 +40,7 @@ En la página de inicio de AWS DeepRacer, expanda el panel de la izquierda y sel
 Una vez que seleccione Aprendizaje por refuerzo, se mostrará la página de modelos. Esta página muestra una lista de todos los modelos que ha creado y el estado de cada modelo. Si desea crear modelos aquí es donde inicia el proceso. Del mismo modo, desde esta página puede descargar, clonar y eliminar modelos.
 
 ![Model List Page](img/model_list_deepracer.png)
+
 Si no tiene ningún modelo, esta lista estará vacía y puede crear un modelo eligiendo ***Create model***. Una vez creado un modelo, puede utilizar esta página para ver el estado del modelo, por ejemplo, si está en entrenamiento o listo. Un estado de modelo de “Ready” indica que el entrenamiento del modelo se ha completado y, a continuación, puede descargarlo, evaluarlo o enviarlo a una carrera virtual. Puede hacer clic en el nombre del modelo para pasar a la página ***Model details***.
 Para crear su primer modelo, seleccione ***Create model***.
 
@@ -51,7 +53,9 @@ A lo largo de la consola verá <font color=blue>**Info**</font> botones. Cuando 
 Debe comenzar en la parte superior con Detalles del modelo. Aqui puede proporcionar un nombre y una descripcion para su modelo. Si es la primera vez que utiliza el servicio, debe seleccionar el botón **Create Resources** . Esto creará las funciones de IAM que AWS DeepRacer necesita para llamar a otros servicios de AWS en su nombre, la VPC utilizada durante el entrenamiento y evaluación, la función lambda de AWS DeepRacer utilizada para validar la función de recompensa de Python 3 y el repositorio de AWS DeepRacer S3 donde se almacenarán los artefactos del modelo. Si ves un error en esta sección, por favor háganoslo saber.
 
 ![Model Details](img/model_details.png)
+
 Por favor, ingrese un nombre y una descripción para su modelo y continúe con la siguiente sección.
+
 ## 3.2 Simulación de entorno
 Como se detalla en el taller, la formación de nuestro modelo RL se lleva a cabo en una pista de carreras simulada en nuestro simulador, y en esta sección usted elegirá la pista en la que entrenará su modelo. AWS RoboMaker se utiliza para crear el entorno de simulación.
 Al entrenar a un modelo, tenga en cuenta la pista en la que desea correr. Entrena en la pista más parecida a la pista final en la que quieres correr. Aunque esto no es necesario y no garantiza un buen modelo, maximizará las probabilidades de que su modelo obtenga su mejor rendimiento en la pista de carreras. Además, si entrenas en una vía recta, no esperes que su modelo aprenda a girar.
@@ -59,9 +63,11 @@ Le proporcionaremos más detalles sobre la AWS DeepRacer League en la sección 2
 - Para el [Circuito de la Cumbre](https://aws.amazon.com/deepracer/summit-circuit/), la pista de carreras en vivo será la pista re:Invent 2018, así que entrena a su modelo en la pista re:Invent si tienes la intención de competir en cualquiera de las cumbres de AWS seleccionadas.
 - Cada carrera del circuito virtual tendrá su propia nueva pista de competición y no será posible entrenar directamente en las pistas de competición. En su lugar tendremos disponible una pista que será similar en tema y diseño a cada pista de competición, pero no idéntica. Esto garantiza que los modelos tengan que generalizarse y que no se puedan adaptar a la pista de competición.
 En el laboratorio de hoy queremos prepararte para competir en la Cumbre, si el tiempo lo permite, así que selecciona la pista re:Invent 2018 y desplázate a la siguiente sección.
+
 ## 3.3 Espacio de acción
 En esta sección se puede configurar el espacio de acción que su modelo seleccionará durante el entrenamiento, y también una vez que el modelo haya sido entrenado. Una acción es una combinación de velocidad y ángulo de dirección. En AWS DeepRacer estamos utilizando un espacio de acción discreto en lugar de un espacio de acción continuo. Para construir este espacio de acción discreto, especificará la velocidad máxima, la granularidad de la velocidad, el ángulo máximo de dirección y la granularidad de la dirección.
 ![action space](img/Action_Space.png)
+
 Entradas
 - Ángulo máximo de dirección es el ángulo máximo en grados que las ruedas delanteras del coche pueden girar, a la izquierda y a la derecha. Hay un límite en cuanto a la distancia en que las ruedas pueden girar, por lo que el ángulo máximo de giro es de 30 grados.
 - Los niveles de dirección se refieren al número de intervalos de dirección entre el ángulo máximo de dirección en cada lado. Por lo tanto, si su ángulo de dirección máximo es de 30 grados, entonces + 30 grados está a la izquierda y -30 grados a la derecha. Con una granularidad de dirección de 5, los siguientes ángulos de dirección, de izquierda a derecha, estarán en el espacio de acción: 30 grados, 15 grados, 0 grados, -15 grados y -30 grados. Los ángulos de dirección son siempre simétricos alrededor de 0 grados.
@@ -97,9 +103,6 @@ La siguiente tabla contiene las variables que puede utilizar en su función de r
 | track_width          | params['track_width']                                                                 | Float                    | El ancho de la pista, en unidades medidores.                                                                                                                                                                                                                                                                                                                             |
 | waypoints            | params['waypoints'] for the full list or params['waypoints'][i] for the i-th waypoint | List                     | Lista ordenada de waypoints, que se extienden alrededor de la pista en el centro de la pista, siendo cada elemento de la lista la coordenada (x, y) del waypoint. La lista comienza en cero.                                                                                                                                                                            |
 | closest_waypoints    | params['closest_waypoints'][0] or params['closest_waypoints'][1]                      | Integer                  | Devuelve una lista que contiene el índice de waypoint anterior más cercano y el índice waypoint siguiente. params ['closest_waypoints'][0] devuelve el índice de waypoint anterior más cercano y params ['closest_waypoints'][1] devuelve el índice de waypoint siguiente más cercano.                                                                                                         |
-|                      |                                                                                       |                          |                                                                                                                                                                                                                                                                                                                                                                     |
-|                      |                                                                                       |                          |                                                                                                                                                                                                                                                                                                                                                                     |
-|                      |                                                                                       |                          |                                                                                                                                                                                                                                                                                                                                                                     |
 
 Aquí hay una explicación visual de algunos de los parámetros de la función de recompensa.
 
@@ -107,7 +110,6 @@ Aquí hay una explicación visual de algunos de los parámetros de la función d
 
 Aquí está una visualización de los waypoints utilizados para la pista re:Invent. Solo tendrás acceso a los puntos de referencia de la línea central en su función de recompensa. Tenga en cuenta también que puede recrear este gráfico simplemente imprimiendo la lista de waypoints en su función de recompensa y luego trazándolos. Cuando utilice una función de impresión en su función de recompensa, la salida se colocará en los registros de AWS Robomaker. Puedes hacer esto para cualquier pista en la que puedas entrenar. Discutiremos los registros más tarde.
 ![waypoints](img/reinventtrack_waypoints.png)
-
 Un método útil para llegar a una función de recompensa, es pensar en el comportamiento que usted piensa que un coche que conduce bien exhibirá. Un ejemplo simple sería recompensar el coche por permanecer en la carretera. Esto se puede hacer estableciendo recompensa = 1, siempre. Esto funcionará en nuestro simulador, porque cuando el coche sale de la pista lo restablecemos, y el coche comienza de nuevo en la pista, así que no tenemos que tener un comportamiento gratificante que nos lleva fuera de la pista. Sin embargo, esta probablemente no sea la mejor función de recompensa, ya que ignora por completo todas las demás variables que se pueden usar para crear una buena función de recompensa.
 
 A continuación ofrecemos algunos ejemplos de funciones de recompensa.
@@ -200,6 +202,7 @@ Usando los ejemplos anteriores, ahora puede proceder a crear su propia función 
 Una vez que haya terminado de crear su función de recompensa, asegúrese de usar el botón **Validate** para verificar que la sintaxis del código esta correcta antes de que comience el entrenamiento. Cuando comiences a entrenar, esta función de recompensa se almacenará en un archivo de S3, pero también asegúrate de copiarla y almacenarla en algún lugar para que sea segura.
 
 Aquí está mi función de recompensa de ejemplo usando el primer ejemplo anterior.
+
 ![rewardfunction](img/NewReward.png)
 
 Desplácese a la siguiente sección.
@@ -312,7 +315,7 @@ Puede seleccionar el trabajo de simulación activo de la lista y, a continuació
 
 ![RoboMaker job details](img/aws_robomaker.png)
 
-Esto abrirá una nueva ventana que muestra el entorno de simulación. ***Tenga cuidado en este entorno porque cualquier cambio que haga en él afectará a su simulación en tiempo real. Por lo tanto, si arrastra o rota accidentalmente el vehículo o el medio ambiente, puede afectar negativamente a su trabajo de entrenamiento.***
+Esto abrirá una nueva ventana que muestra el entorno de simulación. **Tenga cuidado en este entorno porque cualquier cambio que haga en él afectará a su simulación en tiempo real. Por lo tanto, si arrastra o rota accidentalmente el vehículo o el medio ambiente, puede afectar negativamente a su trabajo de entrenamiento.**
 
 ![RoboMaker simulator](img/robomaker_simulator.png)
 
@@ -333,7 +336,7 @@ Los modelos provisionales se almacenan como archivos .pd en una carpeta llamada 
 En el momento de escribir, el servicio AWS DeepRacer sólo puede hacer referencia a un modelo final para cada trabajo de formación. Sin embargo, si desea intercambiar el modelo entrenado durante la iteración de entrenamiento final, con cualquier modelo entrenado en las iteraciones de entrenamiento corriendo hasta la final, puede simplemente intercambiar el archivo model.pb en el archivo model.tar.gz final. Tenga en cuenta que no debe cambiar los otros archivos en el archivo.tar.gz, ya que esto puede hacer que el modelo sea inútil. Haga esto después de que su modelo haya dejado de entrenar, o después de haber dejado de entrenar manualmente.
 
 ## 3.2: Evaluación del rendimiento de su modelo
-Puede que no tenga tiempo en el taller para hacer desde el paso 2 en adelante. Una vez completado el entrenamiento del modelo, puede comenzar la evaluación del modelo. En la página de detalles del modelo, donde ha observado el entrenamiento seleccione ***Start evaluation***. Ahora puede seleccionar la pista en la que desea evaluar el rendimiento de su modelo y también el número de vueltas. Seleccione la pista re: Invent 2018 y 5 vueltas y seleccione Inicio.
+Puede que no tenga tiempo en el taller para hacer desde el paso 2 en adelante. Una vez completado el entrenamiento del modelo, puede comenzar la evaluación del modelo. En la página de detalles del modelo, donde ha observado el entrenamiento seleccione **Start evaluation**. Ahora puede seleccionar la pista en la que desea evaluar el rendimiento de su modelo y también el número de vueltas. Seleccione la pista re: Invent 2018 y 5 vueltas y seleccione Inicio.
 
 Una vez hecho usted debe ver algo de la siguiente manera.
 
@@ -355,7 +358,7 @@ Sugerencias:
 ## 3.5: Analice el rendimiento del modelo inspeccionando los registros de Robomaker
 Si desea ir un paso más allá, puede evaluar el rendimiento de cada modelo que fue entrenado durante el trabajo de capacitación inspeccionando el archivo de registro. Para descargar el archivo de registro de CloudWatch, puede utilizar el siguiente código con [Amazon CLI](https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html).
 
-***Descargue el registro de AWS RoboMaker desde CloudWatch***
+**Descargue el registro de AWS RoboMaker desde CloudWatch**
 
 1. [Análisis rápido] Obtener las últimas 10000 líneas del registro
     aws logs get-log-events —log-group-name  "/aws/robomaker/SimulationJobs"  —log-stream-name  "<STREAM_NAME>" —output text —region us-east-1 > deepracer-sim.log
