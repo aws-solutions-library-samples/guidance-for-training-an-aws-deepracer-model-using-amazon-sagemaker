@@ -62,47 +62,47 @@ Throughout the console you will see <font color=blue>**Info**</font> buttons. Wh
 
 
 ## 3.1 Model details
-You should start at the top with Model Details. Here you can name your model and provide a description for your model. If this is the first time you use the service you should select the **Create Resources** button. This will create the IAM roles that AWS DeepRacer needs to call other AWS services on your behalf, the VPC stack used during training and evaluation, the AWS DeepRacer lambda function used to validate your Python 3 reward function, and the AWS DeepRacer S3 bucket where model artifacts will be stored. If you see an error in this section please let us know.
+Model details画面の初めから設定していきます。ここでは、モデルの名前と説明を設定することができます。もしこのサービスを使用するのが初めての場合、**Create Resources**ボタンをクリックします。この操作によってDeepRacerが他のAWSサービスを使用するために必要なIAMロールが作成されます。他のAWSサービスとは、学習と評価で使用するVCPスタック、Python 3の報酬関数を検証するためのAWS DeepRacer lambda関数、モデルアーティファクトを保存するためのAWS DeepRacer S3バケットなどです。この手順でエラーが出た場合はお知らせください。
 
 
 ![Model Details](img/model_details.png)
 
-Please enter a name and description for your model and scroll to the next section.
+モデルの名前と説明を入力し、次のセクションまでスクロールしてください。
 
 
 ## 3.2 Environment simulation
-As detailed in the workshop, training our RL model takes place on a simulated race track in our simulator, and in this section you will choose the track on which you will train your model. AWS RoboMaker is used to spin up the simulation environment.
+ワークショップで詳しく説明されているように、RLモデルのトレーニングはシミュレータの仮想レーストラックで行われます。このセクションでは、モデルをトレーニングするトラックを選択します。 AWS RoboMakerを使用してシミュレーション環境を立ち上げます。
 
-When training a model, keep the track on which you want to race in mind. Train on the track most similar to the final track you intend to race on. While this isn't required and doesn't guarantee a good model, it will maximize the odds that your model will get its best performance on the race track. Furthermore, if you train on a straight track, don't expect your model to learn how to turn.
+モデルのトレーニングを行うときは、レースしたいトラックを想定し、参加する予定の最終トラックに最も似ているトラックでトレーニングしてください。これは必須というではありませんし、また、良いモデルを保証するものでもありませんが、レースで最高のパフォーマンスを発揮する可能性を最大限に高めます。さらに、直線のトラックでトレーニングする場合は、曲がり方を学ばせることは期待できません。
 
-We will provide more details on the AWS DeepRacer League in Section 2, but here are things to keep in mind when selecting a track to train on if you intent to race in the League.
+AWS DeepRacerリーグの詳細はセクション2で説明します。このセクションでは、リーグのレースに参加する場合に、トレーニングするレースの選択にあたって注意すべきことを説明します。
 
-- For the [Summit Circuit](https://aws.amazon.com/deepracer/summit-circuit/), the live race track will be the re:Invent 2018 track, so train your model on the re:Invent track if you intend to race at any of the selected AWS Summits. 
-- Each race in the Virtual Circuit will have its own new competition track and it won't be possible to directly train on the competition tracks. Instead we will make a track available that will be similar in theme and design to each competition track, but not identical. This ensures that models have to generalize, and can't just be over fitted to the competition track. 
+- [Summit Circuit](https://aws.amazon.com/deepracer/summit-circuit/)では、ライブレーストラックはre:Invent 2018トラックです。そのため、AWS Summitのレースに参加したい場合はre:Inventトラックでモデルをトレーニングしてください。
+- 仮想サーキットのそれぞれのレースには独自の競技トラックがありますが、競技トラックで直接トレーニングすることはできません。その代わりに、全く同じではありませんが、テーマやデザインが似たトラックをご利用いただくことが可能です。これによりモデルが一般化され、競技トラックに過剰適合することがなくなります。
 
-For today's lab we want to get you ready to race at the Summit, time permitting, so please select the re:Invent 2018 track and scroll to the next section.
+本日のラボではSummitでのレースの準備をしていただきたいと思います。re:Invent 2018トラックを選択して次のセクションまで画面をスクロールしてください。
 
 
 ## 3.3 Action space
-In this section you get to configure the action space that your model will select from during training, and also once the model has been trained. An action is a combination of speed and steering angle. In AWS DeepRacer we are using a discrete action space as opposed to a continuous action space. To build this discrete action space you will specify the maximum speed, the speed granularity, the maximum steering angle, and the steering granularity.
+このセクションでは、トレーニング中や、トレーニング済みのモデルから選択したアクションスペースを設定します。アクションとは、速度とステアリング角度の組み合わせです。AWS DeepRacerでは、連続アクションスペースとは反対に離散アクションスペースを使用しています。離散アクションスペースをビルドするには、Maximum speed、Speed levels、Maximum steering angle、Steering levelsを設定する必要があります。
 
 ![action space](img/Action_Space.png)
 
-Inputs
+パラメーターの説明
 
-- Maximum steering angle is the maximum angle in degrees that the front wheels of the car can turn, to the left and to the right. There is a limit as to how far the wheels can turn and so the maximum turning angle is 30 degrees.
-- Steering levels refers to the number of steering intervals between the maximum steering angle on either side.  Thus if your maximum steering angle is 30 degrees, then +30 degrees is to the left and -30 degrees is to the right. With a steering granularity of 5, the following steering angles, from left to right, will be in the action space: 30 degrees, 15 degrees, 0 degrees, -15 degrees, and -30 degrees. Steering angles are always symmetrical around 0 degrees.
-- Maximum speeds refers to the maximum speed the car will drive in the simulator as measured in meters per second. 
-- Speed levels refers to the number of speed levels from the maximum speed (including) to zero (excluding). So if your maximum speed is 3 m/s and your speed granularity is 3, then your action space will contain speed settings of 1 m/s, 2m/s, and 3 m/s. Simply put 3m/s divide 3 = 1m/s, so go from 0m/s to 3m/s in increments of 1m/s. 0m/s is not included in the action space.
+- Maximum steering angleは、車が曲がる際のフロントホイールの左右それぞれの最大角度です。このパラメーターはどれくらいホイールを回転させるかの上限を決めるもので、最大値は30度です。
+- Steering levelsは、左右それぞれの最大ステアリング角度の分割数です。Maximum steering angleを30度に設定した場合、左側に+30度、右側に-30度傾けることができます。そのときSteering levelsに5を設定すると、ステアリング角は左から右に向かって、30度，15度、0度、-15度、-30度の5分割になります。ステアリング角は0度を中心として左右対称です。
+- Maximum speedは、車がシミュレータ内を走行する最高速度です。
+- Speed levelsは、0より大きく設定した最高速度以下の範囲の分割数です。Speed levelsに3、Maximum speedに3を設定した場合、アクションスペースでの速度は1 m/s、2 m/s、3 m/sが使用可能です。これは単純に3 m/s÷3＝1 m/sの計算をし、0 m/sから3 m/sの間を1 m/sずつ増加させていることを意味します。なお、0 m/sはアクションスペースに含まれません。
 
-Based on the above example the final action space will include 15 discrete actions (3 speeds x 5 steering angles), that should be listed in the AWS DeepRacer service. If you haven't done so please configure your action space. Feel free to use what you want to use. Larger action spaces may take a bit longer to train.
+上記の例の場合、最終アクションスペースには15個の個別のアクション（速度が3種類 x ステアリング角が5種類）となります。この情報はAWS DeepRacerサービスに表示されるはずです。もしまだ設定されていない場合、アクションスペースを設定してください。お好きな設定をしていただいて構いません。なお、アクションスペースが大きくなるとトレーニングに少し時間がかかるかもしれません。
 
-Hints
+ヒント
 
-- Your model will not perform an action that is not in the action space. Similarly, if your model is trained on a track that that never required the use of this action, for example turning won't be incentivized on a straight track, the model won't know how to use this action as it won't be incentivized to turn. Thus as you start thinking about building a robust model make sure you keep the action space and training track in mind.  
-- Specifying a fast speed or a wide steering angle is great, but you still need to think about your reward function and whether it makes sense to drive full-speed into a turn, or exhibit zig-zag behavior on a straight section of the track.
-- Our experiments have shown that models with a faster maximum speed take longer to converge than those with a slower maximum speed.
-- For real world racing you will have to play with the speed in the webserver user interface of AWS DeepRacer to make sure your car is not driving faster than what it learned in the simulator.
+- モデルはアクションスペースに無いアクションをしません。同様に、必要ないアクションがあるトラック（カーブを曲がる必要が無い直線トラックなど）でモデルをトレーニングした場合、カーブを曲がる必要が無いためモデルはそのアクションの使い方がわかりません。つまりロバストなモデルを作りたい場合は、アクションスペースとトレーニング用トラックに注意する必要があります。
+- 速い速度や広いステアリング角を設定するのは良いことですが、報酬関数やフルスピードでカーブに突っ込んだり直線でジグザグ走行しないかについて考慮する必要があります。
+- 我々の実験では、最高速度が早いモデルは、遅いモデルよりも収束に時間がかかりました。
+- 実際のレースにあたっては、AWS DeepRacerのWebサーバーユーザーインターフェースで実行して、シミュレータよりも車が速く走らないことを確認する必要があります。
 
 
 ## 3.4 Reward function
