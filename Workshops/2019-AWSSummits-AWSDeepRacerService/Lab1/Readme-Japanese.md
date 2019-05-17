@@ -105,49 +105,49 @@ Hints
 - For real world racing you will have to play with the speed in the webserver user interface of AWS DeepRacer to make sure your car is not driving faster than what it learned in the simulator.
 
 
-## 3.4 Reward function
-In reinforcement learning, the reward function plays a **critical** role in training your models. The reward function is used to incentivize the driving behavior you want the agent to exhibit when using your trained RL model to make driving decisions. 
+## 3.4 報酬関数
+強化学習において、報酬関数はモデルをトレーニングする上で**非常に重要な**役割をもっています。報酬関数は、トレーニングモデルが行動決定を行う際にとってほしい行動に報酬を与えるために使われます。
 
-The reward function evaluates the quality of an action's outcome, and rewards the action accordingly. In practice the reward is calculated during training after each action is taken, and forms a key part of the experience (recall we spoke about state, action, next state, reward) used to train the model. You can build the reward function logic using a number of variables that are exposed by the simulator. These variables represent measurements of the car, such as steering angle and speed, the car in relation to the racetrack, such as (x, Y) coordinates, and the racetrack, such as waypoints. You can use these measurements to build your reward function logic in Python 3 syntax.
+報酬関数は、ある行動から得られる結果を評価し、その行動に報酬を与えます。実際には、報酬はトレーニング中、各行動が取られた後に計算され、経験という形（ステート、アクション、次のステート、報酬）でモデルのトレーニングに使われます。報酬関数のロジックはシミュレータによって提供される変数によって構築することができます。これらの変数は車からの測定値を表しており、例えば、ステアリング角度、スピード、レーストラック上での(X, Y)座標や経路情報となります。これらの測定値を使い、独自の報酬関数ロジックをPython 3シンタックスを利用して実装することができます。
 
-The following table contains the variables you can use in your reward function. Note these are updated from time to time as our engineers and scientists find better ways of doing things, so adjust your previous reward functions accordingly. At the time of the Singapore Summit (10 April 2019) these variables and descriptions are correct in the AWS DeepRacer service in the AWS console. Always use the latest descriptions in the AWS DeepRacer service. Note, if you use the SageMaker RL notebook, you will have to look at the syntax used in the notebook itself.
+次のテーブルは、報酬関数で利用できる変数を表しています。これらの変数は、エンジニアやサイエンティストがよりよい方法を見つけるたびにアップデートされるため、適時作った報酬関数を調整するよう注意してください。Singapore Summit (2019年4月10日)時点での変数名・説明はAWSコンソールと同じです。AWS DeepRacer サービス内の最新の情報を常に使うようにしてください。SageMaker RL ノートブックを利用される場合は、ノートブック自体のシンタックスを確認するよう注意してください。
 
 
-| Variable Name        | Syntax                                                                                | Type                     | Description                                                                                                                                                                                                                                                                                                                                                         |
+| 変数名        | シンタックス                                                                                | 型                     | 説明                                                                                                                                                                                                                                                                                                                                                         |
 |----------------------|---------------------------------------------------------------------------------------|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| all_wheels_on_track  | params['all_wheels_on_track']                                                         | Boolean                  | If all of the four wheels is on the track, where track is defined as the road surface including the border lines, then all_wheels_on_track is True. If any of the four wheels is off the track, then all_wheels_on_track is False. Note if all four wheels are off the track, the car will be reset.                                                                             |
-| x                    | params['x']                                                                           | Float                    | Returns the x coordinate of the center of the front axle of the car, in unit meters.                                                                                                                                                                                                                                                                                 |
-| y                    | params['y']                                                                           | Float                    | Returns the y coordinate of the center of the front axle of the car, in unit meters.                                                                                                                                                                                                                                                                                 |
-| distance_from_center | params['distance_from_center']                                                        | Float [0, track_width/2] | Absolute distance from the center of the track. Center of the track is determined by the line that links all center waypoints.                                                                                                                                                                                                                                      |
-| is_left_of_center    | params['is_left_of_center']                                                           | Boolean                  | A variable that indicates if the car is to the left of the center of the track.                                                                                                                                                                                                                                                                                     |
-| is_reversed          | params['is_reversed']                                                                 | Boolean                  | A variable indicating whether the car is training in the original direction of the track, or the reverse direction of the track.                                                                                                                                                                                                                                    |
-| heading              | params['heading']                                                                     | Float (-180,180]           | Returns the heading the car is facing in degrees. When the car faces the direction of the x-axis increasing (and y constant), then it will return 0. When the car faces the direction of the y-axis increasing (with x constant), then it will return 90. When the car faces the direction of the y-axis decreasing (with x constant), then it will return -90. |
-| progress             | params['progress']                                                                    | Float [0,100]            | Percentage of the track complete. Progress of 100 indicates the lap is completed.                                                                                                                                                                                                                                                                                   |
-| steps                | params['steps']                                                                       | Integer [0,inf]                 | Number of steps completed. One step is one (state, action, next state, reward tuple).                                                                                                                                                                                                                                                                               |
-| speed                | params['speed']                                                                       | Float                    | The desired speed of the car in meters per second. This should tie back to the selected action space.                                                                                                                                                                                                                                                               |
-| steering_angle       | params['steering_angle']                                                              | Float                    | The desired steering_angle of the car in degrees. This should tie back to the selected action space. Note that + angles indicate going left, and negative angles indicate going right. This is aligned with 2d geometric processing.                                                                                       |
-| track_width          | params['track_width']                                                                 | Float                    | The width of the track, in unit meters.                                                                                                                                                                                                                                                                                                                             |
-| waypoints            | params['waypoints'] for the full list or params['waypoints'][i] for the i-th waypoint | List                     | Ordered list of waypoints, that are spread around the track in the center of the track, with each item in the list being the (x, y) coordinate of the waypoint. The list starts at zero.                                                                                                                                                                            |
-| closest_waypoints    | params['closest_waypoints'][0] or params['closest_waypoints'][1]                      | Integer                  | Returns a list containing the nearest previous waypoint index, and the nearest next waypoint index. params['closest_waypoints'][0] returns the nearest previous waypoint index and params['closest_waypoints'][1] returns the nearest next waypoint index.                                                                                                          |
+| all_wheels_on_track  | params['all_wheels_on_track']                                                         | Boolean                  | 4輪全てがトラック（走行路または線）上にある場合、all_wheels_on_trackはTrueとなります。1輪でもトラックの外にある場合、all_wheels_on_trackはFalseとなります。                                                                             |
+| x                    | params['x']                                                                           | Float                    | 車の前車軸の中心のX座標をメートル単位で返します。                                                                                                                                                                                                                                                                                |
+| y                    | params['y']                                                                           | Float                    | 車の前車軸の中心のY座標をメートル単位で返します。                                                                                                                                                                                                                                                                                 |
+| distance_from_center | params['distance_from_center']                                                        | Float [0, track_width/2] | トラックの中心からの絶対距離。トラックの中心は全てのwaypointsの中心が繋げられた線により定義されます。                                                                                                                                                                                                                                      |
+| is_left_of_center    | params['is_left_of_center']                                                           | Boolean                  | 車がトラックの中心から左側に位置するかどうかを示します。                                                                                                                                                                                                                                                                                     |
+| is_reversed          | params['is_reversed']                                                                 | Boolean                  | 車がトラックの順方向でトレーニングしているのか、逆方向でトレーニングしているのか。                                                                                                                                                                                                                                    |
+| heading              | params['heading']                                                                     | Float (-180,180]           | 車の先頭の向いている角度を示します。X軸が増加する方向（Y軸は固定）に向いている場合、0を返します。Y軸が増加する方向（X軸は固定）の場合、90を返します。Y軸が減少する方向（X軸は固定）の場合、-90を返します。 |
+| progress             | params['progress']                                                                    | Float [0,100]            | 完了したトラックの割合をパーセンテージで示します。100はトラックの完了を示します。                                                                                                                                                                                                                                                                                   |
+| steps                | params['steps']                                                                       | Integer [0,inf]                 | 完了したステップを返します。 1ステップは1つのstate, action, next state, rewardのセットを示します。                                                                                                                                                                                                                                                                               |
+| speed                | params['speed']                                                                       | Float                    | 期待する車のスピードがメートル/秒で返されます。これは選択されたアクションに結び付けられます。                                                                                                                                                                                                                                                               |
+| steering_angle       | params['steering_angle']                                                              | Float                    | 度単位で表される、ステアリングの角度。定義したAction Spaceに紐づきます。※ 正の値は左向きを表し、負の値は右向きを表します。これは2次元平面上で処理されます。                                                                                       |
+| track_width          | params['track_width']                                                                 | Float                    | トラックの幅を表します                                                                                                                                                                                                                                                                                                                             |
+| waypoints            | params['waypoints'] for the full list or params['waypoints'][i] for the i-th waypoint | List                     | トラックの中心の順序付きリスト。各要素は(x, y)軸を持ち、リストのインデックスは0から始まります。                                                                                                                                                                            |
+| closest_waypoints    | params['closest_waypoints'][0] or params['closest_waypoints'][1]                      | Integer                  | 車の現在地から最も近いwaypointのインデックス。params['closest_waypoints'][0]は後方のインデックスを、params['closest_waypoints'][1]は前方のインデックスを示します。                                                                                                          |
 |                      |                                                                                       |                          |                                                                                                                                                                                                                                                                                                                                                                     |
 |                      |                                                                                       |                          |                                                                                                                                                                                                                                                                                                                                                                     |
 |                      |                                                                                       |                          |                                                                                                                                                                                                                                                                                                                                                                     |
 
 
-Here is a visual explanation of some of the reward function parameters.
+以下は報酬関数に利用できるいくつかのパラメータを図示したものです。
 
 ![rewardparams](img/reward_function_parameters_illustration.png)
 
-Here is a visualization of the waypoints used for the re:Invent track. You will only have access to the centerline waypoints in your reward function. Note also that you can recreate this graph by just printing the list of waypoints in your reward function and then plotting them. When you use a print function in your reward function, the output will be placed in the AWS RoboMaker logs. You can do this for any track you can train on. We will discuss logs later.
+これはre:Inventトラックで使われた、waypointsを可視化した画像です。報酬関数の中では、waypointsの中心線のみアクセスすることができます。このグラフは、報酬関数内でwaypointsのリストを出力し、プロットすることで自身で作ることができます。print関数を報酬関数内で利用する場合、出力はAWS RoboMaker logsに置かれます。どのトラックにおいても行うことができます。詳細は後の方に記します。
 
 ![waypoints](img/reinventtrack_waypoints.png)
 
-A useful method to come up with a reward function, is to think about the behavior you think a car that drives well will exhibit. A simple example would be to reward the car for staying on the road. This can be done by setting reward = 1, always. This will work in our simulator, because when the car goes off the track we reset it, and the car starts on the track again so we don't have to fear rewarding behavior that leads off the track. However, this is probably not the best reward function, because it completely ignores all other variables that can be used to craft a good reward function.
+報酬関数を考える上で役立つ方法は、車を上手に走らせるにはあなたならどうするのかを考えることです。簡単な例は、路上に留まり続ける車に対して報酬を与えるものです。これはreward = 1とすることで行うことができます。DeepRacerのシミュレーター上では、車がトラックの外に出た場合にはリセットし、トラックを再スタートするため、トラックを外れる行動に対して報酬を考える必要はありません。しかし、この報酬関数は、関数内部で利用できる他の全ての変数を全く利用していないため、おそらく最も優れた報酬関数とは言えません。
 
-Below we provide a few reward function examples. 
+以下にいくつかの報酬関数の例を示します。
 
-**Example 1**:Basic reward function that promotes centerline following.
-Here we first create three bands around the track, using the three markers, and then proceed to reward the car more for driving in the narrow band as opposed to the medium or the wide band. Also note the differences in the size of the reward. We provide a reward of 1 for staying in the narrow band, 0.5 for staying in the medium band, and 0.1 for staying in the wide band. If we decrease the reward for the narrow band, or increase the reward for the medium band, we are essentially incentivizing the car to be use a larger portion of the track surface. This could come in handy, especially when there are sharp corners.
+**Example 1**:中心線に沿った動きに報酬を与える基本的な報酬関数
+ここでは、3つのマーカーによって、3つの走行帯をトラックの周りに作ります。そして、狭い走行帯を走る車により高い報酬を与えます。報酬の大きさには違いがあり、狭い走行帯で走るものには、1を、真ん中の走行帯で走るものには0.5を、一番広い走行帯を走るものには0.1を与えます。もし、狭い走行帯の報酬を減らすか、真ん中の走行帯の報酬を増やすと、トラックの走行面を広く使うように報酬を与える形になります。これは、特に鋭いカーブに有効です。
 
 
 	def reward_function(params):
@@ -172,9 +172,9 @@ Here we first create three bands around the track, using the three markers, and 
 		
 		return float(reward)
 
-Hint: Don't provide rewards equal to zero. The specific optimizer that we are using struggles when the reward given is zero. As such we initialize the reward with a small value. 
+ヒント: 0に等しい報酬を与えないでください。報酬を小さな値で初期化しているため、オプティマイザーは報酬に0を与えられると混乱します。 
 
-**Example 2**:Advanced reward function that penalizes excessive steering and promotes centerline following.
+**Example 2**:極端なステアリングにペナルティーを与え、中心線に沿った動きに報酬を与える高度な報酬関数
 
 
 	def reward_function(params):
@@ -207,7 +207,7 @@ Hint: Don't provide rewards equal to zero. The specific optimizer that we are us
 		return float(reward)
 		
 
-**Example 3**:Advanced reward function that penalizes going slow and promotes centerline following.
+**Example 3**:速度を落とすのにペナルティーを与え、中心線に沿った動きに報酬を与える高度な報酬関数
 
 
 	def reward_function(params):
@@ -240,21 +240,21 @@ Hint: Don't provide rewards equal to zero. The specific optimizer that we are us
 
 		return float(reward)
 
-Using the above examples you can now proceed to craft your own reward function. Here are a few other tips:
+これらのサンプルを利用し、自身の報酬関数を作りましょう。以下に他のTipsを示します。
 
-- You can use the waypoints to calculate the direction from one waypoint to the next.
-- You can use the right-hand rule from 2D gaming to determine on which side of the track you are on.
-- You can scale rewards exponentially, just cap them at 10,000.
-- Keep your action space in mind when using speed and steering_angle in your reward function
-- To keep track of episodes in the logs where your car manages to complete a lap, consider giving a finish bonus (aka reward += 10000) where progress = 100. This is because once the car completes a lap progress will not go beyond 100, but the simulation will continue. The model will keep on training until it reaches the stopping time, but that does not imply the final model is the best model, especially when it comes to racing in the real world. This is a temporary workaround as we will solve.
+- waypointsを利用し、あるwaypointと次のwaypointから方向を計算することができます。
+- 2Dゲームにおける右手の法則を利用することで、トラックのどっち側にいるか判断することができます。
+- 指数的に報酬を与えることができますが、最大10,000に制限してください。
+- 報酬関数でspeedとsteering_angleを利用する際は、Action Spaceを覚えておいてください。
+- ログ内で、ラップを完走したepisodeを追跡するには、progress = 100の際に、完走ボーナス(つまりは reard += 10000)を与えることを考慮にいれてください。これは、一度車がラップを完了した後は、progressは100以上にはなりませんが、シミュレーションは続くためです。モデルは終了時間に到達するまでトレーニングを続けますが、特に実際のレースでは、最終モデルがベストなモデルとは言えないためです。これは一時的なワークアラウンドになります。
 
-Once you are done creating your reward function be sure to use the **Validate** button to verify that your code syntax is good before training begins. When you start training this reward function will be stored in a file in your S3, but also make sure you copy and store it somewhere to ensure it is safe.
+報酬関数を作り終えたら、**Validate**ボタンを押し、コードシンタックスが正しいことをモデルのトレーニング前に確認してください。トレーニングを開始すると、報酬関数はファイルとしてS3に保存されまずが、念のためコピーし、他の場所へ保存してください。
 
-Here is my example reward function using the first example above.
+これが、1つめの例を利用した報酬関数の例になります。
 
 ![rewardfunction](img/NewReward.png)
 
-Please scroll to the next section.
+次のセクションにスクロールしてください。
 
 ## 3.5 Algorithm settings
 This section specifies the hyperparameters that will be used by the reinforcement learning algorithm during training. Hyperparameters are used to improve training performance.
