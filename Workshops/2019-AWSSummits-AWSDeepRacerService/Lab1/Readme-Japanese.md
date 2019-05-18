@@ -51,11 +51,11 @@ Reinforcement learning を選ぶと、モデルページにたどり着きます
 
 
 ## Step 3: モデルの作成
-This page gives you the ability to create an RL model for AWS DeepRacer and start training the model. There are a few sections on the page, but before we get to each please scroll all the way down the page and then all the way back up so you get a sense of what is to come. We are going to create a model that can be used by the AWS DeepRacer car to autonomously drive (take action) around a race track. We need to select the specific race track, provide the actions that our model can choose from, provide a reward function that will be used to incentivize our desired driving behavior, and configure the hyperparameters used during training. 
+このページで AWS DeepRacer のための RL モデルを作成し、モデルのトレーニングを開始します。ページ内にいくつかのセクションがありますが、それぞれを見る前に、まずページの一番下までスクロールして全体を眺めて、上まで戻ってきて下さい。これから AWS DeepRacer で使われる、レーストラックを自動運転で走る (アクションをとる) モデルを作成しようとしています。特定のレーストラックを選び、モデルが選択できるアクションを定義し、期待される運転方法を決めるための報酬関数を定義し、トレーニングに用いられるハイパーパラメータを設定します。
 
 
-### <font color=blue>**Info**</font> **Buttons**
-Throughout the console you will see <font color=blue>**Info**</font> buttons. When selected, an information pane will slide onto the screen from the right of the window. Info buttons will not navigate away from the current page, unless you select a link in the information pane. You can close the panes once you are done.
+### <font color=blue>**Info**</font> **ボタン**
+コンソールでの操作を通して <font color=blue>**Info**</font> ボタンが目に入ると思います。これを選択すると右からスクリーンに情報ペーンが現れます。Info ボタンは、Information ペーンのリンクを選択しない限り他のページには遷移しません。完了したらペーンを閉じることができます。
 
 
 ## 3.1 Model details
