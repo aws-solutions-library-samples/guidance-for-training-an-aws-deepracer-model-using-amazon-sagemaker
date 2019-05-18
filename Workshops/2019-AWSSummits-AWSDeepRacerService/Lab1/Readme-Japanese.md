@@ -15,7 +15,7 @@ AWS DeepRacer サービスはより良い顧客体験を提供するため継続
 Lab は3つのセクションに分割されています: 
 
 1. Section 1: はじめのモデルをトレーニングする、
-2. Section 2: AWS DeepRacer リーグで競う、
+2. Section 2: AWS DeepRacer リーグで競う、
 3. Section 3: モデルのトレーニングとモデルの向上。
 
 ゴール1と2は Section 1、ゴール3は Section 2、ゴール4は Section 3 でカバーされます。
