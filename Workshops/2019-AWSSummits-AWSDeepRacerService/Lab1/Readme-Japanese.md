@@ -26,7 +26,7 @@ Lab を完了するのに50分かかります。全てのコンテンツを試�
 
 
 # ヒント
-- 仮アカウントを使っている場合、報酬関数を保存し、学習済みのモデルをダウンロードするようにして下さい。Summit 終了後はアカウントへのアクセスができなくなり、アカウントは削除されます。
+- 仮アカウントを使っている場合、報酬関数を保存し、トレーニング済みのモデルをダウンロードするようにして下さい。Summit 終了後はアカウントへのアクセスができなくなり、アカウントは削除されます。
 - 早くトレーニングジョブを始めたい人も、時間をとって予めコンセプトをよく理解し、それからモデルのトレーニングを始めることをお勧めします。
 - Lab の進捗に従って質問して下さい。テーブルでの議論は自由に行ってください。
 - 最後にトレーニングジョブを始める際、re:Invent トラックでは少なくとも90分はジョブを走らせて下さい。必要なサービスが立ち上がるのに6分かかり、モデルが完走するまでにレーストラックを探索する時間が必要です。
@@ -394,38 +394,37 @@ Once done you should see something as follows.
 
 ![evaluation_done](img/evaluation_done.png)
 
-## 3.3: Race in the AWS DeepRacer League
+## 3.3: AWS DeepRacer リーグでのレース
 
-If you are happy with your model you can go race in the [Summit Circuit](https://aws.amazon.com/deepracer/summit-circuit/) or right now in the [Virtual Circuit](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards). You can submit your trained model into the Virtual Circuit's current open race [here](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards).
+もしモデルに満足したら、[Summit Circuit](https://aws.amazon.com/deepracer/summit-circuit/) のレースか、今なら [Virtual Circuit](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards) に参加できます。トレーニング済みのモデルを [ここ](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards) から仮想サーキットで現在開催中のレースに提出して下さい。
 
-## 3.4: Iterating and improving your model
+## 3.4: モデルの向上と試行錯誤
 
-Based on the evaluation of the model you should have a good idea as to whether your model can complete the track reliably, and what the average lap time is. Note that for the Virtual Circuit races you will have to complete a certain number of laps consecutively with your model, and so focus on building a reliable model. The number of laps will be determined race by race.
+モデルの評価に基づき、トラックを期待通り完走できたかや、平均ラップタイムについて知ることができます。なお、仮想サーキットのレースでは一定の周回数を連続して走りきる必要があるため、信頼性の高いモデルを構築する必要があります。周回数はレース毎に決定されます。
 
-At this point you have to experiment and iterate on your reward function and hyperparameters. It is best to try a few different reward functions based on different driving behavior, and then evaluate them in the simulator to select the best performing one. If you have an AWS DeepRacer you can also test them in the real world.
+現時点では、報酬関数とハイパーパラメータを試行錯誤する必要があります。異なる運転特性に基づいた少数の異なる報酬関数を試し、シミュレータで評価し、一番よいものを選ぶといいでしょう。もし AWS DeepRacer をお持ちであれば、実機でテストすることも可能です。
 
-Hints:
-- Increase training time beyond. If your model can't reliably complete a lap try to extend your model training time.
-- Try modifying action space by increasing max speed to get faster lap times.
-- Tweak your reward function to incentivize your car to drive faster : you’ll want to specifically modify progress, steps and speed variables.
-- Clone your model to leverage training experience. Please note that you will not be able to change action space once a model is cloned, otherwise the job will fail.
+ヒント: 
+- トレーニング時間を長くする。もしモデルが期待通り完走できなければ、トレーニング時間を伸ばしてみて下さい。
+- 最大速度を上げて行動空間を修正し、速いラップタイムを達成する。
+- 報酬関数を微調整し、車がより速く走ることに対してインセンティブを与える。すなわち変数 (progress, steps, speed) を修正する。
+- 過去のトレーニングを活かせるようモデルを複製する。ただし、モデルを複製した場合、行動空間を変更することはできません (変更するとジョブが失敗します)。
 
-## 3.5: Analyze model performance by inspecting the RoboMaker logs
-If you do want to go a step further, you can evaluate the performance of each model that was trained during the training job by inspecting the log file.
+## 3.5: RoboMaker のログを見てモデルのパフォーマンスを分析する
 
-To download the log file from CloudWatch you can use the following code with [Amazon CLI](https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html).  
+さらに一歩進めたい場合、ログファイルを調べることでトレーニングジョブ実行間の各モデルのパフォーマンスを評価することができます。
 
-**Download the RoboMaker log from CloudWatch**
+CloudWatch からログファイルをダウンロードするには、[AWS CLI](https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html) を使って以下のように行います。
 
-
-1. [Quick Analysis] Get last 10000 lines from the log
-
-	aws logs get-log-events --log-group-name  "/aws/robomaker/SimulationJobs"  --log-stream-name  "<STREAM_NAME>" --output text --region us-east-1 > deepracer-sim.log
-
-2. [Export Entire Log] Copy the log from Amazon Cloudwatch to Amazon S3. Follow the link to export all the logs to [Amazon S3](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/S3ExportTasks.html)
-
-You can now analyze the log file using Python Pandas and see which model iterations provided the highest total reward. Furthermore, if you did add a finish bonus, you can see which model iterations were able to finish a lap. These models are good candidates to test in the simulator and in the real world.
+**CloudWatch から RoboMaker ログのダウンロード**
 
 
+1. [Quick Analysis] ログから最新の 10000 を取得
+
+  ```aws logs get-log-events --log-group-name  "/aws/robomaker/SimulationJobs"  --log-stream-name  "<STREAM_NAME>" --output text --region us-east-1 > deepracer-sim.log```
+
+2. [Export Entire Log] Amazon Cloudwatch から Amazon S3 へログをコピー。次のリンクに全てのログを出力方法が記載されています: [Amazon S3](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/S3ExportTasks.html)
+
+Python Pandas を用いてログファイルを分析し、どのモデルが最も高い報酬を得ているかがわかります。さらに、完走ボーナスを加えると、どのモデルがラップを完了できたか知ることができます。これらのモデルはシミュレータでテストし、実世界で走らせるためのいい候補となるでしょう。
 
 
