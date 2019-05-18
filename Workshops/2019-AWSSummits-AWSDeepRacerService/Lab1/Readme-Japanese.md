@@ -402,7 +402,7 @@ Once done you should see something as follows.
 
 モデルの評価に基づき、トラックを期待通り完走できたかや、平均ラップタイムについて知ることができます。なお、仮想サーキットのレースでは一定の周回数を連続して走りきる必要があるため、信頼性の高いモデルを構築する必要があります。周回数はレース毎に決定されます。
 
-現時点では、報酬関数とハイパーパラメータを試行錯誤する必要があります。異なる運転特性に基づいた少数の異なる報酬関数を試し、シミュレーターで評価し、一番よいものを選ぶといいでしょう。もし AWS DeepRacer をお持ちであれば、実機でテストすることも可能です。
+現時点では、報酬関数とハイパーパラメータを試行錯誤する必要があります。異なる運転特性に基づいた少数の異なる報酬関数を試し、シミュレータで評価し、一番よいものを選ぶといいでしょう。もし AWS DeepRacer をお持ちであれば、実機でテストすることも可能です。
 
 ヒント: 
 - トレーニング時間を長くする。もしモデルが期待通り完走できなければ、トレーニング時間を伸ばしてみて下さい。
@@ -410,22 +410,21 @@ Once done you should see something as follows.
 - 報酬関数を微調整し、車がより速く走ることに対してインセンティブを与える。すなわち変数 (progress, steps, speed) を修正する。
 - 過去のトレーニングを活かせるようモデルを複製する。ただし、モデルを複製した場合、行動空間を変更することはできません (変更するとジョブが失敗します)。
 
-## 3.5: Analyze model performance by inspecting the RoboMaker logs
-If you do want to go a step further, you can evaluate the performance of each model that was trained during the training job by inspecting the log file.
+## 3.5: RoboMaker のログを見てモデルのパフォーマンスを分析する
 
-To download the log file from CloudWatch you can use the following code with [Amazon CLI](https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html).  
+さらに一歩進めたい場合、ログファイルを調べることでトレーニングジョブ実行間の各モデルのパフォーマンスを評価することができます。
 
-**Download the RoboMaker log from CloudWatch**
+CloudWatch からログファイルをダウンロードするには、[AWS CLI](https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html) を使って以下のように行います。
 
-
-1. [Quick Analysis] Get last 10000 lines from the log
-
-	aws logs get-log-events --log-group-name  "/aws/robomaker/SimulationJobs"  --log-stream-name  "<STREAM_NAME>" --output text --region us-east-1 > deepracer-sim.log
-
-2. [Export Entire Log] Copy the log from Amazon Cloudwatch to Amazon S3. Follow the link to export all the logs to [Amazon S3](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/S3ExportTasks.html)
-
-You can now analyze the log file using Python Pandas and see which model iterations provided the highest total reward. Furthermore, if you did add a finish bonus, you can see which model iterations were able to finish a lap. These models are good candidates to test in the simulator and in the real world.
+**CloudWatch から RoboMaker ログのダウンロード**
 
 
+1. [Quick Analysis] ログから最新の 10000 を取得
+
+  ```aws logs get-log-events --log-group-name  "/aws/robomaker/SimulationJobs"  --log-stream-name  "<STREAM_NAME>" --output text --region us-east-1 > deepracer-sim.log```
+
+2. [Export Entire Log] Amazon Cloudwatch から Amazon S3 へログをコピー。次のリンクに全てのログを出力方法が記載されています: [Amazon S3](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/S3ExportTasks.html)
+
+Python Pandas を用いてログファイルを分析し、どのモデルが最も高い報酬を得ているかがわかります。さらに、完走ボーナスを加えると、どのモデルがラップを完了できたか知ることができます。これらのモデルはシミュレータでテストし、実世界で走らせるためのいい候補となるでしょう。
 
 
