@@ -25,33 +25,32 @@ Lab は3つのセクションに分割されています:
 Lab を完了するのに50分かかります。全てのコンテンツを試し、サービス概観し、はじめの強化学習 (reinforcement learning; RL) モデルをトレーニングするのに十分な時間です。Section 1 は約25-30分、Section 2 は約5分、Section 3 はワークショップの時間よりかかると思いますが、家で試せるようになっています。Lab では AWS マネージメントコンソールで AWS DeepRacer の様々な構成要素についての詳細を紹介するので、全てを試してみることができます。Section 1 の最後でモデルのトレーニングを始めます。
 
 
-# Hints
-- Please make sure you save your reward function, and download your trained model from the burner account. You will lose access to the account after the Summit, and the account will be wiped.
-- For those eager to start training a job, our hint would be take your time and familiarize yourself with the concepts first, before starting model training. 
-- Please ask questions as you progress through the lab and feel free to have discussions at your table. 
-- Lastly, when you do start a training job, run it for at least 90 minutes (on the re:Invent track). It takes 6 minutes to spin up the services needed and your model needs time to explore the track before it will manage to complete a lap.
-- If you want to continue learning after the lab, please check out the new course by the AWS Training and Certification team, called [AWS DeepRacer: Driven by Reinforcement Learning](https://www.aws.training/learningobject/wbc?id=32143)
+# ヒント
+- 仮アカウントを使っている場合、報酬関数を保存し、学習済みのモデルをダウンロードするようにして下さい。Summit 終了後はアカウントへのアクセスができなくなり、アカウントは削除されます。
+- 早くトレーニングジョブを始めたい人も、時間をとって予めコンセプトをよく理解し、それからモデルのトレーニングを始めることをお勧めします。
+- Lab の進捗に従って質問して下さい。テーブルでの議論は自由に行ってください。
+- 最後にトレーニングジョブを始める際、re:Invent トラックでは少なくとも90分はジョブを走らせて下さい。必要なサービスが立ち上がるのに6分かかり、モデルが完走するまでにレーストラックを探索する時間が必要です。
+- もし Lab が終わっても学習を継続したい場合は、AWS トレーニングおよび認定チームによって提供される [AWS DeepRacer: Driven by Reinforcement Learning](https://www.aws.training/learningobject/wbc?id=32143) をご確認下さい。
 
-# Section 1: Training your first model
-## Step 1: Login to the AWS DeepRacer service
-Log into the [AWS Console](https://signin.aws.amazon.com/signin?redirect_uri=https%3A%2F%2Fconsole.aws.amazon.com%2Fconsole%2Fhome%3Fnc2%3Dh_ct%26src%3Dheader-signin%26state%3DhashArgs%2523%26isauthcode%3Dtrue&client_id=arn%3Aaws%3Aiam%3A%3A015428540659%3Auser%2Fhomepage&forceMobileApp=0) using the account details provided.
+# Section 1: はじめのモデルをトレーニングする
+## Step 1: AWS DeepRacer サービスにログインする
+提供されたアカウント情報を用いて [AWS Console](https://signin.aws.amazon.com/signin?redirect_uri=https%3A%2F%2Fconsole.aws.amazon.com%2Fconsole%2Fhome%3Fnc2%3Dh_ct%26src%3Dheader-signin%26state%3DhashArgs%2523%26isauthcode%3Dtrue&client_id=arn%3Aaws%3Aiam%3A%3A015428540659%3Auser%2Fhomepage&forceMobileApp=0) にログインして下さい。
 
-Make sure you are in the **North Virginia** region and navigate to [AWS DeepRacer](https://console.aws.amazon.com/deepracer/home?region=us-east-1) (https://console.aws.amazon.com/deepracer/home?region=us-east-1).
+**米国東部（バージニア北部）/ North Virginia** リージョンが選択されていることを確認し、[AWS DeepRacer](https://console.aws.amazon.com/deepracer/home?region=us-east-1) (https://console.aws.amazon.com/deepracer/home?region=us-east-1) を開いて下さい。
 
-From the AWS DeepRacer landing page, expand the pane on the left and select **Reinforcement learning**.
+AWS DeepRacer のランディングページから、左ペーンを開き、**Reinforcement learning** を選択します。
 
-## Step 2: Model List Page
-Once you select Reinforcement learning, you will land on the models page. This page shows a list of all the models you have created and the status of each model. If you want to create models, this is where you start the process. Similarly, from this page you can download, clone, and delete models.
+## Step 2: モデルリストのページ
+Reinforcement learning を選ぶと、モデルページにたどり着きます。このページはあなたが作成したすべてのモデルのリストと、それぞれのモデルの状態を表示します。もしモデルを作成したい場合、このページから始めます。同様に、このページから、モデルのダウンロード・複製・削除が行えます。
 
 ![Model List Page](img/model_list_deepracer.png)
 
-If you don't have any models this list will be empty, and you can create a model by choosing **Create model**.
-Once you have created a model you can use this page to view the status of the model, for example is it training, or ready. A model status of "ready" indicates model training has completed and you can then download it, evaluate it, or submit it to a virtual race. You can click on the model's name to proceed to the **Model details** page. 
+モデルがない場合、リストは空なので、**Create model** を選択してモデルを作成することができます。
 
-To create your first model select **Create model**.
+モデルを作成するとこのページからステータス、例えば Training, Ready、を見ることができます。モデルステータスが Ready であるとは、モデルのトレーニングが完了し、ダウンロード・評価・仮想レースへの提出ができることを示します。モデル名をクリックし、**Model details** ページに進むことができます。
 
 
-## Step 3: Create model
+## Step 3: モデルの作成
 This page gives you the ability to create an RL model for AWS DeepRacer and start training the model. There are a few sections on the page, but before we get to each please scroll all the way down the page and then all the way back up so you get a sense of what is to come. We are going to create a model that can be used by the AWS DeepRacer car to autonomously drive (take action) around a race track. We need to select the specific race track, provide the actions that our model can choose from, provide a reward function that will be used to incentivize our desired driving behavior, and configure the hyperparameters used during training. 
 
 
