@@ -1,24 +1,24 @@
 # Lab 1: AWS DeepRacer の強化学習モデルを構築しましょう!
 
-# Notes
-We are continuously looking to improve the AWS DeepRacer service to provide a better customer experience. As such please always refer to the latest lab content in GitHub as prior content may be outdated. If you do have any technical questions please ask the workshop facilitators, and for those of you working through the lab at home, please post your questions to the [AWS DeepRacer forum](https://forums.aws.amazon.com/forum.jspa?forumID=318).
+# 注意
+AWS DeepRacer サービスはより良い顧客体験を提供するため継続的に改善を重ねています。以前のコンテンツは古くなっている可能性があるため、GitHub の最新の Lab コンテンツを参照してください。もし技術的な質問がある場合はワークショップのファシリテーターに、自宅で Lab に取り組む方は [AWS DeepRacer forum](https://forums.aws.amazon.com/forum.jspa?forumID=318) (英語) に質問をポストしてください。
 
 
-# Overview
-The lab has four goals:
+# 概要
+この Lab には4つのゴールがあります: 
 
-1. familiarize you with the AWS DeepRacer service in the AWS console,
-2. explain the concepts needed to get you started training a model,
-3. explain how you can compete in the DeepRacer League, both the Virtual Circuit and the Summit Circuit, and
-4. explain how you can improve your model.
+1. AWS console 内の AWS DeepRacer の使い方に慣れること、
+2. モデルをトレーニングする際に必要な概念を説明すること、
+3. 仮想サーキット・Summit サーキットでの AWS DeepRacer リーグの競い方を説明すること、そして、
+4. モデルを向上させる方法を説明することです。
 
-The lab is split into three sections:
+Lab は3つのセクションに分割されています: 
 
-1. Section 1: Training your first model,
-2. Section 2: Competing in the AWS DeepRacer League, and
-3. Section 3: Model training and improving your model.
+1. Section 1: はじめのモデルをトレーニングする、
+2. Section 2: AWS DeepRacer リーグで競う、
+3. Section 3: モデルのトレーニングとモデルの向上。
 
-Goals one and two are covered in Section 1, goal three is covered in Section 2, and goal four is covered in Section 3.
+ゴール1と2は Section 1、ゴール3は Section 2、ゴール4は Section 3 でカバーされます。
 
 
 # Format
@@ -181,12 +181,12 @@ AWS DeepRacerリーグの詳細はセクション2で説明します。このセ
 		'''
 		Example that penalizes steering, which helps mitigate zig-zag behaviors
 		'''
-
+	
 		# Calculate 3 marks that are farther and father away from the center line
 		marker_1 = 0.1 * params['track_width']
 		marker_2 = 0.25 * params['track_width']
 		marker_3 = 0.5 * params['track_width']
-
+	
 		# Give higher reward if the car is closer to center line and vice versa
 		if params['distance_from_center'] <= marker_1:
 			reward = 1
@@ -196,16 +196,16 @@ AWS DeepRacerリーグの詳細はセクション2で説明します。このセ
 			reward = 0.1
 		else:
 			reward = 1e-3  # likely crashed/ close to off track
-
+	
 		# Steering penality threshold, change the number based on your action space setting
 		ABS_STEERING_THRESHOLD = 15
-
+	
 		# Penalize reward if the car is steering too much
 		if abs(params['steering_angle']) > ABS_STEERING_THRESHOLD:  # Only need the absolute steering angle
 			reward *= 0.5
-
+	
 		return float(reward)
-		
+
 
 **Example 3**:速度を落とすのにペナルティーを与え、中心線に沿った動きに報酬を与える高度な報酬関数
 
@@ -214,12 +214,12 @@ AWS DeepRacerリーグの詳細はセクション2で説明します。このセ
 		'''
 		Example that penalizes slow driving. This create a non-linear reward function so it may take longer to learn.
 		'''
-
+	
 		# Calculate 3 marks that are farther and father away from the center line
 		marker_1 = 0.1 * params['track_width']
 		marker_2 = 0.25 * params['track_width']
 		marker_3 = 0.5 * params['track_width']
-
+	
 		# Give higher reward if the car is closer to center line and vice versa
 		if params['distance_from_center'] <= marker_1:
 			reward = 1
@@ -229,7 +229,7 @@ AWS DeepRacerリーグの詳細はセクション2で説明します。このセ
 			reward = 0.1
 		else:
 			reward = 1e-3  # likely crashed/ close to off track
-
+	
 		# penalize reward for the car taking slow actions
 		# speed is in m/s
 		# the below assumes your action space has a maximum speed of 5 m/s and speed granularity of 3
@@ -237,7 +237,7 @@ AWS DeepRacerリーグの詳細はセクション2で説明します。このセ
 		SPEED_THRESHOLD = 2
 		if params['speed'] < SPEED_THRESHOLD:
 			reward *= 0.5
-
+	
 		return float(reward)
 
 これらのサンプルを利用し、自身の報酬関数を作りましょう。以下に他のTipsを示します。
