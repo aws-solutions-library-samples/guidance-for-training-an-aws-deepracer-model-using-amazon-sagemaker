@@ -295,10 +295,10 @@ Note 25 to 35 minutes of lab time should have elapsed by this point.
 Hint: Please make sure you save your reward function, and download your trained model from the burner account. You will lose access to the account after the Summit, and the account will be wiped.
 
 
-# Section 2: Competing in the AWS DeepRacer League
-The [AWS DeepRacer League](https://aws.amazon.com/deepracer/league/) is the world's first global autonomous racing league. The League will take place in 2019 in-person, at various selected locations, and online. Race and you stand to win one of many AWS DeepRacer prizes, or one of 47 paid trips to re:Invent 2019 where you will get to take part in the AWS DeepRacer Knockout Rounds. If you make it through the Knockouts you will get to race in the AWS DeepRacer Championship Cup. [Terms and conditions insert link here]() apply.
+# Section 2: AWS DeepRacer Leagueで競争する
+[AWS DeepRacer League](https://aws.amazon.com/deepracer/league/)は世界初のグローバル自走型レーシングリーグです。このリーグは、2019年に複数都市での対人レースおよびオンライン上で開催されます。レースをし、賞または47人に与えられるre:invent 2019で行われるAWS DeepRacer Knockout Roundsへの参加権および旅費を勝ち取りましょう。その予選を勝ち抜くと、AWS DeepRacer Champioonship Cupに参加できます。詳細は[こちら](https://d1.awsstatic.com/DeepRacer/AWS-DeepRacer-League-2019-Official-Rules-English-29-April-2019(1).pdf)を参照してください。
 
-The in-person races are referred to as the Summit Circuit, and the online races are referred to as the Virtual Circuit. The locations of the Summit Circuit events can be found [here](https://aws.amazon.com/deepracer/summit-circuit/). The details of the Virtual Circuit will be announced when the AWS DeepRacer service is opened for general availability. You don't need to own an AWS DeepRacer to take part in either form of competition.
+対人レースはSummit Circuit、オンラインレースはVirtual Circuitを参照してください。Summit Circuitイベントの場所は[こちら](https://aws.amazon.com/deepracer/summit-circuit/)から探してください。Virtual Circuitの詳細はAWS DeepRacerサービスが一般向け公開されてから発表されます。どの競技に参加する場合でも、AWS DeepRacerを所有する必要はありません。
 
 
 ![League](img/league.png)
