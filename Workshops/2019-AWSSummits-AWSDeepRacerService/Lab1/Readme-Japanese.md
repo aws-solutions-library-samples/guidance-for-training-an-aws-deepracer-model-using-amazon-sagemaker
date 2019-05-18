@@ -330,67 +330,67 @@ Each race in the Virtual Circuit will have its own new competition track and it 
 
 After each event in the Summit Circuit and in the Virtual Circuit, all racers that took part will receive points based on the time it took them to complete the race. Points will aggregate through the season, and at the end of the seasons the top point getters will be invited to take part at re:Invent. Please refer to the [terms and conditions insert link here](https://aws.amazon.com/deepracer/faqs/#AWS_DeepRacer_League) for more details. 
 
-# Section 3: Model training and improving your model
+# Section 3: モデルのトレーニングと改善
 
-## 3.1: While your model is training
+## 3.1: モデルのトレーニング
 
-After your model has started training you can select it from the listed models. You can then see the how the training is progressing by looking at the total reward per episode graph, and also at the first person view from the car in the simulator. 
+モデルのトレーニングが開始したら、モデルの一覧からモデルを選択できるようになります。モデルの一覧では、エピソードごとの報酬の合計値のグラフからトレーニングの進行状況を確認することができます。また、シミュレータ上の一人称視点の画像を見ることができます。
 
-At first your car will not be able to drive on a straight road but as it learns better driving behavior you should see its performance improving, and the reward graph increasing. Furthermore, when you car drives off of the track it will be reset on the track. Don't be alarmed if your car doesn't start at the same position. We have enabled round robin to allow the car to start at subsequent points on the track each time to ensure it can train on experience from the whole track. Furthermore, during training you may see your car start training in the opposite direction of the track. This is also done to ensure the model generalizes better, and is not caught off guard by an asymmetrical count between left and right hand turns. Lastly, if you see your car aimlessly drive off track and not resetting, this is when the experience obtained is sent back to Amazon SageMaker to train the model. Once the model has been updated, the new model will be sent back to AWS RoboMaker and the car will resume.
+初めのうち、車はまっすぐ走らないかもしれませんが、車がより良いふるまいを学習するにつれてパフォーマンスが向上し、報酬グラフが上昇していくことが確認できるでしょう。なお、車がトラックを外れた場合はトラックがリセットされます。その際、車が同じ場所から走行を開始しなくても問題ありません。これは、ラウンドロビンを有効にして前回コースアウトした場所から次の走行を始めるようにすることで、トラック全体をトレーニングするためです。さらに、トレーニング中に車がトラックを反対方向に走ることがありますが、これは左右のカーブをバランス良くトレーニングしてモデルをより汎化させるためです。最後に、車がコースアウトしたにも関わらずトラックがリセットされない場合がありますが、これは、トレーニングによって得られた情報をAmazon SageMakerに送ってモデルを学習させるためです。更新されたモデルがAWS RoboMakerに送信されると走行が再開します。
 
-You can look at the log files for both Amazon SageMaker and AWS RoboMaker. The logs are outputted to Amazon CloudWatch. To see the logs, hover your mouse over the reward graph and select the three dots that appear below the refresh button, please then select **View logs**.
+ログファイルは、Amazon SageMakerとAWS RoboMakerのどちらからも確認することができます。ログはAmazon CloudWatchに出力されます。ログを見るには、報酬グラフの右上にある更新ボタンの下にある3つのドットをクリックして**View logs**を選択します。
 
 ![Training Started](img/widg.png)
 
-You will see the logs of the Python validation lambda, Amazon SageMaker, and AWS RoboMaker.
+ここではLambda、Amazon SageMaker、AWS RoboMakerのログを見ることができます。
 
 ![Logs](img/view_in_logs.png)
 
-Each folder will contain the logs for all training jobs that you have executed in AWS DeepRacer. AWS RoboMaker logs will contain output from the simulator, and the Amazon SageMaker logs will contain output from the model training. If there are any errors, the logs are a good place to start.
+各フォルダには、AWS DeepRacerで実行したすべてのトレーニングジョブのログが格納されています。AWS RoboMakerのログにはシミュレータの出力が記録され、Amazon SageMakerのログにはモデルの学習ログが記録されます。エラーが発生した場合は、これらのログを確認すると良いでしょう。
 
 ![AWS RoboMaker Logs](img/robomaker_logs.png)
 
-The AWS DeepRacer service makes use of Amazon SageMaker, AWs RoboMaker, Amazon S3, Amazon Kinesis Video Streams, AWS Lambda, and Amazon CloudWatch. You can navigate to each of these services to get an update on the service's status or for other useful information.
+AWS DeepRacerでは、Amazon SageMaker、AWS RoboMaker、Amazon S3、Amazon Kinesis Video Streams、AWS Lambda、Amazon CloudWatchを使用しています。これらのサービスを使用すると、各サービスのステータスの確認やその他の有用な情報を得ることができます。
 
-In each service you will see a list of current and prior jobs, where retained. Here is a view of training jobs executed in Amazon SageMaker.
+これらのサービスでは、保存されている現在や過去のジョブのリストを見ることができます。こちらの画像は、Amazon SageMakerで実行された学習ジョブの一覧です。
 
 ![SageMaker jobs](img/sagemaker_listjobs.png)
 
-In Amazon SageMaker you will be able to see the logs as well as utilization of the EC2 instance spun up to run training.
+Amazon SageMakerでは、学習を実行するために使用したEC2インスタンスの使用状況のログを見ることができます。
 
 ![SageMaker jobs](img/sagemaker_jobdetails.png)
 
-In AWS RoboMaker you can see the list of all simulation jobs, and for active jobs you can get a direct view into the simulation environment.
+AWS RoboMakerでは、シミュレーションジョブの一覧を見ることができます。アクティブなジョブに関しては、シミュレーション環境を直接見ることができます。
 
 ![RoboMaker jobs](img/aws_robomaker_jobs_list.png)
 
-You can select your active simulation job from the list and then select the Gazebo icon. 
+アクティブなシミュレーションジョブを一覧から選択し、Gazeboアイコンをクリックします。
 
 ![RoboMaker job details](img/aws_robomaker.png)
 
-This will open a new window showing you the simulation environment. **Take care in this environment because any changes you make to it will affect your simulation in real time. Thus if you accidentally drag or rotate the vehicle or the environment, it may negatively affect your training job.**
+新しいウィンドウが開き、シミュレーション環境が表示されます。**ここで加えた変更は即座にシミュレーションに反映されてしまうのでご注意ください。うっかり車や環境をドラッグしたり回転したりすると、トレーニングジョブに良くない影響を与えることがあります。**
 
 ![RoboMaker simulator](img/robomaker_simulator.png) 
 
-The Amazon Kinesis Video Stream is typically deleted after use to free up space and due to limits on the number of streams. Note also that at present the video is not yet stored in your S3 account, for both training and evaluations.
+Amazon Kinesis Video Streamは，通常、使用終了後のスペース解放やストリームの数の制限によって削除されます。この段階ではトレーニングや評価のため、動画はまだS3に格納されません。
 
 ![KVS stream](img/kvs_stream_video.png)
 
-Amazon S3 will store the final model, that is referenced in the AWS DeepRacer service, and interim models trained during your training jobs in the aws-deepracer bucket. Your reward functions will also be stored in the same bucket.
+Amazon S3はAWS DeepRacerで参照する最終モデルと、トレーニングジョブ中にトレーニングされた中間モデルをaws-deepracerバケットに格納します。報酬関数も同じバケットに保存されます。
 
 ![S3list](img/s3.png)
 
-The final model is stored as model.tar.gz file in a folder called DeepRacer-SageMaker-rlmdl-account number-date in your DeepRacer S3 bucket.  
-The interim models are stored as .pd files in a folder called DeepRacer-SageMaker-RoboMaker-comm-account number-date
+最終モデルはmodel.tar.gzファイルとしてDeepRacer S3バケットのDeepRacer-SageMaker-rlmdl-アカウント番号-日時、という名前のフォルダに保存されます。
+中間モデルは拡張子がpdのファイルとしてDeepRacer-SageMaker-RoboMaker-comm-アカウント番号-日時、という名前のフォルダに保存されます。
 ![S3dr](img/s3_aws_deepracer.png)
 
-The AWS DeepRacer service can at the time of writing only reference one final model for each training job. However, should you want to swap out the model trained during the final training iteration, with any model trained in the training iterations running up to the final, you can simple swap out the model.pb file in the final model.tar.gz file. Note that you should not change the other files in the .tar.gz as this may render the model useless. Do this after your model has stopped training, or after you manually stopped training.
+AWS DeepRacerサービスは、現時点では各トレーニングジョブにおいてひとつの最終モデルのみ参照することができます。ただし、トレーニングの途中で得られたモデルを使用したい場合は、model.pdファイルを最後のmodel.tar.gzファイルと入れ替えることができます。モデルが壊れる可能性があるため、tar.gzファイルの中のファイルを変更しないでください。この操作は、モデルのトレーニングが終了してから、もしくはトレーニングを手動で停止してから行ってください。
 
-## 3.2: Evaluating the performance of your model
+## 3.2: モデルの性能評価
 
-You may not have time in the workshop to do from step 2 onwards. Once your model training is complete you can start model evaluation. From your model details page, where you observed training, select **Start evaluation**. You can now select the track on which you want to evaluate the performance of your model and also the number of laps. Select the re:Invent 2018 track and 5 laps and select Start. 
+ワークショップでは、ステップ2以降を行う時間がない場合があります。モデルのトレーニングが完了したらモデルの評価を行うことができます。モデルの詳細画面で**Start evaluation**をクリックすると、モデルの性能と周回数の評価を行いたいトラックを選択することができます。re:Invent 2018トラックと5周を選択してStartを選択してください。
 
-Once done you should see something as follows.
+評価が完了すると、以下のように表示されます。
 
 ![evaluation_done](img/evaluation_done.png)
 
