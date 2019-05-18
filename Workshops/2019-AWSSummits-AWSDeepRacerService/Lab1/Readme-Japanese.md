@@ -405,10 +405,10 @@ Once done you should see something as follows.
 現時点では、報酬関数とハイパーパラメータを試行錯誤する必要があります。異なる運転特性に基づいた少数の異なる報酬関数を試し、シミュレーターで評価し、一番よいものを選ぶといいでしょう。もし AWS DeepRacer をお持ちであれば、実機でテストすることも可能です。
 
 ヒント: 
-- Increase training time beyond. If your model can't reliably complete a lap try to extend your model training time.
-- Try modifying action space by increasing max speed to get faster lap times.
-- Tweak your reward function to incentivize your car to drive faster : you’ll want to specifically modify progress, steps and speed variables.
-- Clone your model to leverage training experience. Please note that you will not be able to change action space once a model is cloned, otherwise the job will fail.
+- トレーニング時間を長くする。もしモデルが期待通り完走できなければ、トレーニング時間を伸ばしてみて下さい。
+- 最大速度を上げて行動空間を修正し、速いラップタイムを達成する。
+- 報酬関数を微調整し、車がより速く走ることに対してインセンティブを与える。すなわち変数 (progress, steps, speed) を修正する。
+- 過去のトレーニングを活かせるようモデルを複製する。ただし、モデルを複製した場合、行動空間を変更することはできません (変更するとジョブが失敗します)。
 
 ## 3.5: Analyze model performance by inspecting the RoboMaker logs
 If you do want to go a step further, you can evaluate the performance of each model that was trained during the training job by inspecting the log file.
