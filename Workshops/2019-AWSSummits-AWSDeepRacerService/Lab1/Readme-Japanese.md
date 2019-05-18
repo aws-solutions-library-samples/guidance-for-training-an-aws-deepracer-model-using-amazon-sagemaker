@@ -21,10 +21,8 @@ Lab は3つのセクションに分割されています:
 ゴール1と2は Section 1、ゴール3は Section 2、ゴール4は Section 3 でカバーされます。
 
 
-# Format
-You will have 50 minutes to complete the lab and this is enough time to thoroughly go through the content, explore the service, and start training your first AWS DeepRacer reinforcement learning (RL) model. Section 1 should take about 25 to 35 minutes, Section 2 should take about 5 minutes, and Section 3 will take more time than you have in the workshop but is for use at home.
-
-The lab will provide detail on the various components in the AWS DeepRacer service in the console and you will get the chance to try them all out. You should will start training your model at the end of Section 1.
+# 形式
+Lab を完了するのに50分かかります。全てのコンテンツを試し、サービス概観し、はじめの強化学習 (reinforcement learning; RL) モデルをトレーニングするのに十分な時間です。Section 1 は約25-30分、Section 2 は約5分、Section 3 はワークショップの時間よりかかると思いますが、家で試せるようになっています。Lab では AWS マネージメントコンソールで AWS DeepRacer の様々な構成要素についての詳細を紹介するので、全てを試してみることができます。Section 1 の最後でモデルのトレーニングを始めます。
 
 
 # Hints
