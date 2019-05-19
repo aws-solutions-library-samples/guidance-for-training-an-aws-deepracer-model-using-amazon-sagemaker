@@ -295,40 +295,40 @@ Note 25 to 35 minutes of lab time should have elapsed by this point.
 Hint: Please make sure you save your reward function, and download your trained model from the burner account. You will lose access to the account after the Summit, and the account will be wiped.
 
 
-# Section 2: Competing in the AWS DeepRacer League
-The [AWS DeepRacer League](https://aws.amazon.com/deepracer/league/) is the world's first global autonomous racing league. The League will take place in 2019 in-person, at various selected locations, and online. Race and you stand to win one of many AWS DeepRacer prizes, or one of 47 paid trips to re:Invent 2019 where you will get to take part in the AWS DeepRacer Knockout Rounds. If you make it through the Knockouts you will get to race in the AWS DeepRacer Championship Cup. [Terms and conditions insert link here]() apply.
+# Section 2: AWS DeepRacer リーグで競う
+[AWS DeepRacer リーグ](https://aws.amazon.com/deepracer/league/)は世界初のグローバル自走型レーシングリーグです。このリーグは、2019年に複数都市での対人レースおよびオンライン上で開催されます。レースをし、賞または47人に与えられるre:invent 2019で行われるAWS DeepRacer Knockout Roundsへの参加権および旅費を勝ち取りましょう。その予選を勝ち抜くと、AWS DeepRacer Champioonship Cupに参加できます。詳細は[こちら](https://d1.awsstatic.com/DeepRacer/AWS-DeepRacer-League-2019-Official-Rules-English-29-April-2019(1).pdf)を参照してください。
 
-The in-person races are referred to as the Summit Circuit, and the online races are referred to as the Virtual Circuit. The locations of the Summit Circuit events can be found [here](https://aws.amazon.com/deepracer/summit-circuit/). The details of the Virtual Circuit will be announced when the AWS DeepRacer service is opened for general availability. You don't need to own an AWS DeepRacer to take part in either form of competition.
+対人レースはSummit サーキット、オンラインレースは仮想サーキットを参照してください。Summit サーキットイベントの場所は[こちら](https://aws.amazon.com/deepracer/summit-circuit/)から探してください。仮想サーキットの詳細はAWS DeepRacerサービスが一般向け公開されてから発表されます。どの競技に参加する場合でも、AWS DeepRacerを所有する必要はありません。
 
 
 ![League](img/league.png)
 
 
-## Racing in the Summit Circuit
-To race in the Summit Circuit you must bring your trained AWS DeepRacer RL model to the Summit on a USB stick in a folder called models. Note that we will also provide standard models as part of a walk-up experience for those who were not able to train their own models. At each even you will have to queue for time on the track, on a first come first serve basis, or as the Summit organizer determined, and have 4 minutes to try and get the best lap time using your model and a standard AWS DeepRacer car that we will make available to race with on the race track. The race track will be the re:Invent 2018 track, so train your model on the re:Invent track if you intend to race at any of the selected AWS Summits. The fastest racer at each race in the Summit Circuit will proceed to re:Invent and the top 10 at each race will win AWS DeepRacer cars.
+## Summit サーキットでレースをする
+Summit サーキットでレースするには、トレーニング済みAWS DeepRacer RLモデルをUSBメモリースティックのmodelsフォルダに入れ、Summitに持参する必要があります。また、モデルを持参できなかった方にも、レースを体験していただくことのできる標準モデルを提供する予定です。イベントでは、先着順またはレーススタッフの進行に応じて、用意したモデルを使いAWS DeepRacerカーをトラック上でレースさせ、4分間での最速ラップタイムを計測します。AWS Summitのレースに合わせて準備する際、レーストラックはre:Invent 2018トラックを予定しているので、このトラックに合わせてモデルをトレーニングしましょう。各Summit サーキットで最速の参加者はre:Inventへの参加権を、そしてトップ10には、AWS DeepRacerカーを勝ち取れます。
 
-## Racing in the Virtual Circuit
-To race in the Virtual Circuit you will have to enter your models into each race, by submitting them via the AWS DeepRacer service in the AWS console. Virtual Circuit races can be seen in the [DeepRacer Virtual Circuit](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards) section in the AWS DeepRacer service.
+## 仮想サーキットでレースする
+仮想サーキットでレースするには、AWSコンソール内のAWS DeepRacerサービスよりモデルを送信し、それぞれのレースにエントリーしてください。仮想サーキットのレースはAWS DeepRacerサービスの [DeepRacer Virtual Circuit](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards) にあります。
 
 ![VirtualCircuit](img/dvc.png)
 
-Scroll down for a list of open races
+スクロールすると、開催中のレースを見つけられます。
 
 ![VirtualCircuitOpen](img/dvc-ll.png)
 
-To see more info on the race, select race information.
+レースの詳細は Race Information から見ることができます。
 
 ![VirtualCircuitInfo](img/dvc-info.png)
 
-Once you have a trained model, you can  submit it into the current open race. Your model will then be evaluated by the AWS DeepRacer service on the indicated competition track. After your model has been evaluated you will see your standing update if your lap time was better than your prior submission.
+トレーニング済みモデルを作成すると、現在の開催中のレースにそのモデルを送信できます。モデルは、指定されている競技トラックを使ってAWS DeepRacer サービスによって評価されます。評価後、ラップタイムが前回の結果よりよければ、アップデートされた新しいタイムを確認することができます。
 
 ![VirtualCircuitModelSubmit](img/model-submitted.png)
 
-Each race in the Virtual Circuit will have its own new competition track and it won't be possible to directly train on the competition tracks. Instead we will make a track available that will be similar in theme and design to each competition track, but not identical. This ensures that models have to generalize, and can't just be overfitted to the competition track. The fastest racer in each race in the Virtual Circuit will proceed to re:Invent and the top 10 at each race will win AWS DeepRacer cars.
+仮想サーキットでは、各レースごとに新しい競技トラックが使われるため、直接その競技トラックに向けてトレーニングを行うのは難しいです。全く同じというわけではありませんが、競技トラックのテーマとデザインに似たトラックが用意されます。つまり、モデルは一般化される必要があり、競技トラックに過学習されるべきではありません。仮想サーキットの各レースで最速の参加者はre:Inventへの招待券、そしてトップ10にはAWS DeepRacerカーを勝ち取るチャンスがあります。
 
-**Tip**: The DeepRacer service does not currently support importing models,  but you can still save your model.tar.gz file, as well as all model training artifacts. The final model is stored as model.tar.gz file in a folder called DeepRacer-SageMaker-rlmdl-account number-date in your DeepRacer S3 bucket. The interim models are stored as .pd files in a folder called DeepRacer-SageMaker-RoboMaker-comm-account number-date
+**Tip**: DeepRacerサービスは現在、モデルのインポートをサポートしておりませんが、model.tar.gzファイルと、全てのトレーニングの成果物を保存できます。最終モデルはmodel.tar.gzとして、DeepRacerのS3バケットのDeepRacer-SageMaker-rlmdl-account number-dateというフォルダに保存されます。中間モデルは、DeepRacer-SageMaker-RoboMaker-comm-account number-dateフォルダに.pd ファイルとして保存されます。
 
-After each event in the Summit Circuit and in the Virtual Circuit, all racers that took part will receive points based on the time it took them to complete the race. Points will aggregate through the season, and at the end of the seasons the top point getters will be invited to take part at re:Invent. Please refer to the [terms and conditions insert link here](https://aws.amazon.com/deepracer/faqs/#AWS_DeepRacer_League) for more details. 
+Summit サーキットと仮想サーキットの各イベントの後に、全ての参加者は完走時間を元にポイントを受け取ります。ポイントはシーズン毎に集計され、最高ポイント獲得者はre:Inventに招待されます。詳細は[AWS DeepRacer リーグの利用規約](https://aws.amazon.com/deepracer/faqs/#AWS_DeepRacer_League)を参照してください。 
 
 # Section 3: モデルのトレーニングと改善
 
