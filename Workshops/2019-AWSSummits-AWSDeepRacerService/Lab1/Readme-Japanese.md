@@ -298,7 +298,7 @@ Hint: Please make sure you save your reward function, and download your trained 
 # Section 2: AWS DeepRacer リーグで競う
 [AWS DeepRacer リーグ](https://aws.amazon.com/deepracer/league/)は世界初のグローバル自走型レーシングリーグです。このリーグは、2019年に複数都市での対人レースおよびオンライン上で開催されます。レースをし、賞または47人に与えられるre:invent 2019で行われるAWS DeepRacer Knockout Roundsへの参加権および旅費を勝ち取りましょう。その予選を勝ち抜くと、AWS DeepRacer Champioonship Cupに参加できます。詳細は[こちら](https://d1.awsstatic.com/DeepRacer/AWS-DeepRacer-League-2019-Official-Rules-English-29-April-2019(1).pdf)を参照してください。
 
-対人レースはSummit サーキット、オンラインレースはVirtual サーキットを参照してください。Summit サーキットイベントの場所は[こちら](https://aws.amazon.com/deepracer/summit-circuit/)から探してください。Virtual サーキットの詳細はAWS DeepRacerサービスが一般向け公開されてから発表されます。どの競技に参加する場合でも、AWS DeepRacerを所有する必要はありません。
+対人レースはSummit サーキット、オンラインレースは仮想サーキットを参照してください。Summit サーキットイベントの場所は[こちら](https://aws.amazon.com/deepracer/summit-circuit/)から探してください。仮想サーキットの詳細はAWS DeepRacerサービスが一般向け公開されてから発表されます。どの競技に参加する場合でも、AWS DeepRacerを所有する必要はありません。
 
 
 ![League](img/league.png)
@@ -307,8 +307,8 @@ Hint: Please make sure you save your reward function, and download your trained 
 ## Summit サーキットでレースをする
 Summit サーキットでレースするには、トレーニング済みAWS DeepRacer RLモデルをUSBメモリースティックのmodelsフォルダに入れ、Summitに持参する必要があります。また、モデルを持参できなかった方にも、レースを体験していただくことのできる標準モデルを提供する予定です。イベントでは、先着順またはレーススタッフの進行に応じて、用意したモデルを使いAWS DeepRacerカーをトラック上でレースさせ、4分間での最速ラップタイムを計測します。AWS Summitのレースに合わせて準備する際、レーストラックはre:Invent 2018トラックを予定しているので、このトラックに合わせてモデルをトレーニングしましょう。各Summit サーキットで最速の参加者はre:Inventへの参加権を、そしてトップ10には、AWS DeepRacerカーを勝ち取れます。
 
-## Virtual サーキットでレースする
-Virtual サーキットでレースするには、AWSコンソール内のAWS DeepRacerサービスよりモデルを送信し、それぞれのレースにエントリーしてください。Virtual サーキットのレースはAWS DeepRacerサービスの [DeepRacer Virtual Circuit](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards) にあります。
+## 仮想サーキットでレースする
+仮想サーキットでレースするには、AWSコンソール内のAWS DeepRacerサービスよりモデルを送信し、それぞれのレースにエントリーしてください。仮想サーキットのレースはAWS DeepRacerサービスの [DeepRacer Virtual Circuit](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards) にあります。
 
 ![VirtualCircuit](img/dvc.png)
 
@@ -320,15 +320,15 @@ Virtual サーキットでレースするには、AWSコンソール内のAWS De
 
 ![VirtualCircuitInfo](img/dvc-info.png)
 
-トレーニング済みモデルを作成すると、現在の開催中のレースにそのモデルを送信できます。モデルは、指定されている競争トラックを使ってAWS DeepRacer サービスによって評価されます。評価後、ラップタイムが前回の結果よりよければ、アップデートされた新しいタイムを確認することができます。
+トレーニング済みモデルを作成すると、現在の開催中のレースにそのモデルを送信できます。モデルは、指定されている競技トラックを使ってAWS DeepRacer サービスによって評価されます。評価後、ラップタイムが前回の結果よりよければ、アップデートされた新しいタイムを確認することができます。
 
 ![VirtualCircuitModelSubmit](img/model-submitted.png)
 
-Virtual サーキットでは、各レースごとに新しい競争トラックが使われるため、直接その競争トラックに向けてトレーニングを行うのは難しいです。全く同じというわけではありませんが、競争トラックのテーマとデザインに似たトラックが用意されます。つまり、モデルは一般化される必要があり、競争トラックに過学習されるべきではありません。Virtual サーキットの各レースで最速の参加者はre:Inventへの招待券、そしてトップ10にはAWS DeepRacerカーを勝ち取るチャンスがあります。
+仮想サーキットでは、各レースごとに新しい競技トラックが使われるため、直接その競技トラックに向けてトレーニングを行うのは難しいです。全く同じというわけではありませんが、競技トラックのテーマとデザインに似たトラックが用意されます。つまり、モデルは一般化される必要があり、競技トラックに過学習されるべきではありません。仮想サーキットの各レースで最速の参加者はre:Inventへの招待券、そしてトップ10にはAWS DeepRacerカーを勝ち取るチャンスがあります。
 
 **Tip**: DeepRacerサービスは現在、モデルのインポートをサポートしておりませんが、model.tar.gzファイルと、全てのトレーニングの成果物を保存できます。最終モデルはmodel.tar.gzとして、DeepRacerのS3バケットのDeepRacer-SageMaker-rlmdl-account number-dateというフォルダに保存されます。中間モデルは、DeepRacer-SageMaker-RoboMaker-comm-account number-dateフォルダに.pd ファイルとして保存されます。
 
-Summit サーキットとVirtual サーキットの各イベントの後に、全ての参加者は完走時間を元にポイントを受け取ります。ポイントはシーズン毎に集計され、最高ポイント獲得者はre:Inventに招待されます。詳細は[AWS DeepRacer リーグの利用規約](https://aws.amazon.com/deepracer/faqs/#AWS_DeepRacer_League)を参照してください。 
+Summit サーキットと仮想サーキットの各イベントの後に、全ての参加者は完走時間を元にポイントを受け取ります。ポイントはシーズン毎に集計され、最高ポイント獲得者はre:Inventに招待されます。詳細は[AWS DeepRacer リーグの利用規約](https://aws.amazon.com/deepracer/faqs/#AWS_DeepRacer_League)を参照してください。 
 
 # Section 3: Model training and improving your model
 
