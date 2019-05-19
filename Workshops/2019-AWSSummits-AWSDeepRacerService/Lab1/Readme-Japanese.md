@@ -326,9 +326,9 @@ Virtual サーキットでレースするには、AWSコンソール内のAWS De
 
 Virtual サーキットでは、各レースごとに新しい競争トラックが使われるため、直接その競争トラックに向けてトレーニングを行うのは難しいです。全く同じというわけではありませんが、競争トラックのテーマとデザインに似たトラックが用意されます。つまり、モデルは一般化される必要があり、競争トラックに過学習されるべきではありません。Virtual サーキットの各レースで最速の参加者はre:Inventへの招待券、そしてトップ10にはAWS DeepRacerカーを勝ち取るチャンスがあります。
 
-**Tip**: The DeepRacer service does not currently support importing models,  but you can still save your model.tar.gz file, as well as all model training artifacts. The final model is stored as model.tar.gz file in a folder called DeepRacer-SageMaker-rlmdl-account number-date in your DeepRacer S3 bucket. The interim models are stored as .pd files in a folder called DeepRacer-SageMaker-RoboMaker-comm-account number-date
+**Tip**: DeepRacerサービスは現在、モデルのインポートをサポートしておりませんが、model.tar.gzファイルと、全てのトレーニングの成果物を保存できます。最終モデルはmodel.tar.gzとして、DeepRacerのS3バケットのDeepRacer-SageMaker-rlmdl-account number-dateというフォルダに保存されます。中間モデルは、DeepRacer-SageMaker-RoboMaker-comm-account number-dateフォルダに.pd ファイルとして保存されます。
 
-After each event in the Summit Circuit and in the Virtual Circuit, all racers that took part will receive points based on the time it took them to complete the race. Points will aggregate through the season, and at the end of the seasons the top point getters will be invited to take part at re:Invent. Please refer to the [terms and conditions insert link here](https://aws.amazon.com/deepracer/faqs/#AWS_DeepRacer_League) for more details. 
+Summit サーキットとVirtual サーキットの各イベントの後に、全ての参加者は完走時間を元にポイントを受け取ります。ポイントはシーズン毎に集計され、最高ポイント獲得者はre:Inventに招待されます。詳細は[AWS DeepRacer リーグの利用規約](https://aws.amazon.com/deepracer/faqs/#AWS_DeepRacer_League)を参照してください。 
 
 # Section 3: Model training and improving your model
 
