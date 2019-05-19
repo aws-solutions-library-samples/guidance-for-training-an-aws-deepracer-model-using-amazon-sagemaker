@@ -307,24 +307,24 @@ Hint: Please make sure you save your reward function, and download your trained 
 ## Summit サーキットでレースをする
 Summit サーキットでレースするには、トレーニング済みAWS DeepRacer RLモデルをUSBメモリースティックのmodelsフォルダに入れ、Summitに持参する必要があります。また、モデルを持参できなかった方にも、レースを体験していただくことのできる標準モデルを提供する予定です。イベントでは、先着順またはレーススタッフの進行に応じて、用意したモデルを使いAWS DeepRacerカーをトラック上でレースさせ、4分間での最速ラップタイムを計測します。AWS Summitのレースに合わせて準備する際、レーストラックはre:Invent 2018トラックを予定しているので、このトラックに合わせてモデルをトレーニングしましょう。各Summit サーキットで最速の参加者はre:Inventへの参加権を、そしてトップ10には、AWS DeepRacerカーを勝ち取れます。
 
-## Racing in the Virtual Circuit
-To race in the Virtual Circuit you will have to enter your models into each race, by submitting them via the AWS DeepRacer service in the AWS console. Virtual Circuit races can be seen in the [DeepRacer Virtual Circuit](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards) section in the AWS DeepRacer service.
+## Virtual サーキットでレースする
+Virtual サーキットでレースするには、AWSコンソール内のAWS DeepRacerサービスよりモデルを送信し、それぞれのレースにエントリーしてください。Virtual サーキットのレースはAWS DeepRacerサービスの [DeepRacer Virtual Circuit](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards) にあります。
 
 ![VirtualCircuit](img/dvc.png)
 
-Scroll down for a list of open races
+スクロールすると、開催中のレースを見つけられます。
 
 ![VirtualCircuitOpen](img/dvc-ll.png)
 
-To see more info on the race, select race information.
+レースの詳細は Race Information から見ることができます。
 
 ![VirtualCircuitInfo](img/dvc-info.png)
 
-Once you have a trained model, you can  submit it into the current open race. Your model will then be evaluated by the AWS DeepRacer service on the indicated competition track. After your model has been evaluated you will see your standing update if your lap time was better than your prior submission.
+トレーニング済みモデルを作成すると、現在の開催中のレースにそのモデルを送信できます。モデルは、指定されている競争トラックを使ってAWS DeepRacer サービスによって評価されます。評価後、ラップタイムが前回の結果よりよければ、アップデートされた新しいタイムを確認することができます。
 
 ![VirtualCircuitModelSubmit](img/model-submitted.png)
 
-Each race in the Virtual Circuit will have its own new competition track and it won't be possible to directly train on the competition tracks. Instead we will make a track available that will be similar in theme and design to each competition track, but not identical. This ensures that models have to generalize, and can't just be overfitted to the competition track. The fastest racer in each race in the Virtual Circuit will proceed to re:Invent and the top 10 at each race will win AWS DeepRacer cars.
+Virtual サーキットでは、各レースごとに新しい競争トラックが使われるため、直接その競争トラックに向けてトレーニングを行うのは難しいです。全く同じというわけではありませんが、競争トラックのテーマとデザインに似たトラックが用意されます。つまり、モデルは一般化される必要があり、競争トラックに過学習されるべきではありません。Virtual サーキットの各レースで最速の参加者はre:Inventへの招待券、そしてトップ10にはAWS DeepRacerカーを勝ち取るチャンスがあります。
 
 **Tip**: The DeepRacer service does not currently support importing models,  but you can still save your model.tar.gz file, as well as all model training artifacts. The final model is stored as model.tar.gz file in a folder called DeepRacer-SageMaker-rlmdl-account number-date in your DeepRacer S3 bucket. The interim models are stored as .pd files in a folder called DeepRacer-SageMaker-RoboMaker-comm-account number-date
 
