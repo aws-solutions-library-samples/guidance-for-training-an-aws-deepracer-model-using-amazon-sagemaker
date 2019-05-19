@@ -298,14 +298,14 @@ Hint: Please make sure you save your reward function, and download your trained 
 # Section 2: AWS DeepRacer Leagueで競争する
 [AWS DeepRacer League](https://aws.amazon.com/deepracer/league/)は世界初のグローバル自走型レーシングリーグです。このリーグは、2019年に複数都市での対人レースおよびオンライン上で開催されます。レースをし、賞または47人に与えられるre:invent 2019で行われるAWS DeepRacer Knockout Roundsへの参加権および旅費を勝ち取りましょう。その予選を勝ち抜くと、AWS DeepRacer Champioonship Cupに参加できます。詳細は[こちら](https://d1.awsstatic.com/DeepRacer/AWS-DeepRacer-League-2019-Official-Rules-English-29-April-2019(1).pdf)を参照してください。
 
-対人レースはSummit Circuit、オンラインレースはVirtual Circuitを参照してください。Summit Circuitイベントの場所は[こちら](https://aws.amazon.com/deepracer/summit-circuit/)から探してください。Virtual Circuitの詳細はAWS DeepRacerサービスが一般向け公開されてから発表されます。どの競技に参加する場合でも、AWS DeepRacerを所有する必要はありません。
+対人レースはSummit サーキット、オンラインレースはVirtual サーキットを参照してください。Summit サーキットイベントの場所は[こちら](https://aws.amazon.com/deepracer/summit-circuit/)から探してください。Virtual サーキットの詳細はAWS DeepRacerサービスが一般向け公開されてから発表されます。どの競技に参加する場合でも、AWS DeepRacerを所有する必要はありません。
 
 
 ![League](img/league.png)
 
 
-## Racing in the Summit Circuit
-To race in the Summit Circuit you must bring your trained AWS DeepRacer RL model to the Summit on a USB stick in a folder called models. Note that we will also provide standard models as part of a walk-up experience for those who were not able to train their own models. At each even you will have to queue for time on the track, on a first come first serve basis, or as the Summit organizer determined, and have 4 minutes to try and get the best lap time using your model and a standard AWS DeepRacer car that we will make available to race with on the race track. The race track will be the re:Invent 2018 track, so train your model on the re:Invent track if you intend to race at any of the selected AWS Summits. The fastest racer at each race in the Summit Circuit will proceed to re:Invent and the top 10 at each race will win AWS DeepRacer cars.
+## Summit サーキットでレースをする
+Summit サーキットでレースするには、トレーニング済みAWS DeepRacer RLモデルをUSBメモリースティックのmodelsフォルダに入れ、Summitに持参する必要があります。また、モデルを持参できなかった方にも、レースを体験していただくことのできる標準モデルを提供する予定です。イベントでは、先着順またはレーススタッフの進行に応じて、用意したモデルを使いAWS DeepRacerカーをトラック上でレースさせ、4分間での最速ラップタイムを計測します。AWS Summitのレースに合わせて準備する際、レーストラックはre:Invent 2018トラックを予定しているので、このトラックに合わせてモデルをトレーニングしましょう。各Summit サーキットで最速の参加者はre:Inventへの参加権を、そしてトップ10には、AWS DeepRacerカーを勝ち取れます。
 
 ## Racing in the Virtual Circuit
 To race in the Virtual Circuit you will have to enter your models into each race, by submitting them via the AWS DeepRacer service in the AWS console. Virtual Circuit races can be seen in the [DeepRacer Virtual Circuit](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards) section in the AWS DeepRacer service.
