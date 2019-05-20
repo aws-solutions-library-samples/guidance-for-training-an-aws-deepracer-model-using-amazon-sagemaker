@@ -298,12 +298,6 @@ experience buffer からランダムにサンプリングされたセットを *
 
 ヒント：報酬機能の保存を確認し、トレーニング済みモデルをバーナーアカウントからダウンロードしてください。Summit後にアカウントへのアクセスを失い、削除されます。
 
-！[停止条件]（img / stop_conditions.png）
-
-この時点までに25〜35分の実験時間が経過しているはずです。
-
-ヒント：報酬機能を確実に保存し、トレーニング済みモデルをバーナーアカウントからダウンロードしてください。あなたはサミットの後アカウントへのアクセスを失い、アカウントは削除されます。
-
 
 # Section 2: AWS DeepRacer リーグで競う
 [AWS DeepRacer リーグ](https://aws.amazon.com/deepracer/league/)は世界初のグローバル自走型レーシングリーグです。このリーグは、2019年に複数都市での対人レースおよびオンライン上で開催されます。レースをし、賞または47人に与えられるre:invent 2019で行われるAWS DeepRacer Knockout Roundsへの参加権および旅費を勝ち取りましょう。その予選を勝ち抜くと、AWS DeepRacer Champioonship Cupに参加できます。詳細は[こちら](https://d1.awsstatic.com/DeepRacer/AWS-DeepRacer-League-2019-Official-Rules-English-29-April-2019(1).pdf)を参照してください。
