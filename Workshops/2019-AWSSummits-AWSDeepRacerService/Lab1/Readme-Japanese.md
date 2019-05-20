@@ -253,46 +253,56 @@ AWS DeepRacerリーグの詳細はセクション2で説明します。このセ
 
 次のセクションにスクロールしてください。
 
-## 3.5 Algorithm settings
-This section specifies the hyperparameters that will be used by the reinforcement learning algorithm during training. Hyperparameters are used to improve training performance.
+## 3.5 アルゴリズム設定
+このセクションでは、強化学習で使われるハイパーパラメータを指定します。ハイパーパラメータを指定することでパフォーマンスが改善します。
 
-Before we dive in, let's just call out some terms we will be using to ensure you are familiar with what they mean.
+実施する前に、用語について説明します。
 
-A **step**, also known as experience, is a tuple of (s,a,r,s’), where s stands for an observation (or state) captured by the camera, a for an action taken by the vehicle, r for the expected reward incurred by the said action, and s’ for the new observation (or new state) after the action is taken.
+経験としても知られる **step** は、 (s,a,r,s’)のタプル型です。s はカメラによってキャプチャされた観測（または状態）、a は車両によって行われた行動、r は行動によって生じる報酬、s は行動から得られた新しい観測（または新しい状態）です。
 
-An **episode** is a period in which the vehicle starts from a given starting point and ends up completing the track or going off the track. Thus an episode is a sequence of steps, or experience. Different episodes can have different lengths.
+**episode** は、車両がスタート地点から出発し、最終的にトラックを完走するか、またはトラックから外れるまでの期間です。つまり、 episodeは、一連のstep、つまり経験です。異なるepisodeは、長さが異なる場合があります。
 
-An **experience buffer** consists of a number of ordered steps collected over fixed number of episodes of varying lengths during training. It serves as the source from which input is drawn for updating the underlying (policy and value) neural networks.
+**experience buffer** は、トレーニング中に様々な長さの一定数のepisodeで収集された順序付けられたstepで構成されています。experience bufferは、ニューラルネットワークを更新するための基本情報（方策と価値）として機能します。
 
-A **batch** is an ordered list of experiences, representing a portion of the experience obtained in the simulation over a period of time, and it is used to update the policy network weights.
+**batch** は、順序付けられた 経験のリストで、一定期間に渡るシミュレーションで得られた経験の一部を表し、policy networkの重みの更新で使用されます。
 
-A set of batches sampled at random from an experience buffer is called a **training data set**, and used for training the policy network weights.
+experience buffer からランダムにサンプリングされたセットを **training data set** と呼び、policy network の重みを更新するのに使用されます。
 
-Our scientists have tested these parameters a lot, and based on the re:Invent track and a small action space these parameters work well, so feel free to leave them unchanged. However, consider changing them as you start iterating on your models as they can significantly improve training convergence.
+これらのパラメータは専門家によってテストおり、re:Inventのトラックと、小さな action space でうまく機能するようになっているので、あまり変更しないでください。ただし、トレーニングの収束性を大幅に改善することができるので、モデルのイテレーションを開始するときに変更することを検討してください。
+
 
 | Parameter                                | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 |------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Batch size                               | The number recent of vehicle experiences sampled at random from an experience buffer and used for updating the underlying deep-learning neural network weights.   If you have 5120 experiences in the buffer, and specify a batch size of 512, then ignoring random sampling, you will get 10 batches of experience. Each batch will be used, in turn, to update your neural network weights during training.  Use a larger batch size to promote more stable and smooth updates to the neural network weights, but be aware of the possibility that the training may be slower. |
-| Number of epochs                         |  An epoch represents one pass through all batches, where the neural network weights are updated after each batch is processed, before proceeding to the next batch.   10 epochs implies you will update the neural network weights, using all batches one at a time, but repeat this process 10 times.  Use a larger number of epochs to promote more stable updates, but expect slower training. When the batch size is small,you can use a smaller number of epochs.                                                                                                           |
-| Learning rate                            |  The learning rate controls how big the updates to the neural network weights are. Simply put, when you need to change the weights of your policy to get to the maximum cumulative reward, how much should you shift your policy.  A larger learning rate will lead to faster training, but it may struggle to converge. Smaller learning rates lead to stable convergence, but can take a long time to train.                                                                                                                                                                   |
-| Exploration                              |  This refers to the method used to determine the trade-off between exploration and exploitation. In other words, what method should we use to determine when we should stop exploring (randomly choosing actions) and when should we exploit the experience we have built up.  Since we will be using a discrete action space, you should always select CategoricalParameters.                                                                                                                                                                                                   |
-| Entropy                                  | A degree of uncertainty, or randomness, added to the probability distribution of the action space. This helps promote the selection of random actions to explore the state/action space more broadly.                                                                                                                                                                                                                                                                                                                                                                            |
-| Discount factor                          | A factor that specifies how much the future rewards contribute to the expected cumulative reward. The larger the discount factor, the farther out the model looks to determine expected cumulative reward and the slower the training. With a discount factor of 0.9, the vehicle includes rewards from an order of 10 future steps to make a move. With a discount factor of 0.999, the vehicle considers rewards from an order of 1000 future steps to make a move. The recommended discount factor values are 0.99, 0.999 and 0.9999.                                         |
-| Loss type                                | The loss type specified the type of the objective function (cost function) used to update the network weights. The Huber and Mean squared error loss types behave similarly for small updates. But as the updates become larger, the Huber loss takes smaller increments compared to the Mean squared error loss. When you have convergence problems, use the Huber loss type. When convergence is good and you want to train faster, use the Mean squared error loss type.                                                                                                      |
-| Number of episodes between each training |  This parameter controls how much experience the car should obtain between each model training iteration. For more complex problems which have more local maxima, a larger experience buffer is necessary to provide more uncorrelated data points. In this case, training will be slower but more stable. The recommended values are 10, 20 and 40.                           |
+| Batch size                               | 車両の経験は、experience bufferからランダムでサンプリングされ、ディープニューラルネットワークの重みを更新するため使用されます。例えば、experience bufferに5120の経験があり、ランダムサンプリングを無視してバッチサイズを512を指定すると、10のバッチ得られます。各バッチは、重みの更新に使用されます。バッチサイズを大きくした場合、重みの更新は安定しますが、トレーニングが遅くなる可能性があるので注意してください。|
+| Number of epochs                         |  エポックは、すべてのバッチを1回実行することを表し、重みは各バッチが処理される毎に更新されます。例えば、10 エポックの場合、すべてのバッチを使用して重みを更新するプロセスを10回繰り返すことを意味します。エポックを増やすことでより安定して重みを更新できますが、トレーニングが遅くなります。バッチサイズが小さい場合は、少ないepochを使用できます。|
+| Learning rate                            |  学習率は、重みを更新する大きさを制御します。簡単に言えば、方策の重みを変えて累積報酬を最大にしたい場合、方策をどれだけ変えるべきかということです。学習率を大きくするとトレーニングは早くなりますが、収束しにくくなります。学習率を小さくすると収束は安定しますが、トレーニングに時間がかかります。|
+| Exploration                              |  探索と搾取の間のトレードオフを決めるために使用する方法を指定します。言い換えると、探索をやめるべきか（ランダムに行動）、これまでの経験を利用するべきかを決定するためにどのような方法を使うべきか、ということです。個別のaction spaceを使うので、必ずCategoricalParametersを選択してください。|
+| Entropy                                  | action spaceの確率分布に追加された、ある程度の不確実性、ランダム性。ランダムにアクションを選択して 状態/action space をより広く探索するのに役立ちます。|
+| Discount factor                          | 割引率は、将来の報酬が予想累積報酬にどれだけ寄与するかを指定します。割引率を大きくすると、モデルは予想累積報酬を決定し、トレーニングが遅くなります。例えば割引率が0.9の場合、車両は移動のために将来の10 stepに報酬が含まれることになります。0.999の割引率であれば、車両は移動するために将来の1000ステップに報酬が含まれることになります。推奨される割引率は、0.99、0.999、および0.9999です。|
+| Loss type                                | 損失タイプは、重みを更新するために使用される目的関数（コスト関数）のことです。Huberと平均二乗誤差は、小規模な更新でも同様に動作します。しかし、更新が大きくなるに連れてHuberの損失は、平均二乗誤差の損失に比べて増分が小さくなります。学習の収束に問題が有る場合、Huberを使います。収束性がよく、より早くトレーニングしたい場合は平均二乗誤差を使用してください。|
+| Number of episodes between each training |  このパラメータは、各モデルのトレーニング・イテレーション毎に車両がどれだけ経験を得るべきかを制御します。例えば多くの極大値を持つ複雑な問題の場合、experience bufferは多くの無相関データが必要です。大きくした場合、トレーニングは遅くなりますが安定します。推奨値は、10、20、40です。|
 
-Note that after each training iteration we will save the new model file to your S3 bucket. The AWS DeepRacer service will not show all models trained during a training run, just the last model. We will look at these in Section 3.
+各トレーニング・イテレーション後に新しいモデルはS3バケットに保存します。AWS DeepRacerサービスは、トレーニング実行中にすべてのモデル表示するのではなく、最後のモデルだけを表示します。これらについては Section 3を参照してください。
 
-## 3.6 Stop conditions
-This is the last section before you start training. Here you can specify the maximum time your model will train for. Ideally you should put a number in this condition. You can always stop training early. Furthermore, if your model stopped as a result of the condition, you can go to the model list screen, and clone your model to restart training using new parameters.
 
-Please specify 90 minutes and then select **Start training**. If there is an error, you will be taken to the error location. Note the Python syntax will also be validated again. Once you start training it can take up to 6 minutes to spin up the services needed to start training. During this time let's talk through the AWS DeepRacer League and how you can take part.
+## 3.6 停止条件
+トレーニングを始める前の最後のセクションです。ここではモデルがトレーニングする最大時間を指定できます。可能であれば、この条件を入力すべきです。いつでも早くトレーニングをやめることが出来ます。もし入力した条件の結果としてモデルが停止した場合は、モデル一覧画面に遷移し、モデルを複製して新しいパラメータを使用してトレーニングを再開できます。
+
+
+90分を指定してから、**Start training** を選択してください。エラーになった場合、エラー箇所に移動します。Pythonのシンタックスも検証されます。トレーニングを開始したら、トレーニングを開始するために必要なサービスが起動するまでに最大6分かかります。この間に AWS DeepRacer リーグと、どのように参加するのかを説明します。
+
 
 ![Stopping conditions](img/stop_conditions.png)
 
-Note 25 to 35 minutes of lab time should have elapsed by this point.
+この時点までに25〜35分の実験時間が経過しているはずです。
 
-Hint: Please make sure you save your reward function, and download your trained model from the burner account. You will lose access to the account after the Summit, and the account will be wiped.
+ヒント：報酬機能の保存を確認し、トレーニング済みモデルをバーナーアカウントからダウンロードしてください。Summit後にアカウントへのアクセスを失い、削除されます。
+
+！[停止条件]（img / stop_conditions.png）
+
+この時点までに25〜35分の実験時間が経過しているはずです。
+
+ヒント：報酬機能を確実に保存し、トレーニング済みモデルをバーナーアカウントからダウンロードしてください。あなたはサミットの後アカウントへのアクセスを失い、アカウントは削除されます。
 
 
 # Section 2: AWS DeepRacer リーグで競う
