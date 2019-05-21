@@ -24,8 +24,13 @@ This will set up the required IAM roles, S3 bucket, and AWS DeepRacer CloudForma
 
 ![Creating](img/creatingresources.png)
 
-When finished you should see the following
+When the create resources process is finished, you should see the following four checkmarks.
 
 ![Done](img/completed.png)
 
+You can now select **Reinforcement learning** on the left hand navigation bar, to see create your own models or use one of the sample models to race in the League!
+
+![SampleModels](img/SampleModels.png)
+
+## Troubleshooting
 Note that since we make use of a VPC, you may see an error if you are at your VPC limit. You may have to request a [VPC limit](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html) increase.
