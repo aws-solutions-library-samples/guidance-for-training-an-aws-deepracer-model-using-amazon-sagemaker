@@ -32,5 +32,7 @@ You can now select **Reinforcement learning** on the left hand navigation bar, t
 
 ![SampleModels](img/SampleModels.png)
 
+The next [lab](https://github.com/aws-samples/aws-deepracer-workshops/tree/master/Workshops/2019-AWSSummits-AWSDeepRacerService/Lab1) will cover racing in the League and model building
+
 ## Troubleshooting
 Note that since we make use of a VPC, you may see an error if you are at your VPC limit. You may have to request a [VPC limit](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html) increase.
