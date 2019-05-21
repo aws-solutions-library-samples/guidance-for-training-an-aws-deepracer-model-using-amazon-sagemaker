@@ -40,15 +40,18 @@ Log into the [AWS Console](https://signin.aws.amazon.com/signin?redirect_uri=htt
 
 Make sure you are in the **North Virginia** region and navigate to [AWS DeepRacer](https://console.aws.amazon.com/deepracer/home?region=us-east-1) (https://console.aws.amazon.com/deepracer/home?region=us-east-1).
 
+This lab assumes you have created the resources required for AWS DeepRacer. Please see [Lab 0 Create resources](https://github.com/aws-samples/aws-deepracer-workshops/tree/master/Workshops/2019-AWSSummits-AWSDeepRacerService/Lab0_Create_resources) if you have not yet done so.
+
 From the AWS DeepRacer landing page, expand the pane on the left and select **Reinforcement learning**.
 
+
+
 ## Step 2: Model List Page
-Once you select Reinforcement learning, you will land on the models page. This page shows a list of all the models you have created and the status of each model. If you want to create models, this is where you start the process. Similarly, from this page you can download, clone, and delete models.
+Once you select Reinforcement learning, you will land on the models page. This page shows a list of all the models you have created and the status of each model. If you want to create models, this is where you start the process. Similarly, from this page you can download, clone, and delete models. If this is the first time you are using the service and have just created your resources, you should see a few sample models in your account.
 
-![Model List Page](img/model_list_deepracer.png)
+![Model List Page](img/SampleModels.png)
 
-If you don't have any models this list will be empty, and you can create a model by choosing **Create model**.
-Once you have created a model you can use this page to view the status of the model, for example is it training, or ready. A model status of "ready" indicates model training has completed and you can then download it, evaluate it, or submit it to a virtual race. You can click on the model's name to proceed to the **Model details** page. 
+You can create a model by selecting **Create model**. Once you have created a model you can use this page to view the status of the model, for example is it training, or ready. A model status of "ready" indicates model training has completed and you can then download it, evaluate it, or submit it to a virtual race. You can click on the model's name to proceed to the **Model details** page. 
 
 To create your first model select **Create model**.
 
@@ -62,8 +65,7 @@ Throughout the console you will see <font color=blue>**Info**</font> buttons. Wh
 
 
 ## 3.1 Model details
-You should start at the top with Model Details. Here you can name your model and provide a description for your model. If this is the first time you use the service you should select the **Create Resources** button. This will create the IAM roles that AWS DeepRacer needs to call other AWS services on your behalf, the VPC stack used during training and evaluation, the AWS DeepRacer lambda function used to validate your Python 3 reward function, and the AWS DeepRacer S3 bucket where model artifacts will be stored. If you see an error in this section please let us know.
-
+You should start at the top with Model Details. Here you can name your model and provide a description for your model. This lab assumes you have created the resources required for AWS DeepRacer. Please see [Lab 0 Create resources](https://github.com/aws-samples/aws-deepracer-workshops/tree/master/Workshops/2019-AWSSummits-AWSDeepRacerService/Lab0_Create_resources) if you have not yet done so.
 
 ![Model Details](img/model_details.png)
 
