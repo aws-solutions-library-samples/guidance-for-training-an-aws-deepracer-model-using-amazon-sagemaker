@@ -1,4 +1,4 @@
-# Lab 1: Let's build an AWS DeepRacer RL model!
+# Lab 1: Get ready to race by building your own AWS DeepRacer RL model!
 
 # Notes
 We are continuously looking to improve the AWS DeepRacer service to provide a better customer experience. As such please always refer to the latest lab content in GitHub as prior content may be outdated. If you do have any technical questions please ask the workshop facilitators, and for those of you working through the lab at home, please post your questions to the [AWS DeepRacer forum](https://forums.aws.amazon.com/forum.jspa?forumID=318).
@@ -36,19 +36,22 @@ The lab will provide detail on the various components in the AWS DeepRacer servi
 
 # Section 1: Training your first model
 ## Step 1: Login to the AWS DeepRacer service
-Log into the [AWS Console](https://signin.aws.amazon.com/signin?redirect_uri=https%3A%2F%2Fconsole.aws.amazon.com%2Fconsole%2Fhome%3Fnc2%3Dh_ct%26src%3Dheader-signin%26state%3DhashArgs%2523%26isauthcode%3Dtrue&client_id=arn%3Aaws%3Aiam%3A%3A015428540659%3Auser%2Fhomepage&forceMobileApp=0) using the account details provided.
+Log into the [AWS Console](https://console.aws.amazon.com/deepracer/home?region=us-east-1#getStarted) using the account details provided.
 
-Make sure you are in the **North Virginia** region and navigate to [AWS DeepRacer](https://console.aws.amazon.com/deepracer/home?region=us-east-1) (https://console.aws.amazon.com/deepracer/home?region=us-east-1).
+Make sure you are in the **North Virginia** region and navigate to [AWS DeepRacer](https://console.aws.amazon.com/deepracer/home?region=us-east-1#getStarted) (https://console.aws.amazon.com/deepracer/home?region=us-east-1#getStarted).
+
+This lab assumes you have created the resources required for AWS DeepRacer. Please see [Lab 0 Create resources](https://github.com/aws-samples/aws-deepracer-workshops/tree/master/Workshops/2019-AWSSummits-AWSDeepRacerService/Lab0_Create_resources) if you have not yet done so.
 
 From the AWS DeepRacer landing page, expand the pane on the left and select **Reinforcement learning**.
 
+
+
 ## Step 2: Model List Page
-Once you select Reinforcement learning, you will land on the models page. This page shows a list of all the models you have created and the status of each model. If you want to create models, this is where you start the process. Similarly, from this page you can download, clone, and delete models.
+Once you select Reinforcement learning, you will land on the models page. This page shows a list of all the models you have created and the status of each model. If you want to create models, this is where you start the process. Similarly, from this page you can download, clone, and delete models. If this is the first time you are using the service and have just created your resources, you should see a few sample models in your account.
 
-![Model List Page](img/model_list_deepracer.png)
+![Model List Page](img/SampleModels.png)
 
-If you don't have any models this list will be empty, and you can create a model by choosing **Create model**.
-Once you have created a model you can use this page to view the status of the model, for example is it training, or ready. A model status of "ready" indicates model training has completed and you can then download it, evaluate it, or submit it to a virtual race. You can click on the model's name to proceed to the **Model details** page. 
+You can create a model by selecting **Create model**. Once you have created a model you can use this page to view the status of the model, for example is it training, or ready. A model status of "ready" indicates model training has completed and you can then download it, evaluate it, or submit it to a virtual race. You can click on the model's name to proceed to the **Model details** page. 
 
 To create your first model select **Create model**.
 
@@ -62,8 +65,7 @@ Throughout the console you will see <font color=blue>**Info**</font> buttons. Wh
 
 
 ## 3.1 Model details
-You should start at the top with Model Details. Here you can name your model and provide a description for your model. If this is the first time you use the service you should select the **Create Resources** button. This will create the IAM roles that AWS DeepRacer needs to call other AWS services on your behalf, the VPC stack used during training and evaluation, the AWS DeepRacer lambda function used to validate your Python 3 reward function, and the AWS DeepRacer S3 bucket where model artifacts will be stored. If you see an error in this section please let us know.
-
+You should start at the top with Model Details. Here you can name your model and provide a description for your model. This lab assumes you have created the resources required for AWS DeepRacer. Please see [Lab 0 Create resources](https://github.com/aws-samples/aws-deepracer-workshops/tree/master/Workshops/2019-AWSSummits-AWSDeepRacerService/Lab0_Create_resources) if you have not yet done so.
 
 ![Model Details](img/model_details.png)
 
@@ -116,8 +118,8 @@ The following table contains the variables you can use in your reward function. 
 | Variable Name        | Syntax                                                                                | Type                     | Description                                                                                                                                                                                                                                                                                                                                                         |
 |----------------------|---------------------------------------------------------------------------------------|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | all_wheels_on_track  | params['all_wheels_on_track']                                                         | Boolean                  | If all of the four wheels is on the track, where track is defined as the road surface including the border lines, then all_wheels_on_track is True. If any of the four wheels is off the track, then all_wheels_on_track is False. Note if all four wheels are off the track, the car will be reset.                                                                             |
-| x                    | params['x']                                                                           | Float                    | Returns the x coordinate of the center of the from axle of the car, in unit meters.                                                                                                                                                                                                                                                                                 |
-| y                    | params['y']                                                                           | Float                    | Returns the y coordinate of the center of the from axle of the car, in unit meters.                                                                                                                                                                                                                                                                                 |
+| x                    | params['x']                                                                           | Float                    | Returns the x coordinate of the center of the front axle of the car, in unit meters.                                                                                                                                                                                                                                                                                 |
+| y                    | params['y']                                                                           | Float                    | Returns the y coordinate of the center of the front axle of the car, in unit meters.                                                                                                                                                                                                                                                                                 |
 | distance_from_center | params['distance_from_center']                                                        | Float [0, track_width/2] | Absolute distance from the center of the track. Center of the track is determined by the line that links all center waypoints.                                                                                                                                                                                                                                      |
 | is_left_of_center    | params['is_left_of_center']                                                           | Boolean                  | A variable that indicates if the car is to the left of the center of the track.                                                                                                                                                                                                                                                                                     |
 | is_reversed          | params['is_reversed']                                                                 | Boolean                  | A variable indicating whether the car is training in the original direction of the track, or the reverse direction of the track.                                                                                                                                                                                                                                    |
@@ -329,24 +331,7 @@ Once you have a trained model, you can  submit it into the current open race. Yo
 
 Each race in the Virtual Circuit will have its own new competition track and it won't be possible to directly train on the competition tracks. Instead we will make a track available that will be similar in theme and design to each competition track, but not identical. This ensures that models have to generalize, and can't just be overfitted to the competition track. The fastest racer in each race in the Virtual Circuit will proceed to re:Invent and the top 10 at each race will win AWS DeepRacer cars.
 
-**Tip**: Since the DeepRacer service does not currently support importing models, you could manually import a model. To do this follow these steps:
-1. Download your trained model from your burner account, it will store as <model Name>.tar.gz. This file contains the model.pb file that has your network weights, and the model_metadata.json that has your model's action space. Please make sure you store your reward function and take note of the track you trained this model on.
-
-2. To import this model into your account, log into your account and go to AWS DeepRacer
-
-3. Start a 10 minute training job, using the same parameters you used in your burner account (track, action space, reward function, and hyperparameters)
-
-4. Once this job is completed, locate the model.tar.gz file associated with this training job
-
-5. Download the model.tar.gz file
-
-6. Unpack the file and replace the model.pb file with the model.pb file from your trained burner account model
-
-7. Repack all contents into model.tar.gz 
-
-8. Go back to the S3 bucket, select the model.tar.gz file in S3, select upload and replace the file in S3 with your new file.
-
-
+**Tip**: The DeepRacer service does not currently support importing models,  but you can still save your model.tar.gz file, as well as all model training artifacts. The final model is stored as model.tar.gz file in a folder called DeepRacer-SageMaker-rlmdl-account number-date in your DeepRacer S3 bucket. The interim models are stored as .pd files in a folder called DeepRacer-SageMaker-RoboMaker-comm-account number-date
 
 After each event in the Summit Circuit and in the Virtual Circuit, all racers that took part will receive points based on the time it took them to complete the race. Points will aggregate through the season, and at the end of the seasons the top point getters will be invited to take part at re:Invent. Please refer to the [terms and conditions insert link here](https://aws.amazon.com/deepracer/faqs/#AWS_DeepRacer_League) for more details. 
 
@@ -400,7 +385,7 @@ Amazon S3 will store the final model, that is referenced in the AWS DeepRacer se
 
 ![S3list](img/s3.png)
 
-The final model is stored as model.tar.gz file in a folder called DeepRacer-SageMaker-rlmdl-account number-date in your DeepRacer S3 bucket. This location of this file is stored by the AWS DeepRacer service, so moving this file is not recommended. 
+The final model is stored as model.tar.gz file in a folder called DeepRacer-SageMaker-rlmdl-account number-date in your DeepRacer S3 bucket.  
 The interim models are stored as .pd files in a folder called DeepRacer-SageMaker-RoboMaker-comm-account number-date
 ![S3dr](img/s3_aws_deepracer.png)
 

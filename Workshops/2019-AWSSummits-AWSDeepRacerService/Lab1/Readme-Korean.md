@@ -10,7 +10,7 @@ AWS는 고객분들께서 보다 나은 경험을 하실 수 있도록 AWS DeepR
 
 1. AWS 콘솔에서 제공하는 AWS DeepRacer 서비스를 잘 배우고 익힙니다. 
 2. 모델 트레이닝을 시작하는데 필요한 개념을 설명합니다. 
-3. DeepRacer League에 어떻게 참가하고, 순위를 위해 어떻게 경쟁하면 되는지 설명합니다. 
+3. DeepRacer League (Virtual Circuit과 Summit Circuit)에 어떻게 참가하고, 순위를 위해 어떻게 경쟁하면 되는지 설명합니다. 
 4. 여러분이 만든 모델을 향상시킬 수 있는 방법을 설명합니다. 
 
 랩은 크게 3개의 섹션으로 구성되어 있습니다:
@@ -31,7 +31,7 @@ AWS는 고객분들께서 보다 나은 경험을 하실 수 있도록 AWS DeepR
 
 - 트레이닝 잡(job)을 시작하고 싶으시다면, 모델 트레이닝을 시작하기에 앞서 충분한 시간을 들여서 개념을 먼저 숙지 하시기 바랍니다. 
 - 랩을 진행하면서 질문도 하시고, 테이블에서 다른 분들과의 의견 교환도 자유롭게 하시기 바랍니다. 
-- 끝으로, 트레이닝 작업을 시작할 때 적어도 60~90분 정도 실행하시기 바랍니다. 필요한 서비스를 시작하려면 약 6분 정도 기다리셔야 합니다. 여러분의 모델이 어느정도 시간을 들여 트랙을 탐색한 후 랩을 완료할 것입니다.
+- 끝으로, 트레이닝 작업을 시작할 때 적어도 90분 정도 실행하시기 바랍니다 (re:Invent 트랙). 필요한 서비스를 시작하려면 약 6분 정도 기다리셔야 합니다. 여러분의 모델이 어느정도 시간을 들여 트랙을 탐색한 후 랩을 완료할 것입니다.
 - 랩을 완료하신 후에도 관련 내용을 계속 학습하고 싶으시면, AWS Training and Certification 팀에서 제공하는 신규 교육 프로그램인 [AWS DeepRacer: Driven by Reinforcement Learning](https://www.aws.training/learningobject/wbc?id=32143) 을 확인해보시기 바랍니다.
 
 # Section 1: 첫 번째 모델 트레이닝
@@ -98,6 +98,7 @@ Section 2에서 AWS DeepRacer League에 대한 자세한 내용을 제공할 예
 
 - 모델은 action space에 없는 행동을 수행하지 않습니다. 어떤 모델이 특정 행동이 필요 없는 트랙에서 학습되었다면 (예 : 좌/우회전을 보상받지 못하는 직선 트랙), 그 행동을 언제 사용해야 할지 모를 것입니다. 따라서 안정적인 모델을 설계하려면 action space와 학습 트랙을 염두에 두십시오.
 - 빠른 속도 또는 넓은 조향각을 지정하는 것은 좋지만, 여러분의 보상 함수에서 전속력으로 회전 구간을 운전하는 것 또는 직선 구간에서 지그재그로 움직이는 것이 적절한지 생각해 봐야 합니다.
+- 빠른 최대 속도를 지정한 모델은 느린 최대 속도를 지정한 모델보다 수렴하는데 더 오래 걸립니다.
 - 실제 경주의 경우, 자동차가 시뮬레이터에서 배운 것보다 더 빨리 주행하지 못하도록 AWS DeepRacer의 웹 서버 사용자 인터페이스에서 speed 값을 조절해야 합니다.
 
 
@@ -112,14 +113,14 @@ Section 2에서 AWS DeepRacer League에 대한 자세한 내용을 제공할 예
 | 변수 이름            | 문법                                                         | 타입                     | 설명                                                         |
 | -------------------- | ------------------------------------------------------------ | ------------------------ | ------------------------------------------------------------ |
 | all_wheels_on_track  | params['all_wheels_on_track']                                | Boolean                  | 경계선을 포함한 도로의 표면으로 정의된 트랙 위에 4바퀴 모두 있는 경우, all_wheels_on_track의 값은 True입니다. 만약, 4바퀴 중 어느 하나라도 트랙을 벗어나면, all_wheels_on_track은 False가 됩니다. 4 개의 바퀴가 모두 트랙에서 벗어나면 자동차는 리셋됩니다. |
-| x                    | params['x']                                                  | Float                    | 자동차의 차축 중심의 x 좌표를 미터로 반환합니다.             |
-| y                    | params['y']                                                  | Float                    | 자동차의 차축 중심의 y 좌표를 미터로 반환합니다.             |
+| x                    | params['x']                                                  | Float                    | 자동차의 앞 차축 중심의 x 좌표를 미터로 반환합니다.          |
+| y                    | params['y']                                                  | Float                    | 자동차의 앞 차축 중심의 y 좌표를 미터로 반환합니다.          |
 | distance_from_center | params['distance_from_center']                               | Float [0, track_width/2] | 트랙 중심으로부터 절대 거리. 트랙의 중심은 모든 waypoint를 연결하는 선에 의해 결정됩니다. |
 | is_left_of_center    | params['is_left_of_center']                                  | Boolean                  | 자동차가 트랙의 중앙선 왼쪽에 있는지를 알려줍니다.           |
 | is_reversed          | params['is_reversed']                                        | Boolean                  | 이 변수는 트랙의 원래 방향으로 주행하면서 학습을 수행하는지, 반대 방향으로 주행하면서 학습을 하는지를 알려줍니다. |
 | heading              | params['heading']                                            | Float (-180,180]         | 자동차가 진행하고 있는 방향을  알려줍니다 (단위: degree). 자동차가 x-축이 증가하는 방향(즉, y축 값은 상수)을 보고 있다면, 리턴값은 0가 됩니다. y-축이 증가하는 방향(x-축은 상수)을 바라보면 90이, y-축의 값이 줄어드는 방향(x-축은 상수)을 바라고 있는 경우, -90이 반환됩니다. |
 | progress             | params['progress']                                           | Float [0,100]            | 트랙 주행 완료 백분율. Progress가 100이면 한바퀴를 완주한 것을 의미합니다. |
-| steps                | params['steps']                                              | Integer                  | 완료된 스텝 수. 한 스텝은 (state, action, next state, reward)의 튜플 입니다. |
+| steps                | params['steps']                                              | Integer [0, inf]         | 완료된 스텝 수. 한 스텝은 (state, action, next state, reward)의 튜플 입니다. |
 | speed                | params['speed']                                              | Float                    | 초당 미터 단위의 자동차 속도. 이것은 선택된 action space와 관련 있습니다. |
 | steering_angle       | params['steering_angle']                                     | Float                    | Degree 단위의 원하는 자동차의 조향 각도 (단위: degree). 이것은 선택된 action space와 관련 있습니다. 양수(+) 각도는 왼쪽으로, 음수(-) 각도는 오른쪽으로 진행함을 나타냅니다. 이것은 2D 기하학적 처리와 관련 있습니다. |
 | track_width          | params['track_width']                                        | Float                    | 트랙의 폭 (미터 단위)                                        |
@@ -307,13 +308,33 @@ Summit Circuit 레이스에 참여하려면 학습된 AWS DeepRacer RL 모델을
 
 ## Virtual Circuit 레이스에 참여하기
 
-Virtual Circuit 레이스에 참여하려면 AWS DeepRacer 서비스의 AWS 콘솔에서 여러분의 모델을 제출해야 합니다. AWS DeepRacer 서비스에 있는 DeepRacer League 메뉴에서 현재 진행중이거나 완료 또는 예정된 모든 레이스의 목록을 볼 수 있습니다. 여러분은 참여할 레이스를 선택하고 모델을 제출하기만 하면 됩니다. 여러분이 제출한 모델은 선택한 레이스 트랙에서 AWS DeepRacer 서비스에 의해 평가됩니다. Virtual Circuit의 각 레이스마다 고유한 트랙이 있으며 이 트랙들을 직접 학습에 사용할 수는 없습니다. 동일하지 않지만 테마와 디자인이 유사한 트랙을 대신 제공할 예정입니다. 따라서 여러분의 모델은 특정 레이스 트랙에 오버피팅 되지 않은 일반적인 것이어야 합니다. 각 Virtual Circuit 레이스의 우승자는 re:Invent 2019의 레이스에 진출하며 10위까지는 AWS DeepRacer 자동차를 상품으로 받게 됩니다.
+*Virtual Circuit 레이스에 참여하려면 AWS DeepRacer 서비스의 AWS 콘솔에서 여러분의 모델을 제출해야 합니다. AWS DeepRacer 서비스에 있는 DeepRacer League 메뉴에서 현재 진행중이거나 완료 또는 예정된 모든 레이스의 목록을 볼 수 있습니다. 여러분은 참여할 레이스를 선택하고 모델을 제출하기만 하면 됩니다. 여러분이 제출한 모델은 선택한 레이스 트랙에서 AWS DeepRacer 서비스에 의해 평가됩니다. Virtual Circuit의 각 레이스마다 고유한 트랙이 있으며 이 트랙들을 직접 학습에 사용할 수는 없습니다. 동일하지 않지만 테마와 디자인이 유사한 트랙을 대신 제공할 예정입니다. 따라서 여러분의 모델은 특정 레이스 트랙에 오버피팅 되지 않은 일반적인 것이어야 합니다. 각 Virtual Circuit 레이스의 우승자는 re:Invent 2019의 레이스에 진출하며 10위까지는 AWS DeepRacer 자동차를 상품으로 받게 됩니다.*
 
-Summit Circuit과 Virtual Circuit의 각 이벤트가 끝나면, 참가자들은 레이스 완료에 걸린 시간을 기준으로 포인트를 받습니다. 포인트는 한 시즌 동안 집계되며, 시즌이 끝났을 때 가장 많이 포인트를 얻은 분은 re:Invent 2019에 초대됩니다. 자세한 내용은 [링크](https://github.com/aws-samples/aws-deepracer-workshops/blob/e5dc542fbf6810ce8464d27ad5b8e2b64a565653/Workshops/2019-AWSSummits-AWSDeepRacerService/Lab1)의 이용 약관을 참조하시기 바랍니다.
+Virtual Circuit 레이스에 참여하려면 AWS DeepRacer 서비스의 AWS 콘솔에서 여러분의 모델을 제출해야 합니다. Virtual Circuit 레이스들은 AWS DeepRacer 서비시의 [DeepRacer Virtual Circuit](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards) 메뉴에서 볼 수 있습니다.
+
+![VirtualCircuit](img/dvc.png)
+
+진행 중인 레이스 목록으로 스크롤 다운하세요.
+
+![VirtualCircuitOpen](img/dvc-ll.png)
+
+레이스에 대한 정보를 보기 위해서 레이스 정보를 선택하세요.
+
+![VirtualCircuitInfo](img/dvc-info.png)
+
+학습된 모델이 있으면, 그 모델을 현재 열린 레이스에 제출할 수 있습니다. 제출된 모델은 지정된 경쟁 트렉에서 AWS DeepRacer 서비스에 의해서 평가가 됩니다. 제출한 모델에 대한 평가가 완료되면, 여러분의 이전 제출 기록보다 더 좋다면 업데이트된 기록을 볼 수 있습니다.
+
+![VirtualCircuitModelSubmit](img/model-submitted.png)
+
+버추얼 서킷의 각 레이스는 새로운 경쟁 트렉을 사용할 것이고, 경쟁 트렉을 직접 학습에 사용할 수는 없습니다. 대신 경쟁 트렉과 테마와 디자인이 동일하지는 않지만 비슷한 트랙이 학습 용으로 제공될 것입니다. 이는 여러분의 모델이 일반화를 잘 할 수 있도록 학습시키고, 경쟁 트렉에 오버피팅 되지 않게 해줍니다. 버추얼 서킷의 각 레이스에서 가장 빠른 레이서는 re:Invent에 초청될 것이고, 매 레이스의 상위 10명에게는 AWS DeepRacer 자동차가 주어질 것입니다.
+
+**팁**: 현재는 DeepRacer 서비스는 모델을 가져오는 기능은 제공하지 않습니다. 하지만, model.tar.gz 파일과 모든 모델 학습 산출물을 저장할 수 있습니다. 최종 모델은 여러분의 DeepRacer S3 버킷의 DeepRacer-SageMaker-rlmdl-account number-date 이름의 폴더에 model.tar.gz 으로 저장됩니다. 중간 모델을은 DeepRacer-SageMaker-rlmdl-account number-date 이름의 폴더에 .pd 확장자를 갖는 파일로 저장됩니다.
+
+Summit Circuit과 Virtual Circuit의 각 이벤트가 끝나면, 참가자들은 레이스 완료에 걸린 시간을 기준으로 포인트를 받습니다. 포인트는 한 시즌 동안 집계되며, 시즌이 끝났을 때 가장 많이 포인트를 얻은 분은 re:Invent 2019에 초대됩니다. 자세한 내용은 [링크](https://aws.amazon.com/deepracer/faqs/#AWS_DeepRacer_League)의 이용 약관을 참조하시기 바랍니다.
 
 # Section 3: 모델 학습과 모델 개선 
 
-## Step 1: 모델 학습 상태 모니터링하기
+## 3.1: 모델 학습 상태 모니터링하기
 
 모델의 학습이 시작된 후에 메뉴의 목록 중에서 선택하면, 에피소드별 전체 보상의 그래프와 시뮬레이터의 1인칭 시점 화면을 통해 학습 진행 상태를 확인할 수 있습니다.
 
@@ -349,7 +370,7 @@ AWS RoboMaker에서는 모든 시뮬레이션 작업 목록을 볼 수 있으며
 
 ![RoboMaker job details](img/aws_robomaker.png)
 
-시뮬레이션 환경을 보여주는 새로운 윈도우가 열립니다. 이 환경을 변경하면 변경 사항이 실시간으로 시뮬레이션에 영향을 미치므로 주의하십시오. 실수로 자동차 또는 환경을 끌거나 돌리면 학습에 부정적인 영향을 줄 수도 있습니다.
+시뮬레이션 환경을 보여주는 새로운 윈도우가 열립니다. **이 환경을 변경하면 변경 사항이 실시간으로 시뮬레이션에 영향을 미치므로 주의하십시오. 실수로 자동차 또는 환경을 끌거나 돌리면 학습에 부정적인 영향을 줄 수도 있습니다.**
 
 ![RoboMaker simulator](img/robomaker_simulator.png) 
 
@@ -361,14 +382,14 @@ Amazon S3는 AWS DeepRacer 서비스가 사용할 최종 모델과 학습 작업
 
 ![S3list](img/s3.png)
 
-최종 모델은 DeepRacer-SageMaker-rlmdl-account number-date 폴더에 .tar.gz 파일로 저장됩니다.
+최종 모델은 여러분의 DeepRacer S3 버킷의 DeepRacer-SageMaker-rlmdl-account number-date 폴더에 model.tar.gz 파일로 저장됩니다.
 임시 모델은 DeepRacer-SageMaker-RoboMaker-comm-account number-date 폴더에 .pd 파일로 저장됩니다.
 
 ![S3dr](img/s3_aws_deepracer.png)
 
 AWS DeepRacer 서비스는 각 학습 작업에 대한 최종 모델 하나씩만 참조 할 수 있습니다. 그러나 최종 학습을 반복하는 과정에서 학습된 모델을 도중에 학습된 모델로 교체하고 싶다면, 최종 model.tar.gz 파일에서 model.pb 파일을 간단히 바꾸면 됩니다. 모델을 쓸모 없게 만들 수도 있기 때문에 .tar.gz에서 다른 파일을 변경하면 안된다는 점에 주의하십시오. 모델 학습이 중지된 후, 또는 수동으로 학습을 중지시킨 후에 이 작업을 수행하십시오.
 
-## Step 2: 모델 성능 평가하기
+## 3.2: 모델 성능 평가하기
 
 워크샵에서 2 단계와 그 다음 단계들을 실행할 시간이 없을 수도 있습니다. 모델 학습이 완료되면 모델 평가를 시작할 수 있습니다. 학습 과정을 지켜본 모델 세부 정보 페이지에서 **Start evaluation**을 선택하십시오. 이제 모델의 성능과 랩 수를 평가할 트랙을 선택할 수 있습니다. re:Invent 2018 트랙과 5 laps를 선택하고 Start를 선택하십시오.
 
@@ -376,9 +397,13 @@ AWS DeepRacer 서비스는 각 학습 작업에 대한 최종 모델 하나씩�
 
 ![evaluation_done](img/evaluation_done.png)
 
-## Step 3: 반복하며 모델을 개선하기
+## 3.3: AWS DeepRacer League에서 경주하기
 
-모델 평가를 바탕으로 여러분의 모델이 트랙을 안정적으로 완주할 수 있는지 여부와 평균 랩타임이 어느 정도인지 알게 되었을 것입니다. Virtual Circuit 레이스에서는 연속으로 세 바퀴를 완주해야하므로, 안정적인 모델을 만드는 것이 중요합니다.
+여러분이 만든 모델에 만족한다면, [Summit Circuit](https://aws.amazon.com/deepracer/summit-circuit/) 이나 [Virtual Circuit](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards)에 참여할 수 있습니다. 여러분이 학습한 모델을 Virtual Circuit의 [현재 오픈된 레이스](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards)에 제출해보세요.
+
+## 3.4: 반복하며 모델을 개선하기
+
+모델 평가를 바탕으로 여러분의 모델이 트랙을 안정적으로 완주할 수 있는지 여부와 평균 랩타임이 어느 정도인지 알게 되었을 것입니다. Virtual Circuit 레이스에서는 연속으로 지정한 바퀴를 완주를 해야하기 때문에, 안정적인 모델을 만드는 것이 중요합니다. 완주 회수는 레이스 별로 지정할 수 있습니다.
 
 이제는 보상 함수와 하이퍼 파라미터를 반복적으로 실험할 때입니다. 여러 가지 주행 특성을 반영한 몇 가지 보상 함수를 시험해본 후, 시뮬레이터에서 평가해 가장 성능이 좋은 함수를 선택합니다. AWS DeepRacer 자동차가 있다면 실제로 테스트해 볼 수도 있습니다.
 
@@ -389,7 +414,7 @@ AWS DeepRacer 서비스는 각 학습 작업에 대한 최종 모델 하나씩�
 - 더 빠른 주행에 가산점을 주도록 보상 함수를 수정하세요. 특히 진행 상황(progress), 진행 스텝수(steps), 속도(speed) 변수를 활용하세요.
 - 모델을 복제하여 학습 경험을 활용하십시오. 모델이 복제되면 동작 공간을 변경할 수 없으며,  바꾸면 작업이 실패한다는 점을 기억하세요.
 
-## Step 4: RoboMaker 로그를 통해 모델 성능 분석하기
+## 3.5: RoboMaker 로그를 통해 모델 성능 분석하기
 
 추가 단계를 원한다면 로그 파일을 검사하여 학습된 각 모델의 성능을 평가할 수 있습니다.
 
