@@ -325,7 +325,7 @@ To see more info on the race, select race information.
 
 ![VirtualCircuitInfo](img/dvc-info.png)
 
-Once you have a trained model, you can  submit it into the current open race. Your model will then be evaluated by the AWS DeepRacer service on the indicated competition track. After your model has been evaluated you will see your standing update if your lap time was better than your prior submission.
+Once you have a trained model, you can  submit it into the current open race, the [Kumo Torakku](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboard/Kumo%20Torakku). Your model will then be evaluated by the AWS DeepRacer service on the indicated competition track. After your model has been evaluated you will see your standing update if your lap time was better than your prior submission.
 
 ![VirtualCircuitModelSubmit](img/model-submitted.png)
 
