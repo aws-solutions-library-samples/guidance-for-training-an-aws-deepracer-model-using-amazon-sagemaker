@@ -103,7 +103,8 @@ Hints
 
 - Your model will not perform an action that is not in the action space. Similarly, if your model is trained on a track that that never required the use of this action, for example turning won't be incentivized on a straight track, the model won't know how to use this action as it won't be incentivized to turn. Thus as you start thinking about building a robust model make sure you keep the action space and training track in mind.  
 - Specifying a fast speed or a wide steering angle is great, but you still need to think about your reward function and whether it makes sense to drive full-speed into a turn, or exhibit zig-zag behavior on a straight section of the track.
-- Our experiments have shown that models with a faster maximum speed take longer to converge than those with a slower maximum speed.
+- Our experiments have shown that models with a faster maximum speed take longer to converge than those with a slower maximum speed. In some cases (reward function and track dependent) it may take longer than 12 hours for a 5 m/s model to converge.
+- You also have to keep physics in mind. If you try train a model at faster than 5 m/s, you may see your car spin out on corners, which will probably increase the time to convergence of your model.
 - For real world racing you will have to play with the speed in the webserver user interface of AWS DeepRacer to make sure your car is not driving faster than what it learned in the simulator.
 
 
