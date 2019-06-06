@@ -9,7 +9,7 @@ import boto3
 import sys
 
 def get_log_events(log_group, stream_name=None, stream_prefix=None, start_time=None, end_time=None):
-    client = boto3.client('logs')
+    client = boto3.client('logs', region_name='us-east-1')
     if stream_name is None and stream_prefix is None:
         print ("both stream name and prefix can't be None")
         return

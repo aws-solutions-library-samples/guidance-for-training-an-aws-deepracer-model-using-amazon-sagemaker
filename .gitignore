@@ -1,0 +1,4 @@
+log-analysis/logs/*
+log-analysis/.ipynb_checkpoints/*
+log-analysis/intermediate_checkpoint/*
+log-analysis/__pycache__/*

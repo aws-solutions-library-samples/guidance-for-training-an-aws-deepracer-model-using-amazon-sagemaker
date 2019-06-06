@@ -15,9 +15,10 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 '''
 
+import datetime
 import numpy as np
 import matplotlib.pyplot as plt
-from shapely.geometry import LineString
+from shapely.geometry import *
 import pandas as pd
 import gzip
 import glob
@@ -231,20 +232,20 @@ def plot_grid_world(episode_df, inner, outer, scale=10.0, plot=True):
     dist /= 100.0
 
    
-    t0 = datetime.fromtimestamp(float(episode_df['timestamp'].iloc[0]))
-    t1 = datetime.fromtimestamp(float(episode_df['timestamp'].iloc[len(episode_df) - 1]))
+    t0 = datetime.datetime.fromtimestamp(float(episode_df['timestamp'].iloc[0]))
+    t1 = datetime.datetime.fromtimestamp(float(episode_df['timestamp'].iloc[len(episode_df) - 1]))
 
     lap_time = (t1-t0).total_seconds()
 
     average_throttle = np.nanmean(episode_df['throttle'])
     max_throttle = np.nanmax(episode_df['throttle'])
     min_throttle = np.nanmin(episode_df['throttle'])
-    velocity = dist/lap_time
+    #velocity = dist/lap_time
 
     print('Distance, lap time = %.2f (meters), %.2f (sec)' % (dist, lap_time))
-    print('Average throttle, velocity = %.2f (Gazebo), %.2f (meters/sec)' % (average_throttle, velocity))
+    #print('Average throttle, velocity = %.2f (Gazebo), %.2f (meters/sec)' % (average_throttle, velocity))
 
-    stats.append((dist, lap_time, velocity, average_throttle, min_throttle, max_throttle))
+    stats.append((dist, lap_time, 0, average_throttle, min_throttle, max_throttle))
 
 
     if plot == True:
