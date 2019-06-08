@@ -59,8 +59,8 @@ Reinforcement learning を選ぶと、モデルページにたどり着きます
 
 
 ## 3.1 Model details
-Model details 画面の初めから設定していきます。ここでは、モデルの名前と説明を設定することができます。もしこのサービスを使用するのが初めての場合、**Create Resources** ボタンをクリックします。この操作によって DeepRacer が他の AWS サービスを使用するために必要な IAM ロールが作成されます。他のAWSサービスとは、学習と評価で使用する VCP スタック、Python 3 の報酬関数を検証するための AWS DeepRacer lambda 関数、モデルアーティファクトを保存するための AWS DeepRacer S3 バケットなどです。この手順でエラーが出た場合はお知らせください。
 
+Model details 画面の初めから設定していきます。ここでは、モデルの名前と説明を設定することができます。もしこのサービスを使用するのが初めての場合、**Create Resources** ボタンをクリックします。この操作によって DeepRacer が他の AWS サービスを使用するために必要な IAM ロールが作成されます。他の AWS サービスとは、学習と評価で使用するVPCスタック、Python 3 の報酬関数を検証するための AWS DeepRacer lambda 関数、モデルアーティファクトを保存するためのAWS DeepRacer S3 バケットなどです。この手順でエラーが出た場合はお知らせください。
 
 ![Model Details](img/model_details.png)
 
@@ -81,7 +81,9 @@ AWS DeepRacer リーグの詳細はセクション2で説明します。この�
 
 
 ## 3.3 Action space
-このセクションでは、トレーニング中や、トレーニング済みのモデルから選択したアクションスペースを設定します。アクションとは、速度とステアリング角の組み合わせです。AWS DeepRacerでは、連続アクションスペースではなく離散アクションスペースを使用します。離散アクションスペースをビルドするには、Maximum speed、Speed levels、Maximum steering angle、Steering levels を設定する必要があります。
+
+このセクションでは、トレーニング中や、トレーニング済みのモデルから選択したアクションスペースを設定します。アクションとは、速度とステアリング角の組み合わせです。AWS DeepRacer では、連続アクションスペースではなく離散アクションスペースを使用します。離散アクションスペースをビルドするには、Maximum speed、Speed granularity、Maximum steering angle、Steering granularity を設定する必要があります。
+
 
 ![action space](img/Action_Space.png)
 
