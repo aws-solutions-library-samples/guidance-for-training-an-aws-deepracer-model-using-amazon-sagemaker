@@ -81,7 +81,7 @@ AWS DeepRacerリーグの詳細はセクション2で説明します。このセ
 
 
 ## 3.3 Action space
-このセクションでは、トレーニング中や、トレーニング済みのモデルから選択したアクションスペースを設定します。アクションとは、速度とステアリング角の組み合わせです。AWS DeepRacerでは、連続アクションスペースではなく離散アクションスペースを使用します。離散アクションスペースをビルドするには、Maximum speed、Speed levels、Maximum steering angle、Steering levelsを設定する必要があります。
+このセクションでは、トレーニング中や、トレーニング済みのモデルから選択したアクションスペースを設定します。アクションとは、速度とステアリング角の組み合わせです。AWS DeepRacerでは、連続アクションスペースではなく離散アクションスペースを使用します。離散アクションスペースをビルドするには、Maximum speed、Speed granularity、Maximum steering angle、Steering granularityを設定する必要があります。
 
 ![action space](img/Action_Space.png)
 
