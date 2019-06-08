@@ -1,4 +1,4 @@
-# Lab 1: Let's build an AWS DeepRacer RL model!
+# Lab 1: Get ready to race by building your own AWS DeepRacer RL model!
 
 # Notes
 We are continuously looking to improve the AWS DeepRacer service to provide a better customer experience. As such please always refer to the latest lab content in GitHub as prior content may be outdated. If you do have any technical questions please ask the workshop facilitators, and for those of you working through the lab at home, please post your questions to the [AWS DeepRacer forum](https://forums.aws.amazon.com/forum.jspa?forumID=318).
@@ -29,26 +29,29 @@ The lab will provide detail on the various components in the AWS DeepRacer servi
 
 # Hints
 - Please make sure you save your reward function, and download your trained model from the burner account. You will lose access to the account after the Summit, and the account will be wiped.
-- For those eager to start training a job, our hint would be take your time and familiarize yourself with the concepts first, before starting model training. 
+- For those eager to start training a job, our hint would be take your time and familiarize yourself with the concepts first, before starting model training.  
 - Please ask questions as you progress through the lab and feel free to have discussions at your table. 
 - Lastly, when you do start a training job, run it for at least 90 minutes (on the re:Invent track). It takes 6 minutes to spin up the services needed and your model needs time to explore the track before it will manage to complete a lap.
 - If you want to continue learning after the lab, please check out the new course by the AWS Training and Certification team, called [AWS DeepRacer: Driven by Reinforcement Learning](https://www.aws.training/learningobject/wbc?id=32143)
 
 # Section 1: Training your first model
 ## Step 1: Login to the AWS DeepRacer service
-Log into the [AWS Console](https://signin.aws.amazon.com/signin?redirect_uri=https%3A%2F%2Fconsole.aws.amazon.com%2Fconsole%2Fhome%3Fnc2%3Dh_ct%26src%3Dheader-signin%26state%3DhashArgs%2523%26isauthcode%3Dtrue&client_id=arn%3Aaws%3Aiam%3A%3A015428540659%3Auser%2Fhomepage&forceMobileApp=0) using the account details provided.
+Log into the [AWS Console](https://console.aws.amazon.com/deepracer/home?region=us-east-1#getStarted) using the account details provided.
 
-Make sure you are in the **North Virginia** region and navigate to [AWS DeepRacer](https://console.aws.amazon.com/deepracer/home?region=us-east-1) (https://console.aws.amazon.com/deepracer/home?region=us-east-1).
+Make sure you are in the **North Virginia** region and navigate to [AWS DeepRacer](https://console.aws.amazon.com/deepracer/home?region=us-east-1#getStarted) (https://console.aws.amazon.com/deepracer/home?region=us-east-1#getStarted).
+
+This lab assumes you have created the resources required for AWS DeepRacer. Please see [Lab 0 Create resources](https://github.com/aws-samples/aws-deepracer-workshops/tree/master/Workshops/2019-AWSSummits-AWSDeepRacerService/Lab0_Create_resources) if you have not yet done so.
 
 From the AWS DeepRacer landing page, expand the pane on the left and select **Reinforcement learning**.
 
+
+
 ## Step 2: Model List Page
-Once you select Reinforcement learning, you will land on the models page. This page shows a list of all the models you have created and the status of each model. If you want to create models, this is where you start the process. Similarly, from this page you can download, clone, and delete models.
+Once you select Reinforcement learning, you will land on the models page. This page shows a list of all the models you have created and the status of each model. If you want to create models, this is where you start the process. Similarly, from this page you can download, clone, and delete models. If this is the first time you are using the service and have just created your resources, you should see a few sample models in your account.
 
-![Model List Page](img/model_list_deepracer.png)
+![Model List Page](img/SampleModels.png)
 
-If you don't have any models this list will be empty, and you can create a model by choosing **Create model**.
-Once you have created a model you can use this page to view the status of the model, for example is it training, or ready. A model status of "ready" indicates model training has completed and you can then download it, evaluate it, or submit it to a virtual race. You can click on the model's name to proceed to the **Model details** page. 
+You can create a model by selecting **Create model**. Once you have created a model you can use this page to view the status of the model, for example is it training, or ready. A model status of "ready" indicates model training has completed and you can then download it, evaluate it, or submit it to a virtual race. You can click on the model's name to proceed to the **Model details** page. 
 
 To create your first model select **Create model**.
 
@@ -62,8 +65,7 @@ Throughout the console you will see <font color=blue>**Info**</font> buttons. Wh
 
 
 ## 3.1 Model details
-You should start at the top with Model Details. Here you can name your model and provide a description for your model. If this is the first time you use the service you should select the **Create Resources** button. This will create the IAM roles that AWS DeepRacer needs to call other AWS services on your behalf, the VPC stack used during training and evaluation, the AWS DeepRacer lambda function used to validate your Python 3 reward function, and the AWS DeepRacer S3 bucket where model artifacts will be stored. If you see an error in this section please let us know.
-
+You should start at the top with Model Details. Here you can name your model and provide a description for your model. This lab assumes you have created the resources required for AWS DeepRacer. Please see [Lab 0 Create resources](https://github.com/aws-samples/aws-deepracer-workshops/tree/master/Workshops/2019-AWSSummits-AWSDeepRacerService/Lab0_Create_resources) if you have not yet done so.
 
 ![Model Details](img/model_details.png)
 
@@ -101,7 +103,8 @@ Hints
 
 - Your model will not perform an action that is not in the action space. Similarly, if your model is trained on a track that that never required the use of this action, for example turning won't be incentivized on a straight track, the model won't know how to use this action as it won't be incentivized to turn. Thus as you start thinking about building a robust model make sure you keep the action space and training track in mind.  
 - Specifying a fast speed or a wide steering angle is great, but you still need to think about your reward function and whether it makes sense to drive full-speed into a turn, or exhibit zig-zag behavior on a straight section of the track.
-- Our experiments have shown that models with a faster maximum speed take longer to converge than those with a slower maximum speed.
+- Our experiments have shown that models with a faster maximum speed take longer to converge than those with a slower maximum speed. In some cases (reward function and track dependent) it may take longer than 12 hours for a 5 m/s model to converge.
+- You also have to keep physics in mind. If you try train a model at faster than 5 m/s, you may see your car spin out on corners, which will probably increase the time to convergence of your model.
 - For real world racing you will have to play with the speed in the webserver user interface of AWS DeepRacer to make sure your car is not driving faster than what it learned in the simulator.
 
 
@@ -323,7 +326,7 @@ To see more info on the race, select race information.
 
 ![VirtualCircuitInfo](img/dvc-info.png)
 
-Once you have a trained model, you can  submit it into the current open race. Your model will then be evaluated by the AWS DeepRacer service on the indicated competition track. After your model has been evaluated you will see your standing update if your lap time was better than your prior submission.
+Once you have a trained model, you can  submit it into the current open race, the [Kumo Torakku](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboard/Kumo%20Torakku). Your model will then be evaluated by the AWS DeepRacer service on the indicated competition track. After your model has been evaluated you will see your standing update if your lap time was better than your prior submission.
 
 ![VirtualCircuitModelSubmit](img/model-submitted.png)
 
