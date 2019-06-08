@@ -59,7 +59,7 @@ Reinforcement learning を選ぶと、モデルページにたどり着きます
 
 
 ## 3.1 Model details
-Model details画面の初めから設定していきます。ここでは、モデルの名前と説明を設定することができます。もしこのサービスを使用するのが初めての場合、**Create Resources**ボタンをクリックします。この操作によってDeepRacerが他のAWSサービスを使用するために必要なIAMロールが作成されます。他のAWSサービスとは、学習と評価で使用するVCPスタック、Python 3の報酬関数を検証するためのAWS DeepRacer lambda関数、モデルアーティファクトを保存するためのAWS DeepRacer S3バケットなどです。この手順でエラーが出た場合はお知らせください。
+Model details画面の初めから設定していきます。ここでは、モデルの名前と説明を設定することができます。もしこのサービスを使用するのが初めての場合、**Create Resources**ボタンをクリックします。この操作によってDeepRacerが他のAWSサービスを使用するために必要なIAMロールが作成されます。他のAWSサービスとは、学習と評価で使用するVPCスタック、Python 3の報酬関数を検証するためのAWS DeepRacer lambda関数、モデルアーティファクトを保存するためのAWS DeepRacer S3バケットなどです。この手順でエラーが出た場合はお知らせください。
 
 
 ![Model Details](img/model_details.png)
