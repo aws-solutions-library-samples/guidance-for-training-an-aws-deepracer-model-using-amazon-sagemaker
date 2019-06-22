@@ -1,4 +1,4 @@
-'''
+"""
 Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this
@@ -13,25 +13,21 @@ PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIG
 HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-'''
+"""
 
-import numpy as np
-import matplotlib.pyplot as plt
-from shapely.geometry import LineString
-import pandas as pd
-import gzip
-import glob
 import math
-
-from matplotlib.collections import PatchCollection
-from matplotlib.patches import Rectangle
-
-from shapely.geometry import Point, Polygon
-from shapely.geometry.polygon import LinearRing, LineString
 from datetime import datetime
 
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from matplotlib.collections import PatchCollection
+from matplotlib.patches import Rectangle
+from shapely.geometry import Point, Polygon
+from shapely.geometry.polygon import LineString
 
 EPISODE_PER_ITER = 20
+
 
 def load_data(fname):
     data = []
@@ -42,7 +38,8 @@ def load_data(fname):
                 data.append(",".join(parts))
     return data
 
-def convert_to_pandas(data, wpts=None):
+
+def convert_to_pandas(data):
 
     """
     stdout_ = 'SIM_TRACE_LOG:%d,%d,%.4f,%.4f,%.4f,%.2f,%.2f,%d,%.4f,%s,%s,%.4f,%d,%.2f,%s\n' % (
@@ -62,14 +59,13 @@ def convert_to_pandas(data, wpts=None):
 
     df_list = list()
     
-    #ignore the first two dummy values that coach throws at the start.
+    # ignore the first two dummy values that coach throws at the start.
     for d in data[2:]:
         parts = d.rstrip().split(",")
         episode = int(parts[0])
         steps = int(parts[1])
-        x = 100*float(parts[2])
-        y = 100*float(parts[3])
-        ##cWp = get_closest_waypoint(x, y, wpts)
+        x = 100 * float(parts[2])
+        y = 100 * float(parts[3])
         yaw = float(parts[4])
         steer = float(parts[5])
         throttle = float(parts[6])
@@ -82,26 +78,26 @@ def convert_to_pandas(data, wpts=None):
         track_len = float(parts[13])
         tstamp = parts[14]
         
-        #desired_action = int(parts[10])
-        #on_track = 0 if 'False' in parts[12] else 1
-        
-        iteration = int(episode / EPISODE_PER_ITER) +1
-        df_list.append((iteration, episode, steps, x, y, yaw, steer, throttle, action, reward, done, all_wheels_on_track, progress,
+        iteration = int(episode / EPISODE_PER_ITER) + 1
+        df_list.append((iteration, episode, steps, x, y, yaw, steer, throttle,
+                        action, reward, done, all_wheels_on_track, progress,
                         closest_waypoint, track_len, tstamp))
 
-    header = ['iteration', 'episode', 'steps', 'x', 'y', 'yaw', 'steer', 'throttle', 'action', 'reward', 'done', 'on_track', 'progress', 'closest_waypoint', 'track_len', 'timestamp']
+    header = ['iteration', 'episode', 'steps', 'x', 'y', 'yaw', 'steer',
+              'throttle', 'action', 'reward', 'done', 'on_track', 'progress',
+              'closest_waypoint', 'track_len', 'timestamp']
     
     df = pd.DataFrame(df_list, columns=header)
     return df
 
-def episode_parser(data, action_map=True, episode_map=True):
-    '''
-    Arrange data per episode
-    '''
-    action_map = {} # Action => [x,y,reward] 
-    episode_map = {} # Episode number => [x,y,action,reward] 
 
- 
+def episode_parser(data):
+    """
+    Arrange data per episode
+    """
+    action_map = {}   # Action => [x,y,reward]
+    episode_map = {}  # Episode number => [x,y,action,reward]
+
     for d in data[:]:
         parts = d.rstrip().split("SIM_TRACE_LOG:")[-1].split(",")
         e = int(parts[0])
@@ -115,8 +111,9 @@ def episode_parser(data, action_map=True, episode_map=True):
         try:
             episode_map[e]
         except KeyError:
-            episode_map[e] = np.array([0,0,0,0,0,0]) #dummy
-        episode_map[e] = np.vstack((episode_map[e], np.array([x,y,action,reward,angle,ttl])))
+            episode_map[e] = np.array([0, 0, 0, 0, 0, 0])  # dummy
+        episode_map[e] = np.vstack(
+            (episode_map[e], np.array([x, y, action, reward, angle, ttl])))
 
         try:
             action_map[action]
@@ -128,13 +125,16 @@ def episode_parser(data, action_map=True, episode_map=True):
     total_rewards = {}
     for x in episode_map.keys():
         arr = episode_map[x]
-        total_rewards[x] = np.sum(arr[:,3])
+        total_rewards[x] = np.sum(arr[:, 3])
 
     import operator
-    top_idx = dict(sorted(total_rewards.items(), key=operator.itemgetter(1), reverse=True)[:])
+    top_idx = dict(sorted(total_rewards.items(),
+                          key=operator.itemgetter(1),
+                          reverse=True)[:])
     sorted_idx = list(top_idx.keys())
 
     return action_map, episode_map, sorted_idx
+
 
 def make_error_boxes(ax, xdata, ydata, xerror, yerror, facecolor='r',
                      edgecolor='r', alpha=0.3):
@@ -154,20 +154,17 @@ def make_error_boxes(ax, xdata, ydata, xerror, yerror, facecolor='r',
     # Add collection to axes
     ax.add_collection(pc)
 
-    # Plot errorbars
-    #artists = ax.errorbar(xdata, ydata, xerr=xerror, yerr=yerror,
-    #                      fmt='None', ecolor='k')
-
     return 0
+
 
 def v_color(ob):
     
-    COLOR = {
+    color = {
         True: '#6699cc',
         False: '#ffcc33'
     }
 
-    return COLOR[ob.is_simple]
+    return color[ob.is_simple]
 
 
 def plot_coords(ax, ob):
@@ -179,9 +176,11 @@ def plot_bounds(ax, ob):
     x, y = zip(*list((p.x, p.y) for p in ob.boundary))
     ax.plot(x, y, '.', color='#000000', zorder=1)
 
+
 def plot_line(ax, ob):
     x, y = ob.xy
     ax.plot(x, y, color='cyan', alpha=0.7, linewidth=3, solid_capstyle='round', zorder=2)
+
 
 def print_border(ax, waypoints, inner_border_waypoints, outer_border_waypoints):
     line = LineString(waypoints)
@@ -196,18 +195,7 @@ def print_border(ax, waypoints, inner_border_waypoints, outer_border_waypoints):
     plot_coords(ax, line)
     plot_line(ax, line)
 
-def get_closest_waypoint(x, y, waypoints):
-    res = 0
-    index = 0
-    min_distance = float('inf')
-    for row in waypoints:
-        distance = math.sqrt((row[0] - x) * (row[0] - x) + (row[1] - y) * (row[1] - y))
-        if distance < min_distance:
-            min_distance = distance
-            res = index
-        index = index + 1
-    return res
-    
+
 def plot_grid_world(episode_df, inner, outer, scale=10.0, plot=True):
     """
     plot a scaled version of lap, along with throttle taken a each position
@@ -234,7 +222,6 @@ def plot_grid_world(episode_df, inner, outer, scale=10.0, plot=True):
         dist += math.sqrt((episode_df['x'].iloc[ii] - episode_df['x'].iloc[ii-1])**2 + (episode_df['y'].iloc[ii] - episode_df['y'].iloc[ii-1])**2)
     dist /= 100.0
 
-   
     t0 = datetime.fromtimestamp(float(episode_df['timestamp'].iloc[0]))
     t1 = datetime.fromtimestamp(float(episode_df['timestamp'].iloc[len(episode_df) - 1]))
 
@@ -250,8 +237,7 @@ def plot_grid_world(episode_df, inner, outer, scale=10.0, plot=True):
 
     stats.append((dist, lap_time, velocity, average_throttle, min_throttle, max_throttle))
 
-
-    if plot == True:
+    if plot:
         for y in range(max_y):
             for x in range(max_x):
                 point = Point((x, y))
@@ -265,13 +251,11 @@ def plot_grid_world(episode_df, inner, outer, scale=10.0, plot=True):
                                    (episode_df['y'] >= (y - 1) * scale) & (episode_df['y'] < y * scale)]
 
                 if len(df_slice) > 0:
-                    #average_throttle = np.nanmean(df_slice['throttle'])
                     grid[x][y] = np.nanmean(df_slice['throttle'])
 
         fig = plt.figure(figsize=(7,7))
         imgplot = plt.imshow(grid)
         plt.colorbar(orientation='vertical')
-        plt.title('Lap time (sec) = %.2f' %lap_time)
-        #plt.savefig('grid.png')
+        plt.title('Lap time (sec) = %.2f' % lap_time)
 
     return lap_time, average_throttle, stats
