@@ -25,6 +25,7 @@ from matplotlib.collections import PatchCollection
 from matplotlib.patches import Rectangle
 from shapely.geometry import Point, Polygon
 from shapely.geometry.polygon import LineString
+from sklearn.preprocessing import MinMaxScaler
 
 EPISODE_PER_ITER = 20
 
@@ -40,7 +41,6 @@ def load_data(fname):
 
 
 def convert_to_pandas(data):
-
     """
     stdout_ = 'SIM_TRACE_LOG:%d,%d,%.4f,%.4f,%.4f,%.2f,%.2f,%d,%.4f,%s,%s,%.4f,%d,%.2f,%s\n' % (
             self.episodes, self.steps, model_location[0], model_location[1], model_heading,
@@ -55,10 +55,10 @@ def convert_to_pandas(data):
             self.track_length,
             time.time())
         print(stdout_)
-    """        
+    """
 
     df_list = list()
-    
+
     # ignore the first two dummy values that coach throws at the start.
     for d in data[2:]:
         parts = d.rstrip().split(",")
@@ -77,7 +77,7 @@ def convert_to_pandas(data):
         closest_waypoint = int(parts[12])
         track_len = float(parts[13])
         tstamp = parts[14]
-        
+
         iteration = int(episode / EPISODE_PER_ITER) + 1
         df_list.append((iteration, episode, steps, x, y, yaw, steer, throttle,
                         action, reward, done, all_wheels_on_track, progress,
@@ -86,9 +86,18 @@ def convert_to_pandas(data):
     header = ['iteration', 'episode', 'steps', 'x', 'y', 'yaw', 'steer',
               'throttle', 'action', 'reward', 'done', 'on_track', 'progress',
               'closest_waypoint', 'track_len', 'timestamp']
-    
+
     df = pd.DataFrame(df_list, columns=header)
     return df
+
+
+def normalize_rewards(df):
+    # Normalize the rewards to a 0-1 scale
+
+    min_max_scaler = MinMaxScaler()
+    scaled_vals = min_max_scaler.fit_transform(
+        df['reward'].values.reshape(df['reward'].values.shape[0], 1))
+    df['reward'] = pd.DataFrame(scaled_vals.squeeze())
 
 
 def episode_parser(data):
@@ -101,7 +110,7 @@ def episode_parser(data):
     for d in data[:]:
         parts = d.rstrip().split("SIM_TRACE_LOG:")[-1].split(",")
         e = int(parts[0])
-        x = float(parts[2]) 
+        x = float(parts[2])
         y = float(parts[3])
         angle = float(parts[5])
         ttl = float(parts[6])
@@ -120,7 +129,7 @@ def episode_parser(data):
         except KeyError:
             action_map[action] = []
         action_map[action].append([x, y, reward])
-                
+
     # top laps
     total_rewards = {}
     for x in episode_map.keys():
@@ -138,7 +147,6 @@ def episode_parser(data):
 
 def make_error_boxes(ax, xdata, ydata, xerror, yerror, facecolor='r',
                      edgecolor='r', alpha=0.3):
-
     # Create list for all the error patches
     errorboxes = []
 
@@ -177,23 +185,25 @@ def plot_bounds(ax, ob):
     ax.plot(x, y, '.', color='#000000', zorder=1)
 
 
-def plot_line(ax, ob):
+def plot_line(ax, ob, color='cyan'):
     x, y = ob.xy
-    ax.plot(x, y, color='cyan', alpha=0.7, linewidth=3, solid_capstyle='round', zorder=2)
+    ax.plot(x, y, color=color, alpha=0.7, linewidth=3, solid_capstyle='round',
+            zorder=2)
 
 
-def print_border(ax, waypoints, inner_border_waypoints, outer_border_waypoints):
+def print_border(ax, waypoints, inner_border_waypoints, outer_border_waypoints,
+                 color='lightgrey'):
     line = LineString(waypoints)
     plot_coords(ax, line)
-    plot_line(ax, line)
+    plot_line(ax, line, color)
 
     line = LineString(inner_border_waypoints)
     plot_coords(ax, line)
-    plot_line(ax, line)
+    plot_line(ax, line, color)
 
     line = LineString(outer_border_waypoints)
     plot_coords(ax, line)
-    plot_line(ax, line)
+    plot_line(ax, line, color)
 
 
 def plot_grid_world(episode_df, inner, outer, scale=10.0, plot=True):
