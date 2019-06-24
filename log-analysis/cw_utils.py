@@ -8,6 +8,7 @@ Get a particular log given stream ID
 import boto3
 import sys
 import dateutil.parser
+import os
 
 
 def get_log_events(log_group, stream_name=None, stream_prefix=None, start_time=None, end_time=None):
@@ -42,7 +43,11 @@ def get_log_events(log_group, stream_name=None, stream_prefix=None, start_time=N
 
 
 def download_log(fname, stream_name=None, stream_prefix=None,
-                 log_group=None, start_time=None, end_time=None):
+                 log_group=None, start_time=None, end_time=None, force=False):
+    if os.path.isfile(fname) and not force:
+        print('Log file exists, use force=True to download again')
+        return
+
     if start_time is None:
         start_time = 1451490400000  # 2018
     if end_time is None:
@@ -63,7 +68,7 @@ def download_log(fname, stream_name=None, stream_prefix=None,
             f.write("\n")
 
 
-def download_all_logs(pathprefix, log_group, not_older_than=None, older_than=None):
+def download_all_logs(pathprefix, log_group, not_older_than=None, older_than=None, force = False):
     client = boto3.client('logs')
 
     lower_timestamp = iso_to_timestamp(not_older_than)
@@ -84,7 +89,10 @@ def download_all_logs(pathprefix, log_group, not_older_than=None, older_than=Non
                 continue
             stream_prefix = stream['logStreamName'].split("/")[0]
             file_name = "%s%s.log" % (pathprefix, stream_prefix)
-            download_log(file_name, stream_prefix=stream_prefix, log_group=log_group)
+
+            if not os.path.isfile(file_name) or force:
+                download_log(file_name, stream_prefix=stream_prefix, log_group=log_group)
+
             fetched_files.append(
                 (file_name, stream_prefix, stream['firstEventTimestamp'], stream['lastEventTimestamp']))
 
