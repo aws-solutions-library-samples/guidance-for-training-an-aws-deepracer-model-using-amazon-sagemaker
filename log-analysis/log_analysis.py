@@ -507,3 +507,42 @@ def analyze_training_progress(panda, episodes_per_iteration):
     ax = axes[2, 2]
     plot(ax, completion_rate_per_iteration, 'Iteration', 'Completion rate',
          'Completion rate (avg: %s)' % total_completion_rate)
+
+
+def load_eval_data(eval_fname):
+    eval_data = load_data(eval_fname)
+    return convert_to_pandas(eval_data)
+
+
+def load_eval_logs(logs):
+    full_dataframe = None
+    for log in logs:
+        eval_data = load_data(log[0])
+        dataframe = convert_to_pandas(eval_data)
+        dataframe['stream'] = log[1]
+        if full_dataframe is not None:
+            full_dataframe = full_dataframe.append(dataframe)
+        else:
+            full_dataframe = dataframe
+
+    return full_dataframe.sort_values(
+        ['stream', 'episode', 'steps']).reset_index()
+
+
+def analyse_single_evaluation(log_file, inner_border, outer_border, episodes=5,
+                              log_tuple=None, min_lap_time=None):
+    print("###############################################################")
+    print(log_file)
+    eval_df = load_eval_data(log_file)
+
+    for e in range(episodes):
+        print("\nEpisode #%s " % e)
+        episode_df = eval_df[eval_df['episode'] == e]
+        plot_grid_world(episode_df, inner_border, outer_border, scale=5.0,
+                        log_tuple=log_tuple, min_lap_time=min_lap_time)
+
+
+def analyse_multiple_race_evaluations(logs, inner_border, outer_border):
+    for log in logs:
+        analyse_single_evaluation(log[0], inner_border, outer_border,
+                                  log_tuple=log)
