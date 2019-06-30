@@ -166,7 +166,6 @@ def make_error_boxes(ax, xdata, ydata, xerror, yerror, facecolor='r',
 
 
 def v_color(ob):
-    
     color = {
         True: '#6699cc',
         False: '#ffcc33'
@@ -206,7 +205,9 @@ def print_border(ax, waypoints, inner_border_waypoints, outer_border_waypoints,
     plot_line(ax, line, color)
 
 
-def plot_grid_world(episode_df, inner, outer, scale=10.0, plot=True):
+def plot_grid_world(episode_df, inner, outer, scale=10.0, plot=True,
+                    log_tuple=None, min_distance_to_plot=None,
+                    graphed_value='throttle'):
     """
     plot a scaled version of lap, along with throttle taken a each position
     """
@@ -216,56 +217,83 @@ def plot_grid_world(episode_df, inner, outer, scale=10.0, plot=True):
 
     max_x = int(np.max([val[0] for val in outer]))
     max_y = int(np.max([val[1] for val in outer]))
+    min_x = min(int(np.min([val[0] for val in outer])), 0)
+    min_y = min(int(np.min([val[1] for val in outer])), 0)
 
-    print(max_x, max_y)
-    grid = np.zeros((max_x+1, max_y+1))
+    outer = [(val[0] - min_x, val[1] - min_y) for val in outer]
+    inner = [(val[0] - min_x, val[1] - min_y) for val in inner]
+
+    grid = np.zeros((max_x + 1 - min_x, max_y + 1 - min_y))
 
     # create shapely ring for outter and inner
     outer_polygon = Polygon(outer)
     inner_polygon = Polygon(inner)
 
-    print('Outer polygon length = %.2f (meters)' % (outer_polygon.length / scale))
-    print('Inner polygon length = %.2f (meters)' % (inner_polygon.length / scale))
+    print('Outer polygon length = %.2f (meters)' % (
+            outer_polygon.length / scale))
+    print('Inner polygon length = %.2f (meters)' % (
+            inner_polygon.length / scale))
 
     dist = 0.0
     for ii in range(1, len(episode_df)):
-        dist += math.sqrt((episode_df['x'].iloc[ii] - episode_df['x'].iloc[ii-1])**2 + (episode_df['y'].iloc[ii] - episode_df['y'].iloc[ii-1])**2)
+        dist += math.sqrt(
+            (episode_df['x'].iloc[ii] - episode_df['x'].iloc[ii - 1]) ** 2 + (
+                    episode_df['y'].iloc[ii] - episode_df['y'].iloc[
+                ii - 1]) ** 2)
     dist /= 100.0
 
     t0 = datetime.fromtimestamp(float(episode_df['timestamp'].iloc[0]))
-    t1 = datetime.fromtimestamp(float(episode_df['timestamp'].iloc[len(episode_df) - 1]))
+    t1 = datetime.fromtimestamp(
+        float(episode_df['timestamp'].iloc[len(episode_df) - 1]))
 
-    lap_time = (t1-t0).total_seconds()
+    lap_time = (t1 - t0).total_seconds()
 
     average_throttle = np.nanmean(episode_df['throttle'])
     max_throttle = np.nanmax(episode_df['throttle'])
     min_throttle = np.nanmin(episode_df['throttle'])
-    velocity = dist/lap_time
+    velocity = dist / lap_time
 
-    print('Distance, lap time = %.2f (meters), %.2f (sec)' % (dist, lap_time))
-    print('Average throttle, velocity = %.2f (Gazebo), %.2f (meters/sec)' % (average_throttle, velocity))
+    distance_lap_time = 'Distance, lap time = %.2f (meters), %.2f (sec)' % (
+        dist, lap_time)
+    print(distance_lap_time)
+    throttle_velocity = 'Average throttle, velocity = %.2f (Gazebo), %.2f (meters/sec)' % (
+        average_throttle, velocity)
+    print(throttle_velocity)
 
-    stats.append((dist, lap_time, velocity, average_throttle, min_throttle, max_throttle))
+    stats.append((dist, lap_time, velocity, average_throttle, min_throttle,
+                  max_throttle))
 
-    if plot:
-        for y in range(max_y):
-            for x in range(max_x):
+    if plot == True and (not min_distance_to_plot or lap_time > min_distance_to_plot):
+        for y in range(max_y - min_y):
+            for x in range(max_x - min_x):
                 point = Point((x, y))
 
                 # this is the track
-                if (not inner_polygon.contains(point)) and (outer_polygon.contains(point)):
+                if (not inner_polygon.contains(point)) and (
+                        outer_polygon.contains(point)):
                     grid[x][y] = -1.0
 
                 # find df slice that fits into this
-                df_slice = episode_df[(episode_df['x'] >= (x - 1) * scale) & (episode_df['x'] < x * scale) & \
-                                   (episode_df['y'] >= (y - 1) * scale) & (episode_df['y'] < y * scale)]
+                df_slice = episode_df[
+                    (episode_df['x'] >= (x + min_x - 1) * scale) & (
+                            episode_df['x'] < (x + min_x) * scale) & \
+                    (episode_df['y'] >= (y + min_y - 1) * scale) & (
+                            episode_df['y'] < (y + min_y) * scale)]
 
                 if len(df_slice) > 0:
-                    grid[x][y] = np.nanmean(df_slice['throttle'])
+                    # average_throttle = np.nanmean(df_slice['throttle'])
+                    grid[x][y] = np.nanmean(df_slice[graphed_value])
 
-        fig = plt.figure(figsize=(7,7))
+        fig = plt.figure(figsize=(12, 16))
         imgplot = plt.imshow(grid)
-        plt.colorbar(orientation='vertical')
-        plt.title('Lap time (sec) = %.2f' % lap_time)
+        subtitle = ''
+        if log_tuple:
+            subtitle = '\n%s\n%s\n%s\n%s' % (
+                log_tuple[1], datetime.fromtimestamp(log_tuple[2] / 1000.0),
+                distance_lap_time, throttle_velocity)
+        plt.colorbar(orientation='horizontal')
+        plt.title('Lap time (sec) = %.3f%s' % (lap_time, subtitle))
+        plt.show()
+        plt.clf()
 
     return lap_time, average_throttle, stats
