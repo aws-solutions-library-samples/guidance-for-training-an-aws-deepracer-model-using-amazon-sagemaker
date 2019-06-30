@@ -205,6 +205,36 @@ def print_border(ax, waypoints, inner_border_waypoints, outer_border_waypoints,
     plot_line(ax, line, color)
 
 
+def plot_top_laps(sorted_idx, episode_map, center_line, inner_border,
+                  outer_border, n_laps=5):
+    fig = plt.figure(n_laps, figsize=(12, 30))
+    for i in range(n_laps):
+        idx = sorted_idx[i]
+
+        episode_data = episode_map[idx]
+
+        ax = fig.add_subplot(n_laps, 1, i + 1)
+
+        line = LineString(center_line)
+        plot_coords(ax, line)
+        plot_line(ax, line)
+
+        line = LineString(inner_border)
+        plot_coords(ax, line)
+        plot_line(ax, line)
+
+        line = LineString(outer_border)
+        plot_coords(ax, line)
+        plot_line(ax, line)
+
+        for idx in range(1, len(episode_data) - 1):
+            x1, y1, action, reward, angle, speed = episode_data[idx]
+            car_x2, car_y2 = x1 - 0.02, y1
+            plt.plot([x1 * 100, car_x2 * 100], [y1 * 100, car_y2 * 100], 'b.')
+
+    return fig
+
+
 def plot_grid_world(episode_df, inner, outer, scale=10.0, plot=True,
                     log_tuple=None, min_distance_to_plot=None,
                     graphed_value='throttle'):
