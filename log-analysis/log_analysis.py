@@ -17,6 +17,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import math
 from datetime import datetime
+from decimal import *
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -78,7 +79,7 @@ def convert_to_pandas(data):
         progress = float(parts[11])
         closest_waypoint = int(parts[12])
         track_len = float(parts[13])
-        tstamp = parts[14]
+        tstamp = Decimal(parts[14])
 
         iteration = int(episode / EPISODE_PER_ITER) + 1
         df_list.append((iteration, episode, steps, x, y, yaw, steer, throttle,
@@ -106,7 +107,7 @@ def episode_parser(data):
     """
     Arrange data per episode
     """
-    action_map = {}   # Action => [x,y,reward]
+    action_map = {}  # Action => [x,y,reward]
     episode_map = {}  # Episode number => [x,y,action,reward]
 
     for d in data[:]:
@@ -295,7 +296,7 @@ def plot_grid_world(episode_df, inner, outer, scale=10.0, plot=True,
     stats.append((dist, lap_time, velocity, average_throttle, min_throttle,
                   max_throttle))
 
-    if plot == True and (not min_distance_to_plot or lap_time > min_distance_to_plot):
+    if plot == True and (not min_distance_to_plot or dist > min_distance_to_plot):
         for y in range(max_y - min_y):
             for x in range(max_x - min_x):
                 point = Point((x, y))
