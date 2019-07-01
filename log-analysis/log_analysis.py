@@ -27,6 +27,8 @@ from shapely.geometry import Point, Polygon
 from shapely.geometry.polygon import LineString
 from sklearn.preprocessing import MinMaxScaler
 
+import cw_utils as cw
+
 EPISODE_PER_ITER = 20
 
 
@@ -530,7 +532,7 @@ def load_eval_logs(logs):
 
 
 def analyse_single_evaluation(log_file, inner_border, outer_border, episodes=5,
-                              log_tuple=None, min_lap_time=None):
+                              log_tuple=None, min_distance_to_plot=None):
     print("###############################################################")
     print(log_file)
     eval_df = load_eval_data(log_file)
@@ -539,10 +541,19 @@ def analyse_single_evaluation(log_file, inner_border, outer_border, episodes=5,
         print("\nEpisode #%s " % e)
         episode_df = eval_df[eval_df['episode'] == e]
         plot_grid_world(episode_df, inner_border, outer_border, scale=5.0,
-                        log_tuple=log_tuple, min_lap_time=min_lap_time)
+                        log_tuple=log_tuple, min_distance_to_plot=min_distance_to_plot)
 
 
-def analyse_multiple_race_evaluations(logs, inner_border, outer_border):
+def analyse_multiple_race_evaluations(logs, inner_border, outer_border, min_distance_to_plot=None):
     for log in logs:
         analyse_single_evaluation(log[0], inner_border, outer_border,
-                                  log_tuple=log)
+                                  log_tuple=log, min_distance_to_plot=min_distance_to_plot)
+
+
+def download_and_analyse_multiple_race_evaluations(log_folder, l_inner_border, l_outer_border, not_older_than=None,
+                                                   older_than=None,
+                                                   log_group='/aws/deepracer/leaderboard/SimulationJobs',
+                                                   min_distance_to_plot=None):
+    logs = cw.download_all_logs("%s/deepracer-eval-" % log_folder, log_group, not_older_than, older_than)
+
+    analyse_multiple_race_evaluations(logs, l_inner_border, l_outer_border, min_distance_to_plot=min_distance_to_plot)
