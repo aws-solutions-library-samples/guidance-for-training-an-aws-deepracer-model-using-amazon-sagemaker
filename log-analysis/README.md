@@ -1,3 +1,7 @@
+#
+
+## Running the notebooks
+
 I recommend setting up a venv for this:
 ```
 python3 -m venv venv
@@ -16,3 +20,5 @@ Then run
 jupyter notebook
 ```
 From the opened page you can select a notebook to work with.
+
+
