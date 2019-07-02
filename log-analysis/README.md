@@ -39,6 +39,10 @@ jupyter notebook
 ```
 From the opened page you can select a notebook to work with.
 
+## Useful hints
+* logs and reward folders have been configured to be ignored by git. This is so that you don't accidentally submit your reward functions or other useful info. Just make sure you secure it somehow yourself.
+* have a look at new_reward function usage in the notebooks. It lets you try and evaluate what the reward would look like for a different reward function.
+
 ## What can I contribute?
 
 There is a number of opportunities for improvement:
