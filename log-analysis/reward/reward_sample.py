@@ -2,9 +2,10 @@ from time import time
 
 
 class Reward:
-    def __init__(self):
+    def __init__(self, verbose=False):
         self.previous_steps = None
         self.initial_time = None
+        self.verbose = verbose
 
     @staticmethod
     def get_vector_length(v):
@@ -38,6 +39,9 @@ class Reward:
         reward = float(steering_factor)
 
         self.previous_steps = params['steps']
+
+        if self.verbose:
+            print(params)
 
         return reward
 

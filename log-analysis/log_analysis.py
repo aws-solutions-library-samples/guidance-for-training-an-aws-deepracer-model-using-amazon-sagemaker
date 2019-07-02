@@ -621,13 +621,13 @@ def df_to_params(df_row, waypoints):
     return params
 
 
-def new_reward(panda, center_line, reward_module, verbose=False, log_above=None):
+def new_reward(panda, center_line, reward_module, verbose=False):
     import importlib
     importlib.invalidate_caches()
     rf = importlib.import_module(reward_module)
     importlib.reload(rf)
 
-    reward = rf.Reward(verbose=verbose, log_above=log_above)
+    reward = rf.Reward(verbose=verbose)
 
     new_rewards = []
     for index, row in panda.iterrows():
@@ -635,3 +635,36 @@ def new_reward(panda, center_line, reward_module, verbose=False, log_above=None)
             reward.reward_function(df_to_params(row, center_line)))
 
     panda['new_reward'] = new_rewards
+
+
+def plot_track(df, center_line, inner_border, outer_border,
+               track_size=(500, 800), x_shift=0, y_shift=0):
+    track = np.zeros(track_size)  # lets magnify the track by *100
+    for index, row in df.iterrows():
+        x = int(row["x"]) + x_shift
+        y = int(row["y"]) + y_shift
+        reward = row["reward"]
+
+        # clip values that are off track
+        if y >= track_size[0]:
+            y = track_size[0] - 1
+
+        if x >= track_size[1]:
+            x = track_size[1] - 1
+
+        track[y, x] = reward
+
+    fig = plt.figure(1, figsize=(12, 16))
+    ax = fig.add_subplot(111)
+
+    shifted_center_line = [[point[0] + x_shift, point[1] + y_shift] for point
+                           in center_line]
+    shifted_inner_border = [[point[0] + x_shift, point[1] + y_shift] for point
+                            in inner_border]
+    shifted_outer_border = [[point[0] + x_shift, point[1] + y_shift] for point
+                            in outer_border]
+
+    print_border(ax, shifted_center_line, shifted_inner_border,
+                 shifted_outer_border)
+    return track
+

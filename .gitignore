@@ -6,3 +6,4 @@ reward
 !reward/reward_sample.py
 logs
 !logs/*-sample.log
+.ipynb_checkpoints
