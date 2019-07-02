@@ -1,4 +1,22 @@
-#
+# Log Analysis
+This folder contains tools making it simple to read information from training and evaluation logs.
+
+The main part of this project are [Jupyter](https://jupyter.org/) notebooks - think of it as a text editor document enriched with executable code.
+
+## What you need to know to use this
+
+If you just want to have a look, GitHub has a viewer for the notebooks, just click into them and enjoy.
+
+For working with the notebooks you need to be familiar with Python code, but the whole process is reasonably simple. Getting to know pandas and matplotlib will help you evolve from the solutions provided to your own bespoke analysis toolkit.
+
+Tinkering and trying things out is highly desirable. Please share your ideas
+
+## Notebooks
+
+There are currently following notebooks:
+* `DeepRacer Log Analysis.ipynb` - original notebook provided by the AWS folks (it has things not used in notebooks listed below)
+* `Training_analysis.ipynb` - built on top of the first one with some things removed and many added, prepared to monitor the training progress
+* `Evaluation_analysis.ipynb` - built on top of the first one, prepared to analyse evaluation data
 
 ## Running the notebooks
 
@@ -21,4 +39,14 @@ jupyter notebook
 ```
 From the opened page you can select a notebook to work with.
 
+## What can I contribute?
 
+There is a number of opportunities for improvement:
+* Report issues/feature requests
+* Fix things
+* Improve descriptions
+* Provide more resources
+* Add analysis bits to notebooks
+* Complete the `logs_to_params` method in log_analysis to improve the logs replay for a different reward
+* Fill in track data used in breakdown in `Training_analysis.ipynb`
+* Make the notebooks work with more tracks
