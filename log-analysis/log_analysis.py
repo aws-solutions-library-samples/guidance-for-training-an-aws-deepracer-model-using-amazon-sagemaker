@@ -558,3 +558,80 @@ def download_and_analyse_multiple_race_evaluations(log_folder, l_inner_border, l
     logs = cw.download_all_logs("%s/deepracer-eval-" % log_folder, log_group, not_older_than, older_than)
 
     analyse_multiple_race_evaluations(logs, l_inner_border, l_outer_border, min_distance_to_plot=min_distance_to_plot)
+
+
+def df_to_params(df_row, waypoints):
+    from track_utils import get_vector_length, \
+        get_a_point_on_a_line_closest_to_point, is_point_on_the_line
+    waypoint = df_row['closest_waypoint']
+    before = waypoint - 1
+    if waypoints[waypoint].tolist() == waypoints[before].tolist():
+        before -= 1
+    after = (waypoint + 1) % len(waypoints)
+
+    if waypoints[waypoint].tolist() == waypoints[after].tolist():
+        after = (after + 1) % len(waypoints)
+
+    current_location = np.array([df_row['x'], df_row['y']])
+
+    closest_point = get_a_point_on_a_line_closest_to_point(
+        waypoints[before],
+        waypoints[waypoint],
+        [df_row['x'], df_row['y']]
+    )
+
+    if is_point_on_the_line(waypoints[before][0], waypoints[before][1],
+                            waypoints[waypoint][0], waypoints[waypoint][1],
+                            closest_point[0], closest_point[1]):
+        closest_waypoints = [before, waypoint]
+    else:
+        closest_waypoints = [waypoint, after]
+
+        closest_point = get_a_point_on_a_line_closest_to_point(
+            waypoints[waypoint],
+            waypoints[after],
+            [df_row['x'], df_row['y']]
+        )
+
+    params = {
+        'x': df_row['x'] / 100,
+        'y': df_row['y'] / 100,
+        'speed': df_row['throttle'],
+        'steps': df_row['steps'],
+        'progress': df_row['progress'],
+        'heading': df_row['yaw'] * 180 / 3.14,
+        'closest_waypoints': closest_waypoints,
+        'steering_angle': df_row['steer'] * 180 / 3.14,
+        'waypoints': waypoints / 100,
+        'distance_from_center':
+            get_vector_length(
+                (
+                        closest_point
+                        -
+                        current_location
+                ) / 100),
+        'timestamp': df_row['timestamp'],
+        # TODO I didn't need them better yet. DOIT
+        'track_width': 0.60,
+        'is_left_of_center': None,
+        'all_wheels_on_track': True,
+        'is_reversed': False,
+    }
+
+    return params
+
+
+def new_reward(panda, center_line, reward_module, verbose=False, log_above=None):
+    import importlib
+    importlib.invalidate_caches()
+    rf = importlib.import_module(reward_module)
+    importlib.reload(rf)
+
+    reward = rf.Reward(verbose=verbose, log_above=log_above)
+
+    new_rewards = []
+    for index, row in panda.iterrows():
+        new_rewards.append(
+            reward.reward_function(df_to_params(row, center_line)))
+
+    panda['new_reward'] = new_rewards
