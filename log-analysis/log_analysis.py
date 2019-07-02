@@ -30,8 +30,6 @@ from sklearn.preprocessing import MinMaxScaler
 
 import cw_utils as cw
 
-EPISODE_PER_ITER = 20
-
 
 def load_data(fname):
     data = []
@@ -43,7 +41,7 @@ def load_data(fname):
     return data
 
 
-def convert_to_pandas(data):
+def convert_to_pandas(data, episodes_per_iteration=20):
     """
     stdout_ = 'SIM_TRACE_LOG:%d,%d,%.4f,%.4f,%.4f,%.2f,%.2f,%d,%.4f,%s,%s,%.4f,%d,%.2f,%s\n' % (
             self.episodes, self.steps, model_location[0], model_location[1], model_heading,
@@ -81,7 +79,7 @@ def convert_to_pandas(data):
         track_len = float(parts[13])
         tstamp = Decimal(parts[14])
 
-        iteration = int(episode / EPISODE_PER_ITER) + 1
+        iteration = int(episode / episodes_per_iteration) + 1
         df_list.append((iteration, episode, steps, x, y, yaw, steer, throttle,
                         action, reward, done, all_wheels_on_track, progress,
                         closest_waypoint, track_len, tstamp))
