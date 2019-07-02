@@ -666,3 +666,124 @@ def plot_track(df, center_line, inner_border, outer_border,
                  shifted_outer_border)
     return track
 
+
+class TrackBreakdown:
+    def __init__(self, vert_lines, track_segments, segment_x, segment_y,
+                 segment_xerr, segment_yerr):
+        # vert_lines are indices of waypoints put on the track in squares to mark a section
+        self.vert_lines = vert_lines
+        # track segments determine location of descriptions on the right graph, formed of tuple
+        # (location along the x axis, location along the y axis, description)
+        self.track_segments = track_segments
+
+        # marking of a bottom-left pixel of a segment on the right graph
+        self.segment_x = segment_x
+        self.segment_y = segment_y
+
+        # boundaries of red rectangles on the right graph
+        # how many pixels wide before and after the bottom-left pixel x coordinate
+        self.segment_xerr = segment_xerr
+        # how many pixels tall below and above the bottom-left pixel y coordinate
+        self.segment_yerr = segment_yerr
+
+
+reinvent2018 = TrackBreakdown(
+    vert_lines=[10, 25, 32, 33, 40, 45, 50, 53, 61, 67],
+    track_segments=[(15, 100, 'hairpin'),
+                    (32, 100, 'right'),
+                    (42, 100, 'left'),
+                    (51, 100, 'left'),
+                    (63, 100, 'left')],
+
+    segment_x=np.array([15, 32, 42, 51, 63]),
+    segment_y=np.array([0, 0, 0, 0, 0]),
+
+    segment_xerr=np.array([[5, 1, 2, 1, 2], [10, 1, 3, 2, 4]]),
+    segment_yerr=np.array([[0, 0, 0, 0, 0], [150, 150, 150, 150, 150]]))
+
+london_loop = TrackBreakdown(
+    vert_lines=[0, 15, 17, 30, 33, 45, 75, 105, 120, 132, 150, 180, 190, 210],
+    track_segments=[(0, 100, 'long sharp left'),
+                    (17, 90, 'mild right'),
+                    (33, 80, 'tight left'),
+                    (75, 100, 'mild chicane'),
+                    (120, 100, 'short sharp left'),
+                    (150, 90, 'left'),
+                    (190, 100, 'right')],
+
+    segment_x=np.array([0, 17, 33, 75, 120, 150, 190]),
+    segment_y=np.array([0, 0, 0, 0, 0, 0, 0]),
+
+    segment_xerr=np.array(
+        [[0, 0, 0, 0, 0, 0, 0], [15, 13, 12, 30, 12, 30, 20]]),
+    segment_yerr=np.array(
+        [[0, 0, 0, 0, 0, 0, 0], [150, 150, 150, 150, 150, 150, 150]]))
+
+track_breakdown = {'reinvent2018': reinvent2018, 'london_loop': london_loop}
+
+
+def action_breakdown(df, iteration_ids, track_breakdown, center_line,
+                     inner_border, outer_border,
+                     action_names=['LEFT', 'RIGHT', 'STRAIGHT', 'SLIGHT LEFT',
+                                   'SLIGHT RIGHT', 'SLOW']):
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+    fig = plt.figure(figsize=(16, 32))
+
+    if type(iteration_ids) is not list:
+        iteration_ids = [iteration_ids]
+
+    wpts_array = center_line
+
+    for iter_num in iteration_ids:
+        # Slice the data frame to get all episodes in that iteration
+        df_iter = df[(iter_num == df['iteration'])]
+        n_steps_in_iter = len(df_iter)
+        print('Number of steps in iteration=', n_steps_in_iter)
+
+        th = 0.8
+        for idx in range(len(action_names)):
+            ax = fig.add_subplot(6, 2, 2 * idx + 1)
+            print_border(ax, center_line, inner_border, outer_border)
+
+            df_slice = df_iter[df_iter['reward'] >= th]
+            df_slice = df_slice[df_slice['action'] == idx]
+
+            ax.plot(df_slice['x'], df_slice['y'], 'b.')
+
+            for idWp in track_breakdown.vert_lines:
+                ax.text(wpts_array[idWp][0],
+                        wpts_array[idWp][1] + 20,
+                        str(idWp),
+                        bbox=dict(facecolor='red', alpha=0.5))
+
+            # ax.set_title(str(log_name_id) + '-' + str(iter_num) + ' w rew >= '+str(th))
+            ax.set_ylabel(action_names[idx])
+
+            # calculate action way point distribution
+            action_waypoint_distribution = list()
+            for idWp in range(len(wpts_array)):
+                action_waypoint_distribution.append(
+                    len(df_slice[df_slice['closest_waypoint'] == idWp]))
+
+            ax = fig.add_subplot(6, 2, 2 * idx + 2)
+
+            # Call function to create error boxes
+            _ = make_error_boxes(ax,
+                                 track_breakdown.segment_x,
+                                 track_breakdown.segment_y,
+                                 track_breakdown.segment_xerr,
+                                 track_breakdown.segment_yerr)
+
+            for tt in range(len(track_breakdown.track_segments)):
+                ax.text(track_breakdown.track_segments[tt][0],
+                        track_breakdown.track_segments[tt][1],
+                        track_breakdown.track_segments[tt][2])
+
+            ax.bar(np.arange(len(wpts_array)), action_waypoint_distribution)
+            ax.set_xlabel('waypoint')
+            ax.set_ylabel('# of actions')
+            ax.legend([action_names[idx]])
+            ax.set_ylim((0, 150))
+
