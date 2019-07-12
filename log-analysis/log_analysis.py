@@ -413,8 +413,13 @@ def avg_and_dev(values, episodes_per_iteration):
     return average_val_per_iteration, deviation_val_per_iteration
 
 
-def plot(ax, values, xlabel, ylabel, title=None, red_above=None):
+def plot(ax, values, xlabel, ylabel, title=None, red_above=None, min_values = None, max_values = None):
     ax.plot(np.arange(len(values)), values, '.')
+    if(min_values):
+        ax.plot(np.arange(len(min_values)), min_values, '-')
+    if(max_values):
+        ax.plot(np.arange(len(max_values)), max_values, 'g-')
+
     if title:
         ax.set_title(title)
     ax.set_ylabel(ylabel)
@@ -472,6 +477,8 @@ def analyze_training_progress(panda, episodes_per_iteration):
             iter_count += 1
 
     completed_time_per_iteration = list()
+    min_completed_time_per_iteration = list()
+    max_completed_time_per_iteration = list()
     buffer_val = list()
     for val in completed_time_per_episode:
         buffer_val.append(val)
@@ -481,6 +488,8 @@ def analyze_training_progress(panda, episodes_per_iteration):
             buffer_val = list()
             if len(complete_times) > 0:
                 completed_time_per_iteration.append(np.mean(complete_times))
+                min_completed_time_per_iteration.append(np.min(complete_times))
+                max_completed_time_per_iteration.append(np.max(complete_times))
             else:
                 completed_time_per_iteration.append(0)
 
@@ -504,7 +513,8 @@ def analyze_training_progress(panda, episodes_per_iteration):
     plot(ax, deviation_time_per_iteration, 'Iteration', 'Dev of time')
 
     ax = axes[2, 1]
-    plot(ax, completed_time_per_iteration, 'Iteration', 'Mean completed laps time', 'Mean completed time')
+    plot(ax, completed_time_per_iteration, 'Iteration', 'Mean completed laps time', 'Mean completed time',
+         min_values=min_completed_time_per_iteration, max_values=max_completed_time_per_iteration)
 
     ax = axes[0, 2]
     plot(ax, average_progress_per_iteration, 'Iteration', 'Mean progress', 'Progress per Iteration')
