@@ -360,7 +360,7 @@ def simulation_agg(panda, firstgroup='iteration', add_timestamp=False):
     result['quintile'] = pd.cut(result['episode'], 5, labels=['1st', '2nd', '3rd', '4th', '5th'])
 
     if add_timestamp:
-        by_timestamp = grouped['timestamp'].agg(np.max).astype(float).reset_index()
+        by_timestamp = grouped['timestamp'].agg(np.max).reset_index()
         result = result.merge(by_timestamp, on=[firstgroup, 'episode'])
 
     return result
@@ -391,6 +391,7 @@ def analyze_categories(panda, category='quintile', groupcount=5):
         group.plot.scatter('time', 'reward', ax=axes[row, 0])
         group.plot.scatter('time', 'new_reward', ax=axes[row, 1])
         group.hist(column=['time'], bins=20, ax=axes[row, 2])
+        axes[row, 3].set(xlim=(0, 100))
         group.hist(column=['progress'], bins=20, ax=axes[row, 3])
         row += 1
 
