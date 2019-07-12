@@ -334,6 +334,8 @@ def simulation_agg(panda, firstgroup='iteration', add_timestamp=False):
     grouped = panda.groupby([firstgroup, 'episode'])
 
     by_steps = grouped['steps'].agg(np.max).reset_index()
+    by_start = grouped.first()['closest_waypoint'].reset_index() \
+        .rename(index=str, columns={"closest_waypoint": "start_at"})
     if 'new_reward' not in panda.columns:
         print('new reward not found, using reward as its values')
         panda['new_reward'] = panda['reward']
@@ -346,6 +348,7 @@ def simulation_agg(panda, firstgroup='iteration', add_timestamp=False):
     by_time['time'] = by_time['time'].astype(float)
 
     result = by_steps \
+        .merge(by_start) \
         .merge(by_progress, on=[firstgroup, 'episode']) \
         .merge(by_time, on=[firstgroup, 'episode']) \
         .merge(by_new_reward, on=[firstgroup, 'episode']) \
@@ -364,7 +367,7 @@ def simulation_agg(panda, firstgroup='iteration', add_timestamp=False):
 
 
 def scatter_aggregates(aggregate_df, title=None):
-    fig, axes = plt.subplots(nrows=2, ncols=3, figsize=[15, 7.2])
+    fig, axes = plt.subplots(nrows=3, ncols=3, figsize=[15, 11])
     if title:
         fig.suptitle(title)
     aggregate_df.plot.scatter('time', 'reward', ax=axes[0, 0])
@@ -373,6 +376,9 @@ def scatter_aggregates(aggregate_df, title=None):
     aggregate_df.plot.scatter('time', 'steps', ax=axes[0, 2])
     aggregate_df.hist(column=['time'], bins=20, ax=axes[1, 1])
     aggregate_df.hist(column=['progress'], bins=20, ax=axes[1, 2])
+    aggregate_df.plot.scatter('start_at', 'reward', ax=axes[2, 0])
+    aggregate_df.plot.scatter('start_at', 'progress', ax=axes[2, 1])
+    aggregate_df.plot.scatter('start_at', 'time_if_complete', ax=axes[2, 2])
 
 
 def analyze_categories(panda, category='quintile', groupcount=5):
