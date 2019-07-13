@@ -416,9 +416,9 @@ def avg_and_dev(values, episodes_per_iteration):
 def plot(ax, values, xlabel, ylabel, title=None, red_above=None, min_values = None, max_values = None):
     ax.plot(np.arange(len(values)), values, '.')
     if(min_values):
-        ax.plot(np.arange(len(min_values)), min_values, '-')
+        ax.plot(np.arange(len(min_values)), min_values, 'r+')
     if(max_values):
-        ax.plot(np.arange(len(max_values)), max_values, 'g-')
+        ax.plot(np.arange(len(max_values)), max_values, 'g+')
 
     if title:
         ax.set_title(title)
@@ -492,6 +492,8 @@ def analyze_training_progress(panda, episodes_per_iteration):
                 max_completed_time_per_iteration.append(np.max(complete_times))
             else:
                 completed_time_per_iteration.append(0)
+                min_completed_time_per_iteration.append(0)
+                max_completed_time_per_iteration.append(0)
 
     print('Number of iterations = ', iter_count)
 
