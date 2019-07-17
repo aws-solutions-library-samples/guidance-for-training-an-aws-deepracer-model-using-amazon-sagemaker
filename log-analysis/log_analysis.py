@@ -408,137 +408,56 @@ def analyze_categories(panda, category='quintile', groupcount=5, title=None):
         row += 1
 
 
-def avg_and_dev(values, episodes_per_iteration):
-    average_val_per_iteration = list()
-    deviation_val_per_iteration = list()
+def analyze_training_progress(aggregates, title=None):
+    aggregates['complete'] = np.where(aggregates['progress'] == 100, 1, 0)
 
-    buffer_val = list()
-    for val in values:
-        buffer_val.append(val)
+    grouped = aggregates.groupby('iteration')
 
-        if len(buffer_val) == episodes_per_iteration:
-            average_val_per_iteration.append(np.mean(buffer_val))
-            deviation_val_per_iteration.append(np.std(buffer_val))
-            # reset
-            buffer_val = list()
+    reward_per_iteration = grouped['reward'].agg([np.mean, np.std]).reset_index()
+    time_per_iteration = grouped['time'].agg([np.mean, np.std]).reset_index()
+    progress_per_iteration = grouped['progress'].agg([np.mean, np.std]).reset_index()
 
-    return average_val_per_iteration, deviation_val_per_iteration
+    complete_laps = aggregates[aggregates['progress'] == 100.0]
+    complete_grouped = complete_laps.groupby('iteration')
+
+    complete_times = complete_grouped['time'].agg([np.mean, np.min, np.max]).reset_index()
+
+    total_completion_rate = complete_laps.shape[0] / aggregates.shape[0]
+
+    complete_per_iteration = grouped['complete'].agg([np.mean]).reset_index()
+
+    print('Number of episodes = ', np.max(aggregates['episode']))
+    print('Number of iterations = ', np.max(aggregates['iteration']))
+
+    fig, axes = plt.subplots(nrows=3, ncols=3, figsize=[15, 15])
+
+    if title:
+        fig.suptitle(title)
+
+    plot(axes[0, 0], reward_per_iteration, 'iteration', 'Iteration', 'mean', 'Mean reward', 'Rewards per Iteration')
+    plot(axes[1, 0], reward_per_iteration, 'iteration', 'Iteration', 'std', 'Std dev of reward', 'Dev of reward')
+    plot(axes[2, 0], aggregates, 'episode', 'Episode', 'reward', 'Total reward')
+
+    plot(axes[0, 1], time_per_iteration, 'iteration', 'Iteration', 'mean', 'Mean time', 'Times per Iteration')
+    plot(axes[1, 1], time_per_iteration, 'iteration', 'Iteration', 'std', 'Std dev of time', 'Dev of time')
+    if complete_times.shape[0] > 0:
+        plot(axes[2, 1], complete_times, 'iteration', 'Iteration', 'mean', 'Time', 'Mean completed laps time')
+
+    plot(axes[0, 2], progress_per_iteration, 'iteration', 'Iteration', 'mean', 'Mean progress',
+         'Progress per Iteration')
+    plot(axes[1, 2], progress_per_iteration, 'iteration', 'Iteration', 'std', 'Std dev of progress', 'Dev of progress')
+    plot(axes[2, 2], complete_per_iteration, 'iteration', 'Iteration', 'mean', 'Completion rate',
+         'Completion rate (avg: %s)' % total_completion_rate)
 
 
-def plot(ax, values, xlabel, ylabel, title=None, red_above=None, min_values = None, max_values = None):
-    ax.plot(np.arange(len(values)), values, '.')
-    if(min_values):
-        ax.plot(np.arange(len(min_values)), min_values, 'r+')
-    if(max_values):
-        ax.plot(np.arange(len(max_values)), max_values, 'g+')
-
+def plot(ax, df, xval, xlabel, yval, ylabel, title=None):
+    df.plot.scatter(xval, yval, ax=ax, s=5, alpha=0.7)
     if title:
         ax.set_title(title)
     ax.set_ylabel(ylabel)
     ax.set_xlabel(xlabel)
 
-    if red_above:
-        for rr in range(len(values)):
-            if values[rr] >= red_above:
-                ax.plot(rr, values[rr], 'r.')
-
     plt.grid(True)
-
-
-def completion_rate(progresses):
-    completes = [progress for progress in progresses if progress == 100.0]
-    return len(completes) / len(progresses)
-
-
-def analyze_training_progress(panda, episodes_per_iteration):
-    # reward graph per episode
-    min_episodes = np.min(panda['episode'])
-    max_episodes = np.max(panda['episode'])
-    print('Number of episodes = ', max_episodes)
-
-    total_reward_per_episode = list()
-    time_per_episode = list()
-    completed_time_per_episode = list()
-    progress_per_episode = list()
-    for epi in range(min_episodes, max_episodes):
-        df_slice = panda[panda['episode'] == epi]
-        total_reward_per_episode.append(np.sum(df_slice['reward']))
-        time_per_episode.append(np.ptp(df_slice['timestamp']))
-        progress_per_episode.append(np.max(df_slice['progress']))
-        completed_time_per_episode.append(time_per_episode[-1] if progress_per_episode[-1] == 100.0 else 0)
-
-    average_reward_per_iteration, deviation_reward_per_iteration = avg_and_dev(total_reward_per_episode,
-                                                                               episodes_per_iteration)
-    average_time_per_iteration, deviation_time_per_iteration = avg_and_dev(time_per_episode, episodes_per_iteration)
-    average_progress_per_iteration, deviation_progress_per_iteration = avg_and_dev(progress_per_episode,
-                                                                                   episodes_per_iteration)
-
-    completion_rate_per_iteration = list()
-
-    total_completion_rate = completion_rate(progress_per_episode)
-
-    buffer_val = list()
-    iter_count = 0
-    for val in progress_per_episode:
-        buffer_val.append(val)
-
-        if len(buffer_val) == episodes_per_iteration:
-            completion_rate_for_iteration = completion_rate(buffer_val)
-            completion_rate_per_iteration.append(completion_rate_for_iteration)
-            buffer_val = list()
-            iter_count += 1
-
-    completed_time_per_iteration = list()
-    min_completed_time_per_iteration = list()
-    max_completed_time_per_iteration = list()
-    buffer_val = list()
-    for val in completed_time_per_episode:
-        buffer_val.append(val)
-
-        if len(buffer_val) == episodes_per_iteration:
-            complete_times = [t for t in buffer_val if t != 0]
-            buffer_val = list()
-            if len(complete_times) > 0:
-                completed_time_per_iteration.append(np.mean(complete_times))
-                min_completed_time_per_iteration.append(np.min(complete_times))
-                max_completed_time_per_iteration.append(np.max(complete_times))
-            else:
-                completed_time_per_iteration.append(0)
-                min_completed_time_per_iteration.append(0)
-                max_completed_time_per_iteration.append(0)
-
-    print('Number of iterations = ', iter_count)
-
-    fig, axes = plt.subplots(nrows=3, ncols=3, figsize=[15, 15])
-
-    ax = axes[0, 0]
-    plot(ax, average_reward_per_iteration, 'Iteration', 'Mean reward', 'Rewards per Iteration')
-
-    ax = axes[1, 0]
-    plot(ax, deviation_reward_per_iteration, 'Iteration', 'Dev of reward')
-
-    ax = axes[2, 0]
-    plot(ax, total_reward_per_episode, 'Episode', 'Total reward')
-
-    ax = axes[0, 1]
-    plot(ax, average_time_per_iteration, 'Iteration', 'Mean time', 'Times per Iteration')
-
-    ax = axes[1, 1]
-    plot(ax, deviation_time_per_iteration, 'Iteration', 'Dev of time')
-
-    ax = axes[2, 1]
-    plot(ax, completed_time_per_iteration, 'Iteration', 'Mean completed laps time', 'Mean completed time',
-         min_values=min_completed_time_per_iteration, max_values=max_completed_time_per_iteration)
-
-    ax = axes[0, 2]
-    plot(ax, average_progress_per_iteration, 'Iteration', 'Mean progress', 'Progress per Iteration')
-
-    ax = axes[1, 2]
-    plot(ax, deviation_progress_per_iteration, 'Iteration', 'Dev of progress')
-
-    ax = axes[2, 2]
-    plot(ax, completion_rate_per_iteration, 'Iteration', 'Completion rate',
-         'Completion rate (avg: %s)' % total_completion_rate)
 
 
 def load_eval_data(eval_fname):
