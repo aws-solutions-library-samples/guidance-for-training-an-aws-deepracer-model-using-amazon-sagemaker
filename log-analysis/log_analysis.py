@@ -330,17 +330,12 @@ def plot_grid_world(episode_df, inner, outer, scale=10.0, plot=True,
     return lap_time, average_throttle, stats
 
 
-def simulation_agg(panda, firstgroup='iteration', add_timestamp=False):
+def simulation_agg(panda, firstgroup='iteration', add_timestamp=False, is_eval=False):
     grouped = panda.groupby([firstgroup, 'episode'])
 
     by_steps = grouped['steps'].agg(np.max).reset_index()
     by_start = grouped.first()['closest_waypoint'].reset_index() \
         .rename(index=str, columns={"closest_waypoint": "start_at"})
-    if 'new_reward' not in panda.columns:
-        print('new reward not found, using reward as its values')
-        panda['new_reward'] = panda['reward']
-    by_new_reward = grouped['new_reward'].agg(np.sum).reset_index()
-    by_reward = grouped['reward'].agg(np.sum).reset_index()
     by_progress = grouped['progress'].agg(np.max).reset_index()
     by_throttle = grouped['throttle'].agg(np.mean).reset_index()
     by_time = grouped['timestamp'].agg(np.ptp).reset_index() \
@@ -350,41 +345,58 @@ def simulation_agg(panda, firstgroup='iteration', add_timestamp=False):
     result = by_steps \
         .merge(by_start) \
         .merge(by_progress, on=[firstgroup, 'episode']) \
-        .merge(by_time, on=[firstgroup, 'episode']) \
-        .merge(by_new_reward, on=[firstgroup, 'episode']) \
-        .merge(by_throttle, on=[firstgroup, 'episode']) \
-        .merge(by_reward, on=[firstgroup, 'episode'])
+        .merge(by_time, on=[firstgroup, 'episode'])
+
+    if not is_eval:
+        if 'new_reward' not in panda.columns:
+            print('new reward not found, using reward as its values')
+            panda['new_reward'] = panda['reward']
+        by_new_reward = grouped['new_reward'].agg(np.sum).reset_index()
+        result = result.merge(by_new_reward, on=[firstgroup, 'episode'])
+
+    result = result.merge(by_throttle, on=[firstgroup, 'episode'])
+
+    if not is_eval:
+        by_reward = grouped['reward'].agg(np.sum).reset_index()
+        result = result.merge(by_reward, on=[firstgroup, 'episode'])
 
     result['time_if_complete'] = result['time'] * 100 / result['progress']
-    result['reward_if_complete'] = result['reward'] * 100 / result['progress']
-    result['quintile'] = pd.cut(result['episode'], 5, labels=['1st', '2nd', '3rd', '4th', '5th'])
+
+    if not is_eval:
+        result['reward_if_complete'] = result['reward'] * 100 / result['progress']
+        result['quintile'] = pd.cut(result['episode'], 5, labels=['1st', '2nd', '3rd', '4th', '5th'])
 
     if add_timestamp:
-        by_timestamp = grouped['timestamp'].agg(np.max).reset_index()
+        by_timestamp = grouped['timestamp'].agg(np.max).astype(float).reset_index()
+        by_timestamp['timestamp'] = pd.to_datetime(by_timestamp['timestamp'], unit='s')
         result = result.merge(by_timestamp, on=[firstgroup, 'episode'])
 
     return result
 
 
-def scatter_aggregates(aggregate_df, title=None):
-    fig, axes = plt.subplots(nrows=3, ncols=3, figsize=[15, 11])
+def scatter_aggregates(aggregate_df, title=None, is_eval=False):
+    fig, axes = plt.subplots(nrows=2 if is_eval else 3, ncols=2 if is_eval else 3, figsize=[15, 11])
     if title:
         fig.suptitle(title)
-    aggregate_df.plot.scatter('time', 'reward', ax=axes[0, 0])
-    aggregate_df.plot.scatter('time', 'new_reward', ax=axes[1, 0])
-    aggregate_df.plot.scatter('time', 'progress', ax=axes[0, 1])
-    aggregate_df.plot.scatter('time', 'steps', ax=axes[0, 2])
-    aggregate_df.hist(column=['time'], bins=20, ax=axes[1, 1])
-    aggregate_df.hist(column=['progress'], bins=20, ax=axes[1, 2])
-    aggregate_df.plot.scatter('start_at', 'reward', ax=axes[2, 0])
-    aggregate_df.plot.scatter('start_at', 'progress', ax=axes[2, 1])
-    aggregate_df.plot.scatter('start_at', 'time_if_complete', ax=axes[2, 2])
+    if not is_eval:
+        aggregate_df.plot.scatter('time', 'reward', ax=axes[0, 2])
+        aggregate_df.plot.scatter('time', 'new_reward', ax=axes[1, 2])
+        aggregate_df.plot.scatter('start_at', 'reward', ax=axes[2, 2])
+        aggregate_df.plot.scatter('start_at', 'progress', ax=axes[2, 0])
+        aggregate_df.plot.scatter('start_at', 'time_if_complete', ax=axes[2, 1])
+    aggregate_df.plot.scatter('time', 'progress', ax=axes[0, 0])
+    aggregate_df.hist(column=['time'], bins=20, ax=axes[1, 0])
+    aggregate_df.plot.scatter('time', 'steps', ax=axes[0, 1])
+    aggregate_df.hist(column=['progress'], bins=20, ax=axes[1, 1])
 
 
-def analyze_categories(panda, category='quintile', groupcount=5):
+def analyze_categories(panda, category='quintile', groupcount=5, title=None):
     grouped = panda.groupby(category)
 
     fig, axes = plt.subplots(nrows=groupcount, ncols=4, figsize=[15, 15])
+
+    if title:
+        fig.suptitle(title)
 
     row = 0
     for name, group in grouped:
@@ -628,7 +640,7 @@ def df_to_params(df_row, waypoints):
                         current_location
                 ) / 100),
         'timestamp': df_row['timestamp'],
-        # TODO I didn't need them better yet. DOIT
+        # TODO I didn't need them yet. DOIT
         'track_width': 0.60,
         'is_left_of_center': None,
         'all_wheels_on_track': True,
@@ -745,8 +757,6 @@ def action_breakdown(df, iteration_ids, track_breakdown, center_line,
                      inner_border, outer_border,
                      action_names=['LEFT', 'RIGHT', 'STRAIGHT', 'SLIGHT LEFT',
                                    'SLIGHT RIGHT', 'SLOW']):
-    import numpy as np
-    import matplotlib.pyplot as plt
 
     fig = plt.figure(figsize=(16, 32))
 
@@ -805,4 +815,3 @@ def action_breakdown(df, iteration_ids, track_breakdown, center_line,
             ax.set_ylabel('# of actions')
             ax.legend([action_names[idx]])
             ax.set_ylim((0, 150))
-
