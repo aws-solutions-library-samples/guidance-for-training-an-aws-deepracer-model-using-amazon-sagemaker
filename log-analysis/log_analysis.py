@@ -208,7 +208,7 @@ def print_border(ax, waypoints, inner_border_waypoints, outer_border_waypoints,
 
 def plot_top_laps(sorted_idx, episode_map, center_line, inner_border,
                   outer_border, n_laps=5):
-    fig = plt.figure(n_laps, figsize=(12, 30))
+    fig = plt.figure(n_laps, figsize=(12, n_laps * 10))
     for i in range(n_laps):
         idx = sorted_idx[i]
 
