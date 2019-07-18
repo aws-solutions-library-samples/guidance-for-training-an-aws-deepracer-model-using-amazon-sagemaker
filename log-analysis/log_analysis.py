@@ -15,7 +15,6 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
-import math
 from datetime import datetime
 from decimal import *
 
@@ -24,7 +23,6 @@ import numpy as np
 import pandas as pd
 from matplotlib.collections import PatchCollection
 from matplotlib.patches import Rectangle
-from shapely.geometry import Point, Polygon
 from shapely.geometry.polygon import LineString
 from sklearn.preprocessing import MinMaxScaler
 
@@ -236,98 +234,64 @@ def plot_top_laps(sorted_idx, episode_map, center_line, inner_border,
     return fig
 
 
-def plot_grid_world(episode_df, inner, outer, scale=10.0, plot=True,
-                    log_tuple=None, min_distance_to_plot=None,
-                    graphed_value='throttle'):
+def plot_evaluations(evaluations, inner, outer, graphed_value='throttle'):
+    streams = evaluations.groupby('stream')
+
+    for name, stream in streams:
+        fig, axes = plt.subplots(2, 3, figsize=(20, 10))
+        fig.tight_layout(pad=0.4, w_pad=0.5, h_pad=7.0)
+
+        for id, episode in stream.groupby('episode'):
+            plot_grid_world(episode, inner, outer, graphed_value, ax=axes[int(id / 3), id % 3])
+
+        fig.show()
+
+
+def plot_grid_world(episode_df, inner, outer, graphed_value='throttle', min_progress=None, ax=None):
     """
     plot a scaled version of lap, along with throttle taken a each position
     """
-    stats = []
-    outer = [(val[0] / scale, val[1] / scale) for val in outer]
-    inner = [(val[0] / scale, val[1] / scale) for val in inner]
 
-    max_x = int(np.max([val[0] for val in outer]))
-    max_y = int(np.max([val[1] for val in outer]))
-    min_x = min(int(np.min([val[0] for val in outer])), 0)
-    min_y = min(int(np.min([val[1] for val in outer])), 0)
+    episode_df.loc[:, 'distance_diff'] = ((episode_df['x'].shift(1) - episode_df['x']) ** 2 + (
+            episode_df['y'].shift(1) - episode_df['y']) ** 2) ** 0.5
 
-    outer = [(val[0] - min_x, val[1] - min_y) for val in outer]
-    inner = [(val[0] - min_x, val[1] - min_y) for val in inner]
-
-    grid = np.zeros((max_x + 1 - min_x, max_y + 1 - min_y))
-
-    # create shapely ring for outter and inner
-    outer_polygon = Polygon(outer)
-    inner_polygon = Polygon(inner)
-
-    print('Outer polygon length = %.2f (meters)' % (
-            outer_polygon.length / scale))
-    print('Inner polygon length = %.2f (meters)' % (
-            inner_polygon.length / scale))
-
-    dist = 0.0
-    for ii in range(1, len(episode_df)):
-        dist += math.sqrt(
-            (episode_df['x'].iloc[ii] - episode_df['x'].iloc[ii - 1]) ** 2 + (
-                    episode_df['y'].iloc[ii] - episode_df['y'].iloc[
-                ii - 1]) ** 2)
-    dist /= 100.0
-
-    t0 = datetime.fromtimestamp(float(episode_df['timestamp'].iloc[0]))
-    t1 = datetime.fromtimestamp(
-        float(episode_df['timestamp'].iloc[len(episode_df) - 1]))
-
-    lap_time = (t1 - t0).total_seconds()
-
+    distance = np.nansum(episode_df['distance_diff']) / 100
+    lap_time = np.ptp(episode_df['timestamp'].astype(float))
+    velocity = 0.01 * distance / lap_time
     average_throttle = np.nanmean(episode_df['throttle'])
-    max_throttle = np.nanmax(episode_df['throttle'])
-    min_throttle = np.nanmin(episode_df['throttle'])
-    velocity = dist / lap_time
+    progress = np.nanmax(episode_df['progress'])
 
-    distance_lap_time = 'Distance, lap time = %.2f (meters), %.2f (sec)' % (
-        dist, lap_time)
-    print(distance_lap_time)
-    throttle_velocity = 'Average throttle, velocity = %.2f (Gazebo), %.2f (meters/sec)' % (
-        average_throttle, velocity)
-    print(throttle_velocity)
+    if not min_progress or progress > min_progress:
 
-    stats.append((dist, lap_time, velocity, average_throttle, min_throttle,
-                  max_throttle))
+        distance_lap_time = 'Distance, progress, lap time = %.2f (meters), %.2f %%, %.2f (sec)' % (
+            distance, progress, lap_time)
+        throttle_velocity = 'Average throttle, velocity = %.2f (Gazebo), %.2f (meters/sec)' % (
+            average_throttle, velocity)
 
-    if plot == True and (not min_distance_to_plot or dist > min_distance_to_plot):
-        for y in range(max_y - min_y):
-            for x in range(max_x - min_x):
-                point = Point((x, y))
+        fig = None
+        if ax is None:
+            fig = plt.figure()
+            ax = fig.add_subplot(1, 1, 1)
 
-                # this is the track
-                if (not inner_polygon.contains(point)) and (
-                        outer_polygon.contains(point)):
-                    grid[x][y] = -1.0
+        ax.set_facecolor('midnightblue')
 
-                # find df slice that fits into this
-                df_slice = episode_df[
-                    (episode_df['x'] >= (x + min_x - 1) * scale) & (
-                            episode_df['x'] < (x + min_x) * scale) & \
-                    (episode_df['y'] >= (y + min_y - 1) * scale) & (
-                            episode_df['y'] < (y + min_y) * scale)]
+        line = LineString(inner)
+        plot_coords(ax, line)
+        plot_line(ax, line)
 
-                if len(df_slice) > 0:
-                    # average_throttle = np.nanmean(df_slice['throttle'])
-                    grid[x][y] = np.nanmean(df_slice[graphed_value])
+        line = LineString(outer)
+        plot_coords(ax, line)
+        plot_line(ax, line)
 
-        fig = plt.figure(figsize=(12, 16))
-        imgplot = plt.imshow(grid)
-        subtitle = ''
-        if log_tuple:
-            subtitle = '\n%s\n%s\n%s\n%s' % (
-                log_tuple[1], datetime.fromtimestamp(log_tuple[2] / 1000.0),
-                distance_lap_time, throttle_velocity)
-        plt.colorbar(orientation='horizontal')
-        plt.title('Lap time (sec) = %.3f%s' % (lap_time, subtitle))
-        plt.show()
-        plt.clf()
+        episode_df.plot.scatter('x', 'y', ax=ax, s=3, c=graphed_value, cmap=plt.get_cmap('plasma'))
 
-    return lap_time, average_throttle, stats
+        subtitle = 'Stream: %s, %s\n%s\n%s' % (
+            episode_df['stream'].iloc[0], datetime.fromtimestamp(episode_df['timestamp'].iloc[0]),
+            distance_lap_time, throttle_velocity)
+        ax.set_title(subtitle)
+
+        if fig:
+            fig.show()
 
 
 def simulation_agg(panda, firstgroup='iteration', add_timestamp=False, is_eval=False):
@@ -481,31 +445,26 @@ def load_eval_logs(logs):
 
 
 def analyse_single_evaluation(log_file, inner_border, outer_border, episodes=5,
-                              log_tuple=None, min_distance_to_plot=None):
-    print("###############################################################")
-    print(log_file)
+                              min_progress=None):
     eval_df = load_eval_data(log_file)
 
     for e in range(episodes):
-        print("\nEpisode #%s " % e)
         episode_df = eval_df[eval_df['episode'] == e]
-        plot_grid_world(episode_df, inner_border, outer_border, scale=5.0,
-                        log_tuple=log_tuple, min_distance_to_plot=min_distance_to_plot)
+        plot_grid_world(episode_df, inner_border, outer_border, min_progress=min_progress)
 
 
-def analyse_multiple_race_evaluations(logs, inner_border, outer_border, min_distance_to_plot=None):
+def analyse_multiple_race_evaluations(logs, inner_border, outer_border, min_progress=None):
     for log in logs:
-        analyse_single_evaluation(log[0], inner_border, outer_border,
-                                  log_tuple=log, min_distance_to_plot=min_distance_to_plot)
+        analyse_single_evaluation(log[0], inner_border, outer_border, min_progress=min_progress)
 
 
 def download_and_analyse_multiple_race_evaluations(log_folder, l_inner_border, l_outer_border, not_older_than=None,
                                                    older_than=None,
                                                    log_group='/aws/deepracer/leaderboard/SimulationJobs',
-                                                   min_distance_to_plot=None):
+                                                   min_progress=None):
     logs = cw.download_all_logs("%s/deepracer-eval-" % log_folder, log_group, not_older_than, older_than)
 
-    analyse_multiple_race_evaluations(logs, l_inner_border, l_outer_border, min_distance_to_plot=min_distance_to_plot)
+    analyse_multiple_race_evaluations(logs, l_inner_border, l_outer_border, min_progress=min_progress)
 
 
 def df_to_params(df_row, waypoints):
