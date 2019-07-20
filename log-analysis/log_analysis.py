@@ -231,11 +231,14 @@ def plot_top_laps(sorted_idx, episode_map, center_line, inner_border,
             car_x2, car_y2 = x1 - 0.02, y1
             plt.plot([x1 * 100, car_x2 * 100], [y1 * 100, car_y2 * 100], 'b.')
 
+    plt.show()
+    plt.clf()
+
     return fig
 
 
 def plot_evaluations(evaluations, inner, outer, graphed_value='throttle'):
-    streams = evaluations.groupby('stream')
+    streams = evaluations.sort_values('timestamp', ascending=False).groupby('stream', sort=False)
 
     for name, stream in streams:
         fig, axes = plt.subplots(2, 3, figsize=(20, 10))
@@ -244,7 +247,8 @@ def plot_evaluations(evaluations, inner, outer, graphed_value='throttle'):
         for id, episode in stream.groupby('episode'):
             plot_grid_world(episode, inner, outer, graphed_value, ax=axes[int(id / 3), id % 3])
 
-        fig.show()
+        plt.show()
+        plt.clf()
 
 
 def plot_grid_world(episode_df, inner, outer, graphed_value='throttle', min_progress=None, ax=None):
@@ -257,7 +261,7 @@ def plot_grid_world(episode_df, inner, outer, graphed_value='throttle', min_prog
 
     distance = np.nansum(episode_df['distance_diff']) / 100
     lap_time = np.ptp(episode_df['timestamp'].astype(float))
-    velocity = 0.01 * distance / lap_time
+    velocity = distance / lap_time
     average_throttle = np.nanmean(episode_df['throttle'])
     progress = np.nanmax(episode_df['progress'])
 
@@ -270,7 +274,7 @@ def plot_grid_world(episode_df, inner, outer, graphed_value='throttle', min_prog
 
         fig = None
         if ax is None:
-            fig = plt.figure()
+            fig = plt.figure(figsize=(16, 10))
             ax = fig.add_subplot(1, 1, 1)
 
         ax.set_facecolor('midnightblue')
@@ -285,13 +289,16 @@ def plot_grid_world(episode_df, inner, outer, graphed_value='throttle', min_prog
 
         episode_df.plot.scatter('x', 'y', ax=ax, s=3, c=graphed_value, cmap=plt.get_cmap('plasma'))
 
-        subtitle = 'Stream: %s, %s\n%s\n%s' % (
-            episode_df['stream'].iloc[0], datetime.fromtimestamp(episode_df['timestamp'].iloc[0]),
-            distance_lap_time, throttle_velocity)
+        subtitle = '%s%s\n%s\n%s' % (
+            ('Stream: %s, ' % episode_df['stream'].iloc[0]) if 'stream' in episode_df.columns else '',
+            datetime.fromtimestamp(episode_df['timestamp'].iloc[0]),
+            distance_lap_time,
+            throttle_velocity)
         ax.set_title(subtitle)
 
         if fig:
-            fig.show()
+            plt.show()
+            plt.clf()
 
 
 def simulation_agg(panda, firstgroup='iteration', add_timestamp=False, is_eval=False):
@@ -353,6 +360,9 @@ def scatter_aggregates(aggregate_df, title=None, is_eval=False):
     aggregate_df.plot.scatter('time', 'steps', ax=axes[0, 1])
     aggregate_df.hist(column=['progress'], bins=20, ax=axes[1, 1])
 
+    plt.show()
+    plt.clf()
+
 
 def analyze_categories(panda, category='quintile', groupcount=5, title=None):
     grouped = panda.groupby(category)
@@ -370,6 +380,9 @@ def analyze_categories(panda, category='quintile', groupcount=5, title=None):
         axes[row, 3].set(xlim=(0, 100))
         group.hist(column=['progress'], bins=20, ax=axes[row, 3])
         row += 1
+
+    plt.show()
+    plt.clf()
 
 
 def analyze_training_progress(aggregates, title=None):
@@ -412,6 +425,9 @@ def analyze_training_progress(aggregates, title=None):
     plot(axes[1, 2], progress_per_iteration, 'iteration', 'Iteration', 'std', 'Std dev of progress', 'Dev of progress')
     plot(axes[2, 2], complete_per_iteration, 'iteration', 'Iteration', 'mean', 'Completion rate',
          'Completion rate (avg: %s)' % total_completion_rate)
+
+    plt.show()
+    plt.clf()
 
 
 def plot(ax, df, xval, xlabel, yval, ylabel, title=None):
@@ -573,6 +589,7 @@ def plot_track(df, center_line, inner_border, outer_border,
 
     print_border(ax, shifted_center_line, shifted_inner_border,
                  shifted_outer_border)
+
     return track
 
 
@@ -635,7 +652,6 @@ def action_breakdown(df, iteration_ids, track_breakdown, center_line,
                      inner_border, outer_border,
                      action_names=['LEFT', 'RIGHT', 'STRAIGHT', 'SLIGHT LEFT',
                                    'SLIGHT RIGHT', 'SLOW']):
-
     fig = plt.figure(figsize=(16, 32))
 
     if type(iteration_ids) is not list:
@@ -693,3 +709,6 @@ def action_breakdown(df, iteration_ids, track_breakdown, center_line,
             ax.set_ylabel('# of actions')
             ax.legend([action_names[idx]])
             ax.set_ylim((0, 150))
+
+    plt.show()
+    plt.clf()
