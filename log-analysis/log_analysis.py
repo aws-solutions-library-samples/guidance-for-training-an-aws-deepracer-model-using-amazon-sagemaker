@@ -30,13 +30,29 @@ import cw_utils as cw
 
 
 def load_data(fname):
+    from os.path import isfile
     data = []
+
+    i = 1
+
+    while isfile('%s.%s' % (fname, i)):
+        load_file('%s.%s' % (fname, i), data)
+        i += 1
+
+    load_file(fname, data)
+
+    if i>1:
+        print("Loaded %s log files (logs rolled over)" % i)
+
+    return data
+
+
+def load_file(fname, data):
     with open(fname, 'r') as f:
         for line in f.readlines():
             if "SIM_TRACE_LOG" in line:
                 parts = line.split("SIM_TRACE_LOG:")[1].split('\t')[0].split(",")
                 data.append(",".join(parts))
-    return data
 
 
 def convert_to_pandas(data, episodes_per_iteration=20):
