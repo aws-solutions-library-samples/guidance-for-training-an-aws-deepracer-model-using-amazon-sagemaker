@@ -148,14 +148,17 @@ Section 2에서 AWS DeepRacer League에 대한 자세한 내용을 제공할 예
 def reward_function(params):
 	'''
 	Example of rewarding the agent to follow center line
+	지그재그 동작을 완화하는 데 도움이되는 조향에 불이익을주는 예
 	'''
 	
 	# Calculate 3 marks that are farther and father away from the center line
+	# 중심선에서 멀어지고 멀리 떨어진 3 개의 마크를 계산합니다.
 	marker_1 = 0.1 * params['track_width']
 	marker_2 = 0.25 * params['track_width']
 	marker_3 = 0.5 * params['track_width']
 	
 	# Give higher reward if the car is closer to center line and vice versa
+	# 자동차가 중앙선에 더 가까우면 더 높은 보상을 제공하십시오
 	if params['distance_from_center'] <= marker_1:
 		reward = 1.0
 	elif params['distance_from_center'] <= marker_2:
@@ -177,14 +180,17 @@ Hint: 보상을 0으로 주지 마십시오. 보상 값이 0일 때, 저희가 �
 def reward_function(params):
 	'''
 	Example that penalizes steering, which helps mitigate zig-zag behaviors
+	지그재그 동작을 완화하는 데 도움이되는 조향에 불이익을주는 예
 	'''
 
 	# Calculate 3 marks that are farther and father away from the center line
+	# 중심선에서 멀어지고 멀리 떨어진 3 개의 마크를 계산합니다.
 	marker_1 = 0.1 * params['track_width']
 	marker_2 = 0.25 * params['track_width']
 	marker_3 = 0.5 * params['track_width']
 
 	# Give higher reward if the car is closer to center line and vice versa
+	# 자동차가 중앙선에 더 가까우면 더 높은 보상을 제공하십시오
 	if params['distance_from_center'] <= marker_1:
 		reward = 1
 	elif params['distance_from_center'] <= marker_2:
@@ -195,9 +201,11 @@ def reward_function(params):
 		reward = 1e-3  # likely crashed/ close to off track
 
 	# Steering penality threshold, change the number based on your action space setting
+	# 조향 페널티 임계 값, 작업 공간 설정에 따라 숫자 변경
 	ABS_STEERING_THRESHOLD = 15
 
 	# Penalize reward if the car is steering too much
+	# 차가 너무 조향되면 보상을 받는다
 	if abs(params['steering_angle']) > ABS_STEERING_THRESHOLD:  # Only need the absolute steering angle
 		reward *= 0.5
 
