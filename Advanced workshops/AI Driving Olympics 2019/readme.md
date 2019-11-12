@@ -16,7 +16,7 @@ While these examples are prepared to assist the participants of the AIDO 3 Chall
 * `challenge_eval_submit`: Amazon SageMaker notebook to run evaluation on trained models and iPython notebooks for analyzing the evaluation logs. 
 
 
-## Prepare submission for AIDO 3 Challenge at NeurIPS'2019
+## Prepare submission for AIDO 3 AWS DeepRacer Challenge at NeurIPS'2019
 
 To prepare your AIDO 3 submission, run the following notebooks in order:
 
@@ -27,7 +27,11 @@ To prepare your AIDO 3 submission, run the following notebooks in order:
 * `challenge_eval_submit\2_submit-NeurIPS.ipynb` to prepare your submission.
 
 
+## Participate in AIDO 3 AWS DeepRacer Challenge at NeurIPS'2019
 
+To upload your submission, go to http://roboracer.s3-website-us-east-1.amazonaws.com/
+
+Warning: Each participant is allowed a maximum of 3 submissions per day.
 
 
 
