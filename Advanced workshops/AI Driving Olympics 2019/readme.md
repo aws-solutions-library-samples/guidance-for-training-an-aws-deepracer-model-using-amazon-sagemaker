@@ -11,7 +11,7 @@ While these examples are prepared to assist the participants of the AIDO 3 Chall
 
 * `challenge_train_w_PPO`: Amazon SageMaker notebook and simulation application resources for training with customized simulation environments in AWS RoboMaker and using Clipped PPO RL algorithm.
 
-* `challenge_train_DQO`: Amazon SageMaker notebook for training with DQN RL agent and instructions on how to modify the notebook from using the Clipped PPO RL agent to DQN agent. Refer to these instruction to switch to another algorithm in Amazon SageMaker RL libraires.
+* `challenge_train_DQN`: Amazon SageMaker notebook for training with DQN RL agent and instructions on how to modify the notebook from using the Clipped PPO RL agent to DQN agent. Refer to these instruction to switch to another algorithm in Amazon SageMaker RL libraires.
 
 * `challenge_eval_submit`: Amazon SageMaker notebook to run evaluation on trained models and iPython notebooks for analyzing the evaluation logs. 
 
