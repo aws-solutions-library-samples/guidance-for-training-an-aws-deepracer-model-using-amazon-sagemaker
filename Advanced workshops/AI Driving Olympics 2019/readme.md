@@ -26,6 +26,8 @@ To prepare your AIDO 3 submission, run the following notebooks in order:
 
 * `challenge_eval_submit\2_submit-NeurIPS.ipynb` to prepare your submission.
 
+The evalution track name is "Bowtie_track_mixture".
+
 
 ## Participate in AIDO 3 AWS DeepRacer Challenge at NeurIPS'2019
 
