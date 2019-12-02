@@ -332,65 +332,51 @@ For those interested in head-to-head racing, here is a basic reward function
 **Example 4**: Basic head-to-head reward function
 
 
-		""" We consider both the  
-		distance between the learner car and the closest bot car,  
-		as well as if the learner car is within the wedge area 
-		apexed at the bot car. The assumption is within the wedge
-		is more possible to crash. """
+	def reward_function(params):
+	    '''
+	    Example of rewarding the agent to stay inside two borders
+	    and penalizing getting too close to the objects in front
+	    '''
 
-		def reward_function(params):
-			
-			reward = 1e-3
+	    all_wheels_on_track = params['all_wheels_on_track']
+	    distance_from_center = params['distance_from_center']
+	    track_width = params['track_width']
+	    objects_distance = params['objects_distance']
+	    _, next_object_index = params['closest_objects']
+	    objects_left_of_center = params['objects_left_of_center']
+	    is_left_of_center = params['is_left_of_center']
 
-			distance_from_center = params['distance_from_center']
-			track_width = params['track_width']
-			bot_car_progress_delta = params['bot_car_progress']
-			bot_car_lane_match = params['bot_car_lane_match']
-			speed = params['speed']
-			steering = abs(params['steering_angle'])
-			flag_unsafe = params['flag_unsafe']
-			dist_closest_bot_car = params['dist_closest_bot']
-			is_bot_in_camera = params['is_bot_in_camera']
-			
-			reward = 1e-3  # likely crashed / close to off track        
-			if distance_from_center <= (0.3 * track_width): 
-				reward_lane = 1.0
-				if distance_from_center <= (0.2 * track_width):
-					# geting close to the center
-					reward_lane *= 0.8
-				elif distance_from_center <= (0.1 * track_width):
-					# getting closer
-					reward_lane *= 0.2
-				elif distance_from_center <= (0.05 * track_width):
-					# too close
-					reward_lane = 1e-3       
-			else:
-				reward_lane = 1e-3
-				
-			# avoid closest bot car
-			reward_avoid = 1.0
-			# penalize if distance too close
-			if 0.8 <= dist_closest_bot_car < 1.0:
-				reward_avoid *= 0.8
-			elif 0.5 <= dist_closest_bot_car < 0.8:
-				reward_avoid *= 0.5
-			elif 0.3 < dist_closest_bot_car < 0.5:
-				reward_avoid *= 0.01
-				
-			
-			# on the different lane of the closest ahead bot car
-			if bot_car_lane_match and is_bot_in_camera:
-				reward = 0.0
-			else:
-				reward = 2.0*reward_avoid + 2.0*reward_lane
-				
-								  
-			# speed penalty
-			if speed < 3.0:
-				reward *= 0.5
-				
+	    # Initialize reward with a small number but not zero
+	    # because zero means off-track or crashed
+	    reward = 1e-3
 
-			return float(reward)
+	    # Reward if the agent stays inside the two borders of the track
+	    if all_wheels_on_track and (0.5 * track_width - distance_from_center) >= 0.05:
+		reward_lane = 1.0
+	    else:
+		reward_lane = 1e-3
+
+	    # Penalize if the agent is too close to the next object
+	    reward_avoid = 1.0
+
+	    # Distance to the next object
+	    distance_closest_object = objects_distance[next_object_index]
+	    # Decide if the agent and the next object is on the same lane
+	    is_same_lane = objects_left_of_center[next_object_index] == is_left_of_center
+
+	    if is_same_lane:
+		if 0.5 <= distance_closest_object < 0.8: 
+		    reward_avoid *= 0.5
+		elif 0.3 <= distance_closest_object < 0.5:
+		    reward_avoid *= 0.2
+		elif distance_closest_object < 0.3:
+		    reward_avoid = 1e-3 # Likely crashed
+
+	    # Calculate reward by putting different weights on 
+	    # the two aspects above
+	    reward += 1.0 * reward_lane + 4.0 * reward_avoid
+
+	    return reward
 
 #### 4.3.2 Training algorithm and hyperparameters
 
