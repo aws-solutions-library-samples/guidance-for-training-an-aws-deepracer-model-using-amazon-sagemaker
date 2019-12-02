@@ -2,7 +2,7 @@
 
 This Github contains workshop labs that have presented at a number of AWS DeepRacer workshops. Please always refer to the latest workshop as we keep making changes.
 
-The latest [workshop lab](https://github.com/aws-samples/aws-deepracer-workshops/tree/master/Workshops/2019-reInvent) (or [실습 가이드 한글 버전](https://github.com/aws-samples/aws-deepracer-workshops/tree/master/Workshops/2019-AWSSummits-AWSDeepRacerService/Lab1/Readme-Korean.md), [日本語版ワークショップ](https://github.com/aws-samples/aws-deepracer-workshops/tree/master/Workshops/2019-AWSSummits-AWSDeepRacerService/Lab1/Readme-Japanese.md)) is ran as part of the AWS re:Invent 2019
+The latest [workshop lab](https://github.com/aws-samples/aws-deepracer-workshops/tree/master/Workshops/2019-reInvent) is ran as part of AWS re:Invent 2019.
 
 You can learn more about the AWS DeepRacer League [here](http://www.deepracerleague.com/). Start building your models for the 2020 AWS DeepRacer League!
 
