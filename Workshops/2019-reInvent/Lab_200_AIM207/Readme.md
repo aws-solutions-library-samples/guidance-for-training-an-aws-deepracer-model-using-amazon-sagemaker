@@ -202,7 +202,7 @@ The following list contains the variables you can use in your reward function. N
 			"objects_speed": [float, ],            # list of the objects' speeds in meters per second.
 			"progress": float,                     # percentage of track completed
 			"speed": float,                        # agent's speed in meters per second (m/s)
-			"steering": float,                     # agent's steering angle in degrees
+			"steering_angle": float,               # agent's steering angle in degrees
 			"steps": int,                          # number steps completed
 			"track_length": float,                 # track length in meters.
 			"track_width": float,                  # width of the track
