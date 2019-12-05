@@ -1,24 +1,7 @@
 # DeepRacer notebook using Amazon SageMaker RL and AWS RoboMaker services
 
-This folder contains examples of how to use RL to train an autonomous deepracer. This is a jailbreaker for the AWS DeepRacer. This gives a glimse of architecture used to get the DeepRacer working.
+This folder contains examples of how to use RL to train an autonomous deepracer with multiple sensor types for head-to-head and object avoidance experience.
 
-
-## Contents
-
-* `deepracer_rl.ipynb`: notebook for training autonomous race car.
-
-* `Dockerfile`: Custom docker instead of using SageMaker default docker
-
-* `src/`
-  * `training_worker.py`: Main entrypoint for starting distributed training job
-  * `markov/`: Helper files for S3 upload/download
-   * `presets/default.py`: Preset (configuration) for DeepRacer
-   * `rewards/default.py`: Custom reward function
-   * `environments/deepracer_racetrack_env.py`: Gym environment file for DeepRacer
-   * `actions/model_metadata_10_state.json`: JSON file to customize your action space & the speed
-  * `lib/`: redis configuration file and ppo_head.py customized tensorflow file copied to sagemaker container.
-
-* `common/`: helper function to build docker files.
 
 ## How to use the notebook
 
