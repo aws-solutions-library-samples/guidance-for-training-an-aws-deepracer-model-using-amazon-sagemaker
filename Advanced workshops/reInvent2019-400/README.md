@@ -15,3 +15,9 @@ This folder contains examples of how to use RL to train an autonomous deepracer 
 8. This takes like 2 min to create your notebook instance. Then click on the newly created instance and click on the juypter notebook.
 9. You will see all the github files and now run `deepracer_rl.ipynb`
 10. Run clean robomaker & sagemaker commands in the script only when you are done with training.
+
+The link for the simulation application:
+
+https://neurips-aido3-awsdeepracer.s3.us-east-2.amazonaws.com/build_REINVENT400_MULTICAR.tar.gz
+
+
