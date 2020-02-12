@@ -2,8 +2,8 @@
 
 # Notes
 - After the lab, make sure you check out new features in the console: **Garage**, where you can customize the sensors on your car, and **Community races** where you can create your own virtual races in the AWS console that you can race in with friends and colleagues.
-- **DeepRacer will have three racing formats in 2020**, namely time-trial, object avoidance, and head-to-head racing. Time-trial racing involves racing a single car on an unobstructed track with the goal of setting the fastest lap time possible. Object avoidance racing is similar to time-trial racing, however, there are objects on the track while the single car is racing for the fastest lap time. Head-to-head racing involves two cars racing on the same track simultaneously to see who crosses the finish line first.
-- **In this lab we are targeting a time-trial model. You can only race time-trial models at the MGM Grand Garden and Quad at Aria, at re:Invent 2019**. Furthermore, you can get a reasonable time-trial model within 120 minutes of training. If you decide to deviate and train a head-to-head or object avoidance model, these models can take in excess of 10 hours to train after which you can evaluate your model's performance in the console.
+- **DeepRacer will have three racing formats in 2020**, namely time-trial, object avoidance, and head-to-head racing.
+- **In this lab we are targeting a time-trial model**. You can get a reasonable time-trial model within 120 minutes of training.
 -  Join us in the **[AWS DeepRacer Slack Community](https://deepracer-community.slack.com/)** or post your questions to the [AWS DeepRacer forum](https://forums.aws.amazon.com/forum.jspa?forumID=318).
 - If you want to continue learning after the lab, please check out the online video course by the AWS Training and Certification team, called **[AWS DeepRacer: Driven by Reinforcement Learning](https://www.aws.training/learningobject/wbc?id=32143)**.
 
@@ -31,7 +31,6 @@ The lab will provide detail on the various components in the AWS DeepRacer servi
 
 
 # Housekeeping
-- Please ensure you **load the AWS service credits** provided.
 - If you don't have an AWS account, please create one, or ask facilitators if there are burner accounts available. Please make sure you save your reward function, and download your trained model from the burner account. You will lose access to the burner account after the workshop, and the account will be wiped.
 - For those eager to start training a job, our hint would be take your time and familiarize yourself with the concepts first, before starting model training.
 - Please ask questions as you progress through the lab and feel free to have discussions at your table. 
