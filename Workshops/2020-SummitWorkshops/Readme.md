@@ -2,23 +2,25 @@
 
 # Notes
 - After the lab, make sure you check out new features in the console: **Garage**, where you can customize the sensors on your car, and **Community races** where you can create your own virtual races in the AWS console that you can race in with friends and colleagues.
-- **DeepRacer will have three racing formats in 2020**, namely time-trial, object avoidance, and head-to-head racing.
+- **DeepRacer will have three racing formats in 2020**, namely time-trial, object avoidance, and head-to-head racing.for more details on the League go to [www.deepracerleague.com](https://www.deepracerleague.com)
 - **In this lab we are targeting a time-trial model**. You can get a reasonable time-trial model within 120 minutes of training.
--  Join us in the **[AWS DeepRacer Slack Community](https://deepracer-community.slack.com/)** or post your questions to the [AWS DeepRacer forum](https://forums.aws.amazon.com/forum.jspa?forumID=318).
-- If you want to continue learning after the lab, please check out the online video course by the AWS Training and Certification team, called **[AWS DeepRacer: Driven by Reinforcement Learning](https://www.aws.training/learningobject/wbc?id=32143)**.
+-  Join us in the **[AWS DeepRacer Slack Community](https://deepracer-community.slack.com/)** for discussions with the community or post your questions to the [AWS DeepRacer forum](https://forums.aws.amazon.com/forum.jspa?forumID=318).
+- If you want to continue learning after the lab, please check out the following:
+	- [reInvent 2019 Expert Boot Camp videos](http://bit.ly/DRBootCamp) from our community experts
+	- online video course by the AWS Training and Certification team **[AWS DeepRacer: Driven by Reinforcement Learning](http://bit.ly/DeepRacerVideoCourse)**
 
 
 # Overview
 The lab has four goals:
 
 1. familiarize you with AWS DeepRacer in the AWS console,
-2. explain the concepts needed and to get you started training a time-trial model so you can go race at the MGM,
+2. explain the concepts needed and to get you started training a time-trial model,
 3. explain how you can take part in the virtual warm-up races or create your own virtual races in preparation for the 2020 AWS DeepRacer League, and
 4. explain how you can improve your models.
 
 The lab is split into three sections:
 
-- Section 1: Training your first time-trial model so you can go race at the MGM,
+- Section 1: Training your first time-trial model,
 - Section 2: Preparing for the 2020 AWS DeepRacer League, and
 - Section 3: Model training and improving your model.
 
@@ -32,9 +34,8 @@ The lab will provide detail on the various components in the AWS DeepRacer servi
 
 # Housekeeping
 - If you don't have an AWS account, please create one, or ask facilitators if there are burner accounts available. Please make sure you save your reward function, and download your trained model from the burner account. You will lose access to the burner account after the workshop, and the account will be wiped.
-- For those eager to start training a job, our hint would be take your time and familiarize yourself with the concepts first, before starting model training.
+- For those eager to start training a job, our advice would be take your time and familiarize yourself with the concepts first, before starting model training.
 - Please ask questions as you progress through the lab and feel free to have discussions at your table. 
-- Lastly, when you do start a training job, run it for at least 90 minutes. It takes 6 minutes to spin up the services needed and your model needs time to explore the track before it will manage to complete a lap.
 - <font color=blue>**Info**</font> buttons. Throughout the console you will see <font color=blue>**Info**</font> buttons. When selected, an information pane will slide onto the screen from the right of the window. Info buttons will not navigate away from the current page, unless you select a link in the information pane. You can close the panes once you are done.
 
 
@@ -145,7 +146,7 @@ As detailed in the workshop, training our RL model takes place on a simulated ra
 
 When training a model, keep the track on which you want to race in mind. Train on the track most similar to the final track you intend to race on. While this isn't required and doesn't guarantee a good model, it will maximize the odds that your model will get its best performance on the race track. Furthermore, if you train on a straight track, don't expect your model to learn how to turn.
 
-Scroll down and **please select the 2019 DeepRacer Championship Cup track** from the Environment Simulation section. This is the track that you will encounter in the MGM Grand Garden.  
+Scroll down and **please select the 2019 DeepRacer Championship Cup track** from the Environment Simulation section. This is the track that you will encounter in the 2020 Summit Circuit.  
 
 ![Model environment](img/create_model_1_environment_simulation.png)
 
@@ -157,7 +158,7 @@ Scroll down and select **Next**.
 
 #### 4.2.1 Race type
 
-On this screen you can select your racing type. As mentioned in the Notes above in this lab we will focus on training a time-trial model so you can go race in the MGM Grand Garden.
+On this screen you can select your racing type. As mentioned in the Notes above in this lab we will focus on training a time-trial model.
 
 Please select **Time-trial**.
 
@@ -444,15 +445,11 @@ Note 25 to 35 minutes of lab time should have elapsed by this point.
 
 # Section 2: Competing in the AWS DeepRacer League
 
-## 2.1 2019 AWS DeepRacer League
-The [AWS DeepRacer League](https://aws.amazon.com/deepracer/league/) is the world's first global autonomous racing league. The 2019 League is concluding right here at reInvent 2019, and you can **watch the finalists race in the MGM Grand Garden** to see who make it through to the final. The **final will take place in the at 8am in the Venetian before the Keynote**.
+## 2.1 2020 AWS DeepRacer League
 
+The League is back in 2020, so start training your models and taking part in warm-up races usch as the [AWS Innovate DeepRacer race](http://bit.ly/DeepRacerInnovate20). In 2020 you can look forward to more in-person races at selected AWS Summits, and more virtual races in the AWS DeepRacer service in the AWS console. We will also introduce two new race formats, object avoidance, and head-to-head racing, in addition to the 2019 time-trial format.
 
-## 2.2 2020 AWS DeepRacer League
-
-The League will be back in 2020, so start training your models and taking part in the pre-season virtual races listed under **[Official DeepRacer virtual circuit](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards)** in the console. In 2020 you can look forward to more in-person races at selected AWS Summits, and more virtual races in the AWS DeepRacer service in the AWS console. We will also introduce two new race formats, object avoidance, and head-to-head racing, in addition to the 2019 time-trial format.
-
-Once you have a trained model, you can  submit it to any open warm-up race in the [console](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards). Your model will then be evaluated by the AWS DeepRacer service on the indicated competition track. After your model has been evaluated you will see your standing update if your lap time was better than your prior submission.
+Once you have a trained model, you can  submit it to any open race in the [console](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboards) or [community race](http://bit.ly/CreateVirtualRace) that you have access too. Your model will then be evaluated by the AWS DeepRacer service on the indicated competition track. After your model has been evaluated you will see your standing update if your lap time was better than your prior submission.
 
 # Section 3: Model training and improving your model
 
