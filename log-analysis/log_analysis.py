@@ -94,23 +94,21 @@ def convert_to_pandas(data, wpts=None):
     df = pd.DataFrame(df_list, columns=header)
     return df
 
-def episode_parser(data, action_map=True, episode_map=True):
+def episode_parser(df, action_map=True, episode_map=True):
     '''
     Arrange data per episode
     '''
     action_map = {} # Action => [x,y,reward] 
     episode_map = {} # Episode number => [x,y,action,reward] 
 
- 
-    for d in data[:]:
-        parts = d.rstrip().split("SIM_TRACE_LOG:")[-1].split(",")
-        e = int(parts[0])
-        x = float(parts[2]) 
-        y = float(parts[3])
-        angle = float(parts[5])
-        ttl = float(parts[6])
-        action = int(parts[7])
-        reward = float(parts[8])
+    for index, row in df.iterrows():
+        e = int(row['episode'])
+        x = float(row['x']) 
+        y = float(row['y'])
+        angle = float(row['steer'])
+        ttl = float(row['throttle'])
+        action = int(row['action'])
+        reward = float(row['reward'])
 
         try:
             episode_map[e]
@@ -208,7 +206,7 @@ def get_closest_waypoint(x, y, waypoints):
         index = index + 1
     return res
     
-def plot_grid_world(episode_df, inner, outer, scale=10.0, plot=True):
+def plot_grid_world(episode_df, inner, outer, scale=1.0, plot=True):
     """
     plot a scaled version of lap, along with throttle taken a each position
     """
@@ -252,6 +250,7 @@ def plot_grid_world(episode_df, inner, outer, scale=10.0, plot=True):
 
 
     if plot == True:
+        
         for y in range(max_y):
             for x in range(max_x):
                 point = Point((x, y))
