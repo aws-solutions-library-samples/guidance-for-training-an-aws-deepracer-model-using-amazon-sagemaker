@@ -1,3 +1,8 @@
+## This project has moved
+
+To use the AWS DeepRacer Community log analysis project, go to https://github.com/aws-deepracer-community/deepracer-analysis/
+To use the original workshops/log analysis project, go to https://github.com/aws-samples/aws-deepracer-workshops
+
 ## AWS Deepracer Workshop Lab Github
 
 This Github contains workshop labs that have presented at a number of AWS DeepRacer workshops. Please always refer to the latest workshop as we keep making changes.
