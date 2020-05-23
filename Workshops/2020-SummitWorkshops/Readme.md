@@ -189,9 +189,9 @@ The following list contains the variables you can use in your reward function. N
 			"closest_objects": [int, int],         # zero-based indices of the two closest objects to the agent's current position of (x, y).
 			"closest_waypoints": [int, int],       # indices of the two nearest waypoints.
 			"distance_from_center": float,         # distance in meters from the track center 
-			"crashed": Boolean,                 # Boolean flag to indicate whether the agent has crashed.
+			"is_crashed": Boolean,                 # Boolean flag to indicate whether the agent has crashed.
 			"is_left_of_center": Boolean,          # Flag to indicate if the agent is on the left side to the track center or not. 
-			"offtrack": Boolean,                # Boolean flag to indicate whether the agent has gone off track.
+			"is_offtrack": Boolean,                # Boolean flag to indicate whether the agent has gone off track.
 			"is_reversed": Boolean,                # flag to indicate if the agent is driving clockwise (True) or counter clockwise (False).
 			"heading": float,                      # agent's yaw in degrees
 			"objects_distance": [float, ],         # list of the objects' distances in meters between 0 and track_len.
