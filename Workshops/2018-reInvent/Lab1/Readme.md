@@ -37,10 +37,12 @@ From the AWS DeepRacer landing page, click on the "Get started" button.
 
 ## Step 2: Initialize AWS DeepRacer
 
+#### Reset Resources
 From the Get started page, you may need to initialize AWS DeepRacer. If you see an error that says "Can't find valid IAM roles", click on the button "Reset resources". 
 
 ![Initialize DeepRacer](img/02_reset_resources.png)
 
+#### Create Resources
  
 After about 5 minutes, the page will refresh and you will see a button to "Create resources". Click on this button, and after a few minutes your AWS account will be ready to create and train models.
 
