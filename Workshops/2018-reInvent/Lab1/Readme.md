@@ -30,7 +30,7 @@ Let's get going!
 ## Step 1: AWS Console
 Logon to the AWS Console using the account details provided to you.
 Navigate to AWS DeepRacer, https://console.aws.amazon.com/deepracer/home?region=us-east-1
-From the AWS DeepRacer landing page, click on the **Get started** button.
+From the AWS DeepRacer landing page, click on the **"Get started"** button.
 
 
 ![Model List Page](img/01_get_started.png)
@@ -38,24 +38,24 @@ From the AWS DeepRacer landing page, click on the **Get started** button.
 ## Step 2: Initialize AWS DeepRacer
 
 #### Reset Resources
-From the Get started page, you may need to initialize AWS DeepRacer. If you see an error that says **Can't find valid IAM roles**, click on the button **Reset resources**. 
+From the Get started page, you may need to initialize AWS DeepRacer. If you see an error that says **"Can't find valid IAM roles"**, click on the button **"Reset resources"**. 
 
 ![Initialize DeepRacer](img/02_reset_resources.png)
 
 #### Create Resources
  
-After about 5 minutes, the page will refresh and you will see a button to **Create resources**. Click on this button, and after a few minutes your AWS account will be ready to create and train models.
+After about 5 minutes, the page will refresh and you will see a button to **"Create resources"**. Click on this button, and after a few minutes your AWS account will be ready to create and train models.
 
 ![Initialize DeepRacer](img/03_creater_resources.png)
 
 
 ## Step 3: Model List Page
 
-After AWS DeepRacer resources have been created in your AWS account, you should then expand the panel on the left of the screen, and under the **Reinforcement Learning** option, click on **Your models**.
+After AWS DeepRacer resources have been created in your AWS account, you should then expand the panel on the left of the screen, and under the **"Reinforcement Learning"** option, click on **"Your models"**.
  
 This page lists sample models and all models you have created. You will see each model's current status.
 
-To create and train your own model, click on the **Create model** button
+To create and train your own model, click on the **"Create model"** button
 
 ![Model List Page](img/04_list_models.png)
 
@@ -80,22 +80,26 @@ First, enter a model name and description, then scroll to the next section
 
 Here you will select the track on which your RL model will train. This track will be simulated by AWS RoboMaker throughout the training process, and you will be able to monitor training progress. We will cover that in a few steps.
 
- **Make certain to choose the re:Invent 2018 track and scroll to the next section..** After selecting the track, click on the **Next** button.
+ **Make certain to choose the re:Invent 2018 track and scroll to the next section..** After selecting the track, click on the **"Next"** button.
 
 ![Model Details](img/06_select_track.png)
 
 #### Race Type
 
-For this race we are using the **Time trial**, so you can click on the **Next** button.
+For this race we are using the **"Time trial"**, so you can click on the **"Next"** button.
 
 
 ![Model Details](img/07_time_trial.png)
 
 
 #### Reward function
-In RL, the reward function plays a **critical** role in training an RL model. The reward function directly impacts the behaviors that your model will learn, by determining which actions (from each specific state) lead to good outcomes and which actions lead to outcomes that should best be avoided. The reward function contains the “logic” to determine if an action was good or bad, and quantify it. For example, if your goal is for the car to finish a lap around a racetrack, rewarding the car for staying on the track, as opposed to going off the track, is a good starting point. An example of the logic used in a basic reward function that incentivizes the car for staying closer to the middle of the track can be seen in the Basic Reward function section.
+In RL, the reward function plays a **critical** role in training an RL model. 
+The reward function directly impacts the behaviors that your model will learn, by determining which actions (from each specific state) lead to good outcomes and which actions lead to outcomes that should best be avoided. 
+The reward function contains the “logic” to determine if an action was good or bad, and quantify it. 
+For example, if your goal is for the car to finish a lap around a racetrack, rewarding the car for staying on the track, as opposed to going off the track, is a good starting point. 
+An example of the logic used in a basic reward function that incentivizes the car for staying closer to the middle of the track can be seen in the Basic Reward function section.
 
-There is a default reward function that can be modified, and by clicking on the **Reward function examples** button, you can see other reward functions to use or modify.
+There is a default reward function that can be modified, and by clicking on the **"Reward function examples"** button, you can see other reward functions to use or modify.
 
 ![Basic Reward Function](img/08_reward_function.png)
 
@@ -148,14 +152,16 @@ time, for the first lab we can skip this section, our default values should suff
 ![Wide Band Reward function](img/09_view_hyperparameters.png)
 
 #### Stop conditions
-This is the last section before you start training. Here you can specify the maximum time your model will train for. Ideally you should put a number in this condition. You can always stop training early. Furthermore, if your mode stopped as a result of the condition, you can go to the model list screen, and clone your model to restart training using new parameters.
+This is the last section before you start training. Here you can specify the maximum time your model will train for. Ideally you should put a number in this condition. You can always stop training early. 
+Furthermore, if your mode stopped as a result of the condition, you can go to the model list screen, and clone your model to restart training using new parameters.
 
 
 
 ![Stop conditions](img/10_set_training_time.png)
 
 ## Step 5: Reward Function Constructors' Championship
-Once you reach this section please discuss in your team the reward function you need to implement to reach the goal. You will have 15 minutes to create it, implement it, and launch. Before you start training, nominate just one person to start training. We will continue with the workshop after the 30 minutes expired and this person will have to monitor the progress of training during the workshop. Everyone will get to implement their own reward function during lab 2. The sooner you start training your model the sooner your car will reach the middle of the hairpin.
+Once you reach this section please discuss in your team the reward function you need to implement to reach the goal. You will have 15 minutes to create it, implement it, and launch. Before you start training, nominate just one person to start training. 
+We will continue with the workshop after the 30 minutes expired and this person will have to monitor the progress of training during the workshop. Everyone will get to implement their own reward function during lab 2. The sooner you start training your model the sooner your car will reach the middle of the hairpin.
 
 
 ![RewardFunctionChallenge](img/StraightTrack.png)
@@ -163,7 +169,7 @@ Once you reach this section please discuss in your team the reward function you 
 
 ## Step 6: Start Training
 
-After you define your function, algorithm settings, training time, and click on **Create model**.
+After you define your function, algorithm settings, training time, and click on **"Create model"**.
 
 Your model will then be initialized and trained. It takes a few minutes for training to start.
 
