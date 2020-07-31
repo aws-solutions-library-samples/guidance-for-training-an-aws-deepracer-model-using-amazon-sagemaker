@@ -1,4 +1,4 @@
-# robomaker workshop
+# AWS DeepRacer workshop
 
 ### Setup:
 
