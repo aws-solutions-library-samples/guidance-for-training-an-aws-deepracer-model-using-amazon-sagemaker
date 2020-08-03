@@ -26,8 +26,6 @@ ghrepo = "https://github.com/nealmcfee-aws/aws-deepracer-workshop/"
 branch = "master"
 template_bucket = "neuralmotors.com"
 
-
-
 #
 
 [menu]
