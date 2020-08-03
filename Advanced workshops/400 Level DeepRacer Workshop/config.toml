@@ -1,0 +1,64 @@
+languageCode = "en-us"
+ignoreFiles = [ "\\.files/README.md$",  ]
+defaultContentLanguage = "en"
+title = "AWS DeepRacer Workshop"
+theme = "learn"
+uglyurls = false
+googleAnalytics = "UA-167412439-1"
+sectionPagesMenu = "main"
+relativeURLs = true
+
+[blackfriday]
+hrefTargetBlank = true
+
+[params]
+editURL = "https://github.com/nealmcfee-aws/aws-deepracer-workshop/edit/master/content/"
+themeVariant = "deepracer"
+showVisitedLinks = false
+author = ""
+description = "AWS DeepRacer Workshop"
+disableSearch = false
+disableAssetsBusting = false
+disableLanguageSwitchingButton = true
+disableShortcutsTitle=false
+disableInlineCopyToClipBoard = true
+ghrepo = "https://github.com/nealmcfee-aws/aws-deepracer-workshop/"
+branch = "master"
+template_bucket = "neuralmotors.com"
+
+
+
+#
+
+[menu]
+  [[menu.main]]
+    identifier = "Prerequisites"
+    name = "This is the Mu track"
+    title = "Workshop using Mu"
+    url = "/mu/"
+    weight = -110
+
+[[menu.shortcuts]]
+name = "<i class='fas fa-bookmark'></i> More Resources"
+url = "/more_resources"
+weight = 10
+
+[[menu.shortcuts]]
+name = "<i class='fas fa-users'></i> Authors"
+url = "/authors"
+weight = 20
+
+[[menu.shortcuts]]
+name = "<i class='fab fa-github'></i> GitHub Project"
+url = "https://github.com/nealmcfee-aws/aws-deepracer-workshop"
+weight = 30
+
+[[menu.shortcuts]]
+name = "<i class='fas fa-envelope'></i> Have questions?"
+url = "mailto:mcfeenea@amazon.com"
+weight = 40
+
+
+[outputs]
+home = [ "HTML", "JSON"]
+page = [ "HTML" ]
