@@ -50,7 +50,7 @@ weight = 20
 
 [[menu.shortcuts]]
 name = "<i class='fab fa-github'></i> GitHub Project"
-url = "https://github.com/nealmcfee-aws/aws-deepracer-workshop"
+url = "https://github.com/nealmcfee-aws/aws-deepracer-workshops"
 weight = 30
 
 [[menu.shortcuts]]
