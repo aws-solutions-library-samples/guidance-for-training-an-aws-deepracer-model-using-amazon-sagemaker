@@ -40,12 +40,12 @@ template_bucket = "neuralmotors.com"
 
 [[menu.shortcuts]]
 name = "<i class='fas fa-bookmark'></i> More Resources"
-url = "/content/more_resources"
+url = "/more_resources"
 weight = 10
 
 [[menu.shortcuts]]
 name = "<i class='fas fa-users'></i> Authors"
-url = "/content/authors"
+url = "/authors"
 weight = 20
 
 [[menu.shortcuts]]
