@@ -1,6 +1,8 @@
 ---
-title: Credits
-disableToc: true
+title: "Credits"
+chapter: true
+weight: 65
+description: "Workshop authors."
 ---
 
 ### Thanks to our wonderful contributors!

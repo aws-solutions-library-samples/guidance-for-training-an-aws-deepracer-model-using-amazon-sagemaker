@@ -1,9 +1,9 @@
 ---
 title: "More Resources"
-disableToc: true
+chapter: true
+weight: 55
+description: "Discover more resources for AWS DeepRacer."
 ---
-
-Discover more resources for AWS DeepRacer :
 
 ## Resources
 

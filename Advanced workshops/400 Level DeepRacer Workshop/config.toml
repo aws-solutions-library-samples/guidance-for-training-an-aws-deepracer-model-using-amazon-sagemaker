@@ -37,24 +37,14 @@ template_bucket = "neuralmotors.com"
     weight = -110
 
 [[menu.shortcuts]]
-name = "<i class='fas fa-bookmark'></i> More Resources"
-url = "/more_resources"
-weight = 10
-
-[[menu.shortcuts]]
-name = "<i class='fas fa-users'></i> Authors"
-url = "/authors"
-weight = 20
-
-[[menu.shortcuts]]
 name = "<i class='fab fa-github'></i> GitHub Project"
 url = "https://github.com/nealmcfee-aws/aws-deepracer-workshops"
-weight = 30
+weight = 10
 
 [[menu.shortcuts]]
 name = "<i class='fas fa-envelope'></i> Have questions?"
 url = "mailto:mcfeenea@amazon.com"
-weight = 40
+weight = 20
 
 
 [outputs]
