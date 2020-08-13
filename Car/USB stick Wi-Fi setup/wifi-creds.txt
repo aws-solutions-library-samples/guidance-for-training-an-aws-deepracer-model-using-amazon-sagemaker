@@ -1,0 +1,39 @@
+###################################################################################
+#                                 AWS DeepRacer                                   #
+# File name: wifi-creds.txt                                                       #
+#                                                                                 #
+# To connect the device to Wi-Fi, type your Wi-Fi SSID name and password          #
+# (case sensitive) in the corresponding fields below.                             #
+# For example:                                                                    #
+#      ssid: 'Your-WiFi 100'                                                      #
+#      password: 'Passwd1234'                                                     #
+#                                                                                 #
+# Then follow the instructions on https://aws.amazon.com/startyourengines to      #
+# finish the setup process.                                                       #
+#                                                                                 #
+# WARNING:                                                                        #
+#                                                                                 #
+# 1. Please make sure the Wi-Fi that the device connects to for the first time    #
+# has Internet connection. If not, it will impact the software update and any     #
+# subsequent Wi-Fi connections.                                                   #
+#                                                                                 #
+# 2. Do NOT change the file name or the field name of 'ssid' and 'password',      #
+# which are all case sensitive.                                                   #
+#                                                                                 #
+# 3. Do NOT replace the default single quote signs (''), which are plain text and #
+# may not be recognized by the device after editing.                              #
+#                                                                                 #
+#                                                                                 #
+# If the USB drive was plugged into the device before, a list of available Wi-Fi  #
+# networks will be automatically generated below, you can simply uncomment the    #
+# one you want to connect to by removing the pound sign.                          #
+#                                                                                 #
+# If you have validated the Wi-Fi credentials but still find the Wi-Fi LED does   #
+# not turn to solid blue, try rebooting the device by pressing the 'RESET' button #
+# and then plugging in the USB drive again after the power LED turns blue.        #
+#                                                                                 #
+###################################################################################
+
+# Provide your SSID and password below
+ssid: ''
+password: ''
