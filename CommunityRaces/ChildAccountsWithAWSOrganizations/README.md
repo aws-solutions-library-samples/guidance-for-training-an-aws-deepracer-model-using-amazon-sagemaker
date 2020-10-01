@@ -13,6 +13,7 @@ If your company doesn’t use a single AWS account per employee, you can create 
 - In the AWS DeepRacer console, training and racing activities are managed at the AWS account level. This means every individual who has access to a specific AWS account will see all AWS DeepRacer models in that account and will share a single racer alias for all race submissions. In this topic, enterprise customers, whose employees share one account ID using individual IAM roles, can learn to enter multiple racers into virtual AWS DeepRacer community competitions.
 - If each employee has their own AWS account ID, you do not need to set up child accounts. Individuals with their own AWS DeepRacer account ID can submit a model to any type of leaderboard.
 - If all employees share one primary AWS account ID using different IAM roles, all employees share a single leaderboard submission for all leaderboards, including community leaderboards. Using AWS Organizations and the provided scripts to create individual accounts as a child to the primary account may be the best way to allow multiple employees to submit separate models to a leaderboard at the same time.
+- Download and extract the scripts from ChildAccounts.zip
 
 **Important**
 The provided scripts only works with the entity, *IAM role*. Some enterprise customers set up their accounts using the *IAM user* entity. For help converting *IAM users* to *IAM roles* contact your AWS account team.
