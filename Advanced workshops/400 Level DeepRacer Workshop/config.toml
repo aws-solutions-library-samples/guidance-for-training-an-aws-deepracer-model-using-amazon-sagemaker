@@ -12,7 +12,7 @@ relativeURLs = true
 hrefTargetBlank = true
 
 [params]
-editURL = "https://github.com/nealmcfee-aws/aws-deepracer-workshop/edit/master/content/"
+editURL = "https://github.com/aws-samples/aws-deepracer-workshops/edit/master/content/"
 themeVariant = "deepracer"
 showVisitedLinks = false
 author = ""
@@ -22,9 +22,48 @@ disableAssetsBusting = false
 disableLanguageSwitchingButton = true
 disableShortcutsTitle=false
 disableInlineCopyToClipBoard = true
-ghrepo = "https://github.com/nealmcfee-aws/aws-deepracer-workshop/"
+ghrepo = "https://github.com/aws-samples/aws-deepracer-workshops/"
 branch = "master"
 template_bucket = "neuralmotors.com"
+
+
+[deployment]
+# By default, files are uploaded in an arbitrary order.
+# Files that match the regular expressions in the "Order" list
+# will be uploaded first, in the listed order.
+order = [".jpg$", ".gif$"]
+
+
+[[deployment.targets]]
+# An arbitrary name for this target.
+name = "drworkshop"
+
+# S3; see https://gocloud.dev/howto/blob/#s3
+# For S3-compatible endpoints, see https://gocloud.dev/howto/blob/#s3-compatible
+URL = "s3://www.deepracerworkshops.com?region=us-east-1"
+
+
+# If you are using a CloudFront CDN, deploy will invalidate the cache as needed.
+#cloudFrontDistributionID = <ID>
+
+
+# [[deployment.matchers]] configure behavior for files that match the Pattern.
+# Samples:
+
+[[deployment.matchers]]
+#  Cache static assets for 1 year.
+pattern = "^.+\\.(js|css|svg|ttf)$"
+cacheControl = "max-age=31536000, no-transform, public"
+gzip = true
+
+[[deployment.matchers]]
+pattern = "^.+\\.(png|jpg)$"
+cacheControl = "max-age=31536000, no-transform, public"
+gzip = false
+
+[[deployment.matchers]]
+pattern = "^.+\\.(html|xml|json)$"
+gzip = true
 
 #
 
@@ -43,7 +82,7 @@ weight = 10
 
 [[menu.shortcuts]]
 name = "<i class='fas fa-envelope'></i> Have questions?"
-url = "mailto:mcfeenea@amazon.com"
+url = "mailto:sahika@amazon.com"
 weight = 20
 
 
