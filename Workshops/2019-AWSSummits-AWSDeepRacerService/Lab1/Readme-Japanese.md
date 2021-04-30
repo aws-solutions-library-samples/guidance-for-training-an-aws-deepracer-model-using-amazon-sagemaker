@@ -301,7 +301,7 @@ experience buffer からランダムにサンプリングされた **batch** の
 
 
 # Section 2: AWS DeepRacer リーグで競う
-[AWS DeepRacer リーグ](https://aws.amazon.com/deepracer/league/)は世界初のグローバル自走型レーシングリーグです。このリーグは、2019年に複数都市での直接およびオンライン上で開催されます。レースをし、賞または47人に与えられる re:invent 2019 で行われる AWS DeepRacer Knockout Rounds への参加権および旅費を勝ち取りましょう。その予選を勝ち抜くと、AWS DeepRacer Champioonship Cup に参加できます。詳細は[こちら](https://d1.awsstatic.com/DeepRacer/AWS-DeepRacer-League-2019-Official-Rules-English-29-April-2019(1).pdf)を参照してください。
+[AWS DeepRacer リーグ](https://aws.amazon.com/deepracer/league/)は世界初のグローバル自走型レーシングリーグです。このリーグは、2019年に複数都市での直接およびオンライン上で開催されます。レースをし、賞または47人に与えられる re:invent 2019 で行われる AWS DeepRacer Knockout Rounds への参加権および旅費を勝ち取りましょう。その予選を勝ち抜くと、AWS DeepRacer Championship Cup に参加できます。詳細は[こちら](https://d1.awsstatic.com/DeepRacer/AWS-DeepRacer-League-2019-Official-Rules-English-29-April-2019(1).pdf)を参照してください。
 
 直接参加型レースはSummit サーキット、オンラインレースは仮想サーキットを参照してください。Summit サーキットイベントの場所は[こちら](https://aws.amazon.com/deepracer/summit-circuit/)から探してください。仮想サーキットの詳細は AWS DeepRacer サービスが一般向け公開されてから発表されます。どの競技に参加する場合でも、AWS DeepRacer を所有する必要はありません。
 
