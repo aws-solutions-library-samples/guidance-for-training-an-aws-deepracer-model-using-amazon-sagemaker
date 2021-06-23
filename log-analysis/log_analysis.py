@@ -31,8 +31,6 @@ from shapely.geometry.polygon import LinearRing, LineString
 from datetime import datetime
 
 
-EPISODE_PER_ITER = 20
-
 def load_data(fname):
     data = []
     with open(fname, 'r') as f:
@@ -59,7 +57,7 @@ def convert_to_pandas(data, wpts=None):
             time.time())
         print(stdout_)
     """        
-
+    EPISODE_PER_ITER = 20
     df_list = list()
     
     #ignore the first two dummy values that coach throws at the start.
