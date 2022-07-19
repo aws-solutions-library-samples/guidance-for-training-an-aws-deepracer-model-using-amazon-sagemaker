@@ -6,7 +6,7 @@ The latest [workshop lab](https://github.com/aws-samples/aws-deepracer-workshops
 
 You can learn more about the AWS DeepRacer League [here](http://www.deepracerleague.com/). Start building your models for the 2020 AWS DeepRacer League!
 
-If you want to learn mode, please also check out a new course by the AWS Training and Certification team, called [AWS DeepRacer: Driven by Reinforcement Learning](https://www.aws.training/learningobject/wbc?id=32143)
+If you want to learn more, please also check out a new course by the AWS Training and Certification team, called [AWS DeepRacer: Driven by Reinforcement Learning](https://www.aws.training/learningobject/wbc?id=32143)
 
 ## Resources
 
