@@ -1,0 +1,1 @@
+/root/.aws/credentials
