@@ -34,13 +34,12 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Redis.
-RUN \
-    cd /tmp && \
-    wget http://download.redis.io/redis-stable.tar.gz && \
-    tar xvzf redis-stable.tar.gz && \
-    cd redis-stable && \
-    make && \
-    make install
+RUN cd /tmp && \
+     wget https://download.redis.io/releases/redis-6.2.6.tar.gz && \
+     tar xvzf redis-6.2.6.tar.gz && \
+     cd redis-6.2.6 && \
+     make && \
+     make install
 
 RUN ln -s /usr/bin/python3 /usr/bin/python && \
     ln -s /usr/bin/pip3 /usr/bin/pip
