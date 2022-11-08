@@ -71,5 +71,5 @@ RACER_NAME:
 MODEL_NAME:
  - model1-created-in-console
  - model2-created-in-console
-LEADERBOARD_TYPE:                     "LEAGUE"
-LEADERBOARD_NAME:                     "2020 MARCH QUALIFIER"
+#LEADERBOARD_TYPE:                     "LEAGUE"
+#LEADERBOARD_NAME:                     "2020 MARCH QUALIFIER"

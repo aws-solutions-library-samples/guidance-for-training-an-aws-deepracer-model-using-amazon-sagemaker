@@ -90,5 +90,5 @@ MODEL_NAME:
  - model2-created-in-console
  - model3-created-in-console
  - model4-created-in-console
-LEADERBOARD_TYPE:                     "LEAGUE"
-LEADERBOARD_NAME:                     "2020 MARCH QUALIFIER"
+#LEADERBOARD_TYPE:                     "LEAGUE"
+#LEADERBOARD_NAME:                     "2020 MARCH QUALIFIER"
