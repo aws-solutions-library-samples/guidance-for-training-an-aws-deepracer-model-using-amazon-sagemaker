@@ -1,0 +1,1480 @@
+done_condition: 
+<built-in function any>
+sess: 
+agent: <tensorflow.python.client.session.Session object at 0x7fe5d4aa1fd0>
+
+level_managers: 
+0: <markov.multi_agent_coach.multi_agent_level_manager.MultiAgentLevelManager object at 0x7fe5d4a9c240>
+
+top_level_manager: 
+<markov.multi_agent_coach.multi_agent_level_manager.MultiAgentLevelManager object at 0x7fe5d4a9c240>
+environments: 
+0: <markov.environments.deepracer_racetrack_env.DeepRacerRacetrackEnv object at 0x7fe5d4a9cbe0>
+
+heatup_steps: 
+<rl_coach.core_types.EnvironmentSteps object at 0x7fe5d534c7b8>
+evaluation_steps: 
+<rl_coach.core_types.EnvironmentEpisodes object at 0x7fe5d534c780>
+steps_between_evaluation_periods: 
+<rl_coach.core_types.EnvironmentEpisodes object at 0x7fe5d534c6a0>
+improve_steps: 
+<rl_coach.core_types.TrainingSteps object at 0x7fe5d534c748>
+visualization_parameters: 
+"VisualizationParameters" {
+    "add_rendered_image_to_env_response": false,
+    "dump_csv": true,
+    "dump_gifs": false,
+    "dump_in_episode_signals": false,
+    "dump_mp4": false,
+    "dump_parameters_documentation": true,
+    "dump_signals_to_csv_every_x_episodes": 5,
+    "max_fps_for_human_control": 10,
+    "native_rendering": false,
+    "print_networks_summary": false,
+    "render": false,
+    "tensorboard": false,
+    "video_dump_filters": {
+        "0": {
+            "run_phases": {
+                "0": {
+                    "_value_": "Testing",
+                    "_name_": "TEST",
+                    "__objclass__": "<enum 'RunPhase'>"
+                }
+            },
+            "__class__": "SelectedPhaseOnlyDumpFilter"
+        },
+        "1": {
+            "max_reward_achieved": -Infinity,
+            "__class__": "MaxDumpFilter"
+        }
+    }
+}
+
+name: 
+multi_agent_graph
+task_parameters: 
+"TaskParameters" {
+    "apply_stop_condition": false,
+    "checkpoint_restore_path": null,
+    "checkpoint_save_dir": "./checkpoint_sagemaker",
+    "checkpoint_save_secs": 20,
+    "evaluate_only": null,
+    "experiment_path": "/opt/ml/model",
+    "export_onnx_graph": false,
+    "framework_type": {
+        "_value_": "TensorFlow",
+        "_name_": "tensorflow",
+        "__objclass__": "<enum 'Frameworks'>"
+    },
+    "num_gpu": 1,
+    "seed": null,
+    "task_index": 0,
+    "use_cpu": false
+}
+
+_phase: 
+RunPhase.UNDEFINED
+preset_validation_params: 
+"PresetValidationParameters" {
+    "max_episodes_to_achieve_reward": 10000,
+    "min_reward_threshold": 400,
+    "num_workers": 1,
+    "read_csv_tries": 200,
+    "reward_test_level": null,
+    "test": true,
+    "test_using_a_trace_test": true,
+    "trace_max_env_steps": 5000,
+    "trace_test_levels": null
+}
+
+reset_required: 
+False
+num_checkpoints_to_keep: 
+4
+graph_creation_time: 
+1665100428.2876763
+last_checkpoint_saving_time: 
+1665100427.9828477
+total_steps_counters: 
+RunPhase.HEATUP: <rl_coach.core_types.TotalStepsCounter object at 0x7fe5d534cc88>
+RunPhase.TRAIN: <rl_coach.core_types.TotalStepsCounter object at 0x7fe5d534cc50>
+RunPhase.TEST: <rl_coach.core_types.TotalStepsCounter object at 0x7fe5d534cc18>
+
+checkpoint_id: 
+0
+checkpoint_saver: 
+agent: <rl_coach.saver.SaverCollection object at 0x7fe5d4a9cfd0>
+
+checkpoint_state_updater: 
+agent: None
+
+graph_logger: 
+<rl_coach.logger.Logger object at 0x7fe5d534ca20>
+data_store: 
+<markov.s3_boto_data_store.S3BotoDataStore object at 0x7fe5d4a9cb70>
+is_batch_rl: 
+False
+time_metric: 
+TimeTypes.EpisodeNumber
+env_params: 
+"DeepRacerRacetrackEnvParameters" {
+    "agents_params": {
+        "0": {
+            "algorithm": {
+                "act_for_full_episodes": true,
+                "apply_gradients_every_x_episodes": 5,
+                "beta_entropy": 0.01,
+                "clip_likelihood_ratio_using_epsilon": 0.2,
+                "clipping_decay_schedule": {
+                    "current_value": 1,
+                    "initial_value": 1,
+                    "__class__": "ConstantSchedule"
+                },
+                "discount": 0.999,
+                "distributed_coach_synchronization_type": {
+                    "_value_": "sync",
+                    "_name_": "SYNC",
+                    "__objclass__": "<enum 'DistributedCoachSynchronizationType'>"
+                },
+                "estimate_state_value_using_gae": true,
+                "gae_lambda": 0.95,
+                "heatup_using_network_decisions": false,
+                "in_action_space": null,
+                "load_memory_from_file_path": null,
+                "n_step": -1,
+                "normalization_stats": null,
+                "num_consecutive_playing_steps": {
+                    "_num_steps": 20,
+                    "__class__": "EnvironmentEpisodes"
+                },
+                "num_consecutive_training_steps": 1,
+                "num_episodes_in_experience_replay": 1000000,
+                "num_steps_between_copying_online_weights_to_target": {
+                    "_num_steps": 20,
+                    "__class__": "EnvironmentEpisodes"
+                },
+                "optimization_epochs": 10,
+                "policy_gradient_rescaler": {
+                    "_value_": 8,
+                    "_name_": "GAE",
+                    "__objclass__": "<enum 'PolicyGradientRescaler'>"
+                },
+                "rate_for_copying_weights_to_target": 1.0,
+                "share_statistics_between_workers": true,
+                "store_transitions_only_when_episodes_are_terminated": false,
+                "supports_parameter_noise": false,
+                "use_accumulated_reward_as_measurement": false,
+                "use_kl_regularization": false,
+                "__class__": "ClippedPPOAlgorithmParameters"
+            },
+            "current_episode": 0,
+            "env_agent": {
+                "_ctrl_": {
+                    "_action_space_": {
+                        "_high": "array([1., 1.])",
+                        "_low": "array([-1., -1.])",
+                        "_shape": "array([2])",
+                        "default_action": "array([0., 0.])",
+                        "descriptions": {},
+                        "max_abs_range": "array([1., 1.])",
+                        "num_dimensions": 1,
+                        "num_elements": 2,
+                        "scale_action_space": true,
+                        "scaled_up_action_space_bounds": {
+                            "high": "array([30.,  1.])",
+                            "low": "array([-30. ,   0.5])"
+                        },
+                        "__class__": "ScalableBoxActionSpace"
+                    },
+                    "_agent_name_": "racecar",
+                    "_model_metadata_": {
+                        "_bucket": "aws-deepracer-data-us-east-1-1",
+                        "_local_dir": "./custom_files/agent",
+                        "_local_path": "./custom_files/agent/model_metadata.json",
+                        "_model_metadata": {
+                            "action_space": {
+                                "speed": {
+                                    "high": 1.0,
+                                    "low": 0.5
+                                },
+                                "steering_angle": {
+                                    "high": 30.0,
+                                    "low": -30.0
+                                }
+                            },
+                            "action_space_type": "continuous",
+                            "lidar_config": {
+                                "clipping_dist": 2.0,
+                                "num_sectors": 8,
+                                "num_values_per_sector": 8
+                            },
+                            "neural_network": "DEEP_CONVOLUTIONAL_NETWORK_SHALLOW",
+                            "sensor": {
+                                "0": "FRONT_FACING_CAMERA"
+                            },
+                            "training_algorithm": "clipped_ppo",
+                            "version": 5.0
+                        },
+                        "_s3_client": {
+                            "_backoff_time_sec": 1.0,
+                            "_boto_client_name": "s3",
+                            "_log_and_cont": false,
+                            "_max_retry_attempts": 5,
+                            "_region_name": "us-east-1",
+                            "_session": null,
+                            "__class__": "S3Client"
+                        },
+                        "_s3_key": "data-9babcdaa-3fd8-4d3c-a7bc-b195bebd6811/models/7a42c0c5-e13b-49c6-955e-18e3b64dba4b/model_metadata.json",
+                        "__class__": "ModelMetadata"
+                    },
+                    "__class__": "TrainingCtrl"
+                },
+                "_network_settings_": {
+                    "activation_function": "relu",
+                    "embedder_type": "scheme",
+                    "input_embedders": {
+                        "FRONT_FACING_CAMERA": {
+                            "bn_info_conv": {
+                                "0": false,
+                                "1": "relu",
+                                "2": 0.0
+                            },
+                            "bn_info_dense": {
+                                "0": false,
+                                "1": "relu",
+                                "2": 0.0
+                            },
+                            "conv_info_list": {
+                                "0": {
+                                    "0": 32,
+                                    "1": 8,
+                                    "2": 4
+                                },
+                                "1": {
+                                    "0": 64,
+                                    "1": 4,
+                                    "2": 2
+                                },
+                                "2": {
+                                    "0": 64,
+                                    "1": 3,
+                                    "2": 1
+                                }
+                            },
+                            "dense_layer__hidden_unit_list": {},
+                            "is_first_layer_bn": false
+                        }
+                    },
+                    "middleware_embedders": {
+                        "bn_info_conv": {
+                            "0": false,
+                            "1": "relu",
+                            "2": 0.0
+                        },
+                        "bn_info_dense": {
+                            "0": false,
+                            "1": "relu",
+                            "2": 0.0
+                        },
+                        "conv_info_list": {},
+                        "dense_layer__hidden_unit_list": {
+                            "0": 512
+                        },
+                        "is_first_layer_bn": false
+                    }
+                },
+                "_sensor_": {
+                    "sensors": {
+                        "0": {
+                            "__class__": "Camera"
+                        }
+                    },
+                    "__class__": "CompositeSensor"
+                },
+                "__class__": "Agent"
+            },
+            "exploration": {
+                "action_space": {
+                    "_high": "array([1., 1.])",
+                    "_low": "array([-1., -1.])",
+                    "_shape": "array([2])",
+                    "default_action": "array([0., 0.])",
+                    "descriptions": {},
+                    "max_abs_range": "array([1., 1.])",
+                    "num_dimensions": 1,
+                    "num_elements": 2,
+                    "scale_action_space": true,
+                    "scaled_up_action_space_bounds": {
+                        "high": "array([30.,  1.])",
+                        "low": "array([-30. ,   0.5])"
+                    },
+                    "__class__": "ScalableBoxActionSpace"
+                },
+                "evaluation_noise": 0.05,
+                "noise_as_percentage_from_action_space": true,
+                "noise_schedule": {
+                    "current_value": 0.1,
+                    "decay_delta": 0.0,
+                    "decay_steps": 50000,
+                    "final_value": 0.1,
+                    "initial_value": 0.1,
+                    "__class__": "LinearSchedule"
+                },
+                "__class__": "AdditiveNoiseParameters"
+            },
+            "full_name_id": "main_level/agent",
+            "input_filter": {
+                "_observation_filters": {
+                    "FRONT_FACING_CAMERA": {
+                        "to_grayscale": {
+                            "name": null,
+                            "supports_batching": false,
+                            "__class__": "ObservationRGBToYFilter"
+                        },
+                        "to_uint8": {
+                            "input_high": 255,
+                            "input_low": 0,
+                            "name": null,
+                            "supports_batching": false,
+                            "__class__": "ObservationToUInt8Filter"
+                        },
+                        "stacking": {
+                            "input_observation_space": null,
+                            "name": null,
+                            "stack": {},
+                            "stack_size": 1,
+                            "stacking_axis": -1,
+                            "supports_batching": false,
+                            "__class__": "ObservationStackingFilter"
+                        }
+                    }
+                },
+                "_reward_filters": {},
+                "i_am_a_reference_filter": false,
+                "name": "input_filter",
+                "__class__": "InputFilter"
+            },
+            "is_a_highest_level_agent": true,
+            "is_a_lowest_level_agent": true,
+            "is_batch_rl_training": false,
+            "memory": {
+                "load_memory_from_file_path": null,
+                "max_size": [
+                    "<MemoryGranularity.Transitions: 0>",
+                    1000000
+                ],
+                "n_step": -1,
+                "shared_memory": false,
+                "train_to_eval_ratio": 1,
+                "__class__": "DeepRacerMemoryParameters"
+            },
+            "name": "agent",
+            "network_wrappers": {
+                "main": {
+                    "adam_optimizer_beta1": 0.9,
+                    "adam_optimizer_beta2": 0.999,
+                    "async_training": false,
+                    "batch_size": 64,
+                    "clip_gradients": null,
+                    "create_target_network": true,
+                    "embedding_merger_type": {
+                        "_value_": 0,
+                        "_name_": "Concat",
+                        "__objclass__": "<enum 'EmbeddingMergerType'>"
+                    },
+                    "force_cpu": false,
+                    "framework": {
+                        "_value_": "TensorFlow",
+                        "_name_": "tensorflow",
+                        "__objclass__": "<enum 'Frameworks'>"
+                    },
+                    "gradients_clipping_method": {
+                        "_value_": 0,
+                        "_name_": "ClipByGlobalNorm",
+                        "__objclass__": "<enum 'GradientClippingMethod'>"
+                    },
+                    "heads_parameters": {
+                        "0": {
+                            "activation_function": "relu",
+                            "dense_layer": null,
+                            "initializer": "normalized_columns",
+                            "is_training": false,
+                            "loss_weight": 1.0,
+                            "name": "v_head_params",
+                            "num_output_head_copies": 1,
+                            "output_bias_initializer": null,
+                            "parameterized_class_name": "VHead",
+                            "rescale_gradient_from_head_by_factor": 1.0,
+                            "__class__": "VHeadParameters"
+                        },
+                        "1": {
+                            "activation_function": "tanh",
+                            "dense_layer": null,
+                            "is_training": false,
+                            "loss_weight": 1.0,
+                            "name": "ppo_head_params",
+                            "num_output_head_copies": 1,
+                            "parameterized_class_name": "PPOHead",
+                            "rescale_gradient_from_head_by_factor": 1.0,
+                            "__class__": "PPOHeadParameters"
+                        }
+                    },
+                    "input_embedders_parameters": {
+                        "FRONT_FACING_CAMERA": {
+                            "activation_function": "relu",
+                            "batchnorm": false,
+                            "dense_layer": null,
+                            "dropout_rate": 0.0,
+                            "input_clipping": null,
+                            "input_offset": {
+                                "image": 0.0,
+                                "tensor": 0.0,
+                                "vector": 0.0
+                            },
+                            "input_rescaling": {
+                                "image": 255.0,
+                                "tensor": 1.0,
+                                "vector": 1.0
+                            },
+                            "is_training": false,
+                            "name": "embedder",
+                            "scheme": {
+                                "0": {
+                                    "kernel_size": 8,
+                                    "num_filters": 32,
+                                    "strides": 4,
+                                    "__class__": "Conv2d"
+                                },
+                                "1": {
+                                    "kernel_size": 4,
+                                    "num_filters": 64,
+                                    "strides": 2,
+                                    "__class__": "Conv2d"
+                                },
+                                "2": {
+                                    "kernel_size": 3,
+                                    "num_filters": 64,
+                                    "strides": 1,
+                                    "__class__": "Conv2d"
+                                }
+                            },
+                            "__class__": "InputEmbedderParameters"
+                        }
+                    },
+                    "l2_regularization": 0,
+                    "learning_rate": 0.0003,
+                    "learning_rate_decay_rate": 0,
+                    "learning_rate_decay_steps": 0,
+                    "middleware_parameters": {
+                        "activation_function": "relu",
+                        "batchnorm": false,
+                        "dense_layer": null,
+                        "dropout_rate": 0.0,
+                        "is_training": false,
+                        "name": "middleware_fc_embedder",
+                        "num_streams": 1,
+                        "parameterized_class_name": "FCMiddleware",
+                        "scheme": {
+                            "0": {
+                                "units": 512,
+                                "__class__": "Dense"
+                            }
+                        },
+                        "__class__": "FCMiddlewareParameters"
+                    },
+                    "optimizer_epsilon": 1e-05,
+                    "optimizer_type": "Adam",
+                    "replace_mse_with_huber_loss": true,
+                    "rms_prop_optimizer_decay": 0.9,
+                    "scale_down_gradients_by_number_of_workers_for_sync_training": true,
+                    "sess": null,
+                    "shared_optimizer": true,
+                    "softmax_temperature": 1,
+                    "tensorflow_support": true,
+                    "use_separate_networks_per_head": true,
+                    "__class__": "ClippedPPONetworkParameters"
+                }
+            },
+            "output_filter": {
+                "_action_filters": {},
+                "i_am_a_reference_filter": false,
+                "name": "output_filter",
+                "__class__": "NoOutputFilter"
+            },
+            "pre_network_filter": {
+                "_observation_filters": {},
+                "_reward_filters": {},
+                "i_am_a_reference_filter": false,
+                "name": "pre_network_filter",
+                "__class__": "NoInputFilter"
+            },
+            "task_parameters": {
+                "apply_stop_condition": false,
+                "checkpoint_restore_path": null,
+                "checkpoint_save_dir": "./checkpoint_sagemaker",
+                "checkpoint_save_secs": 20,
+                "evaluate_only": null,
+                "experiment_path": "/opt/ml/model",
+                "export_onnx_graph": false,
+                "framework_type": {
+                    "_value_": "TensorFlow",
+                    "_name_": "tensorflow",
+                    "__objclass__": "<enum 'Frameworks'>"
+                },
+                "num_gpu": 1,
+                "seed": null,
+                "task_index": 0,
+                "use_cpu": false,
+                "__class__": "TaskParameters"
+            },
+            "visualization": {
+                "add_rendered_image_to_env_response": false,
+                "dump_csv": true,
+                "dump_gifs": false,
+                "dump_in_episode_signals": false,
+                "dump_mp4": false,
+                "dump_parameters_documentation": true,
+                "dump_signals_to_csv_every_x_episodes": 5,
+                "max_fps_for_human_control": 10,
+                "native_rendering": false,
+                "print_networks_summary": false,
+                "render": false,
+                "tensorboard": false,
+                "video_dump_filters": {
+                    "0": {
+                        "run_phases": {
+                            "0": {
+                                "_value_": "Testing",
+                                "_name_": "TEST",
+                                "__objclass__": "<enum 'RunPhase'>"
+                            }
+                        },
+                        "__class__": "SelectedPhaseOnlyDumpFilter"
+                    },
+                    "1": {
+                        "max_reward_achieved": -Infinity,
+                        "__class__": "MaxDumpFilter"
+                    }
+                },
+                "__class__": "VisualizationParameters"
+            },
+            "__class__": "DeepRacerClippedPPOAgentParams"
+        }
+    },
+    "custom_reward_threshold": null,
+    "default_input_filter": {
+        "_observation_filters": {},
+        "_reward_filters": {},
+        "i_am_a_reference_filter": false,
+        "name": "no_input_filter",
+        "__class__": "NoInputFilter"
+    },
+    "default_output_filter": {
+        "_action_filters": {},
+        "i_am_a_reference_filter": false,
+        "name": null,
+        "__class__": "NoOutputFilter"
+    },
+    "done_condition": "<built-in function any>",
+    "enable_domain_randomization": false,
+    "experiment_path": "/opt/ml/model",
+    "frame_skip": 1,
+    "level": "DeepRacerRacetrackEnv-v0",
+    "non_trainable_agents": {},
+    "pause_physics": null,
+    "run_phase_subject": null,
+    "seed": null,
+    "target_success_rate": 1.0,
+    "unpause_physics": null
+}
+
+agents_params: 
+0: "DeepRacerClippedPPOAgentParams" {
+    "algorithm": {
+        "act_for_full_episodes": true,
+        "apply_gradients_every_x_episodes": 5,
+        "beta_entropy": 0.01,
+        "clip_likelihood_ratio_using_epsilon": 0.2,
+        "clipping_decay_schedule": {
+            "current_value": 1,
+            "initial_value": 1,
+            "__class__": "ConstantSchedule"
+        },
+        "discount": 0.999,
+        "distributed_coach_synchronization_type": {
+            "_value_": "sync",
+            "_name_": "SYNC",
+            "__objclass__": "<enum 'DistributedCoachSynchronizationType'>"
+        },
+        "estimate_state_value_using_gae": true,
+        "gae_lambda": 0.95,
+        "heatup_using_network_decisions": false,
+        "in_action_space": null,
+        "load_memory_from_file_path": null,
+        "n_step": -1,
+        "normalization_stats": null,
+        "num_consecutive_playing_steps": {
+            "_num_steps": 20,
+            "__class__": "EnvironmentEpisodes"
+        },
+        "num_consecutive_training_steps": 1,
+        "num_episodes_in_experience_replay": 1000000,
+        "num_steps_between_copying_online_weights_to_target": {
+            "_num_steps": 20,
+            "__class__": "EnvironmentEpisodes"
+        },
+        "optimization_epochs": 10,
+        "policy_gradient_rescaler": {
+            "_value_": 8,
+            "_name_": "GAE",
+            "__objclass__": "<enum 'PolicyGradientRescaler'>"
+        },
+        "rate_for_copying_weights_to_target": 1.0,
+        "share_statistics_between_workers": true,
+        "store_transitions_only_when_episodes_are_terminated": false,
+        "supports_parameter_noise": false,
+        "use_accumulated_reward_as_measurement": false,
+        "use_kl_regularization": false,
+        "__class__": "ClippedPPOAlgorithmParameters"
+    },
+    "current_episode": 0,
+    "env_agent": {
+        "_ctrl_": {
+            "_action_space_": {
+                "_high": "array([1., 1.])",
+                "_low": "array([-1., -1.])",
+                "_shape": "array([2])",
+                "default_action": "array([0., 0.])",
+                "descriptions": {},
+                "max_abs_range": "array([1., 1.])",
+                "num_dimensions": 1,
+                "num_elements": 2,
+                "scale_action_space": true,
+                "scaled_up_action_space_bounds": {
+                    "high": "array([30.,  1.])",
+                    "low": "array([-30. ,   0.5])"
+                },
+                "__class__": "ScalableBoxActionSpace"
+            },
+            "_agent_name_": "racecar",
+            "_model_metadata_": {
+                "_bucket": "aws-deepracer-data-us-east-1-1",
+                "_local_dir": "./custom_files/agent",
+                "_local_path": "./custom_files/agent/model_metadata.json",
+                "_model_metadata": {
+                    "action_space": {
+                        "speed": {
+                            "high": 1.0,
+                            "low": 0.5
+                        },
+                        "steering_angle": {
+                            "high": 30.0,
+                            "low": -30.0
+                        }
+                    },
+                    "action_space_type": "continuous",
+                    "lidar_config": {
+                        "clipping_dist": 2.0,
+                        "num_sectors": 8,
+                        "num_values_per_sector": 8
+                    },
+                    "neural_network": "DEEP_CONVOLUTIONAL_NETWORK_SHALLOW",
+                    "sensor": {
+                        "0": "FRONT_FACING_CAMERA"
+                    },
+                    "training_algorithm": "clipped_ppo",
+                    "version": 5.0
+                },
+                "_s3_client": {
+                    "_backoff_time_sec": 1.0,
+                    "_boto_client_name": "s3",
+                    "_log_and_cont": false,
+                    "_max_retry_attempts": 5,
+                    "_region_name": "us-east-1",
+                    "_session": null,
+                    "__class__": "S3Client"
+                },
+                "_s3_key": "data-9babcdaa-3fd8-4d3c-a7bc-b195bebd6811/models/7a42c0c5-e13b-49c6-955e-18e3b64dba4b/model_metadata.json",
+                "__class__": "ModelMetadata"
+            },
+            "__class__": "TrainingCtrl"
+        },
+        "_network_settings_": {
+            "activation_function": "relu",
+            "embedder_type": "scheme",
+            "input_embedders": {
+                "FRONT_FACING_CAMERA": {
+                    "bn_info_conv": {
+                        "0": false,
+                        "1": "relu",
+                        "2": 0.0
+                    },
+                    "bn_info_dense": {
+                        "0": false,
+                        "1": "relu",
+                        "2": 0.0
+                    },
+                    "conv_info_list": {
+                        "0": {
+                            "0": 32,
+                            "1": 8,
+                            "2": 4
+                        },
+                        "1": {
+                            "0": 64,
+                            "1": 4,
+                            "2": 2
+                        },
+                        "2": {
+                            "0": 64,
+                            "1": 3,
+                            "2": 1
+                        }
+                    },
+                    "dense_layer__hidden_unit_list": {},
+                    "is_first_layer_bn": false
+                }
+            },
+            "middleware_embedders": {
+                "bn_info_conv": {
+                    "0": false,
+                    "1": "relu",
+                    "2": 0.0
+                },
+                "bn_info_dense": {
+                    "0": false,
+                    "1": "relu",
+                    "2": 0.0
+                },
+                "conv_info_list": {},
+                "dense_layer__hidden_unit_list": {
+                    "0": 512
+                },
+                "is_first_layer_bn": false
+            }
+        },
+        "_sensor_": {
+            "sensors": {
+                "0": {
+                    "__class__": "Camera"
+                }
+            },
+            "__class__": "CompositeSensor"
+        },
+        "__class__": "Agent"
+    },
+    "exploration": {
+        "action_space": {
+            "_high": "array([1., 1.])",
+            "_low": "array([-1., -1.])",
+            "_shape": "array([2])",
+            "default_action": "array([0., 0.])",
+            "descriptions": {},
+            "max_abs_range": "array([1., 1.])",
+            "num_dimensions": 1,
+            "num_elements": 2,
+            "scale_action_space": true,
+            "scaled_up_action_space_bounds": {
+                "high": "array([30.,  1.])",
+                "low": "array([-30. ,   0.5])"
+            },
+            "__class__": "ScalableBoxActionSpace"
+        },
+        "evaluation_noise": 0.05,
+        "noise_as_percentage_from_action_space": true,
+        "noise_schedule": {
+            "current_value": 0.1,
+            "decay_delta": 0.0,
+            "decay_steps": 50000,
+            "final_value": 0.1,
+            "initial_value": 0.1,
+            "__class__": "LinearSchedule"
+        },
+        "__class__": "AdditiveNoiseParameters"
+    },
+    "full_name_id": "main_level/agent",
+    "input_filter": {
+        "_observation_filters": {
+            "FRONT_FACING_CAMERA": {
+                "to_grayscale": {
+                    "name": null,
+                    "supports_batching": false,
+                    "__class__": "ObservationRGBToYFilter"
+                },
+                "to_uint8": {
+                    "input_high": 255,
+                    "input_low": 0,
+                    "name": null,
+                    "supports_batching": false,
+                    "__class__": "ObservationToUInt8Filter"
+                },
+                "stacking": {
+                    "input_observation_space": null,
+                    "name": null,
+                    "stack": {},
+                    "stack_size": 1,
+                    "stacking_axis": -1,
+                    "supports_batching": false,
+                    "__class__": "ObservationStackingFilter"
+                }
+            }
+        },
+        "_reward_filters": {},
+        "i_am_a_reference_filter": false,
+        "name": "input_filter",
+        "__class__": "InputFilter"
+    },
+    "is_a_highest_level_agent": true,
+    "is_a_lowest_level_agent": true,
+    "is_batch_rl_training": false,
+    "memory": {
+        "load_memory_from_file_path": null,
+        "max_size": [
+            "<MemoryGranularity.Transitions: 0>",
+            1000000
+        ],
+        "n_step": -1,
+        "shared_memory": false,
+        "train_to_eval_ratio": 1,
+        "__class__": "DeepRacerMemoryParameters"
+    },
+    "name": "agent",
+    "network_wrappers": {
+        "main": {
+            "adam_optimizer_beta1": 0.9,
+            "adam_optimizer_beta2": 0.999,
+            "async_training": false,
+            "batch_size": 64,
+            "clip_gradients": null,
+            "create_target_network": true,
+            "embedding_merger_type": {
+                "_value_": 0,
+                "_name_": "Concat",
+                "__objclass__": "<enum 'EmbeddingMergerType'>"
+            },
+            "force_cpu": false,
+            "framework": {
+                "_value_": "TensorFlow",
+                "_name_": "tensorflow",
+                "__objclass__": "<enum 'Frameworks'>"
+            },
+            "gradients_clipping_method": {
+                "_value_": 0,
+                "_name_": "ClipByGlobalNorm",
+                "__objclass__": "<enum 'GradientClippingMethod'>"
+            },
+            "heads_parameters": {
+                "0": {
+                    "activation_function": "relu",
+                    "dense_layer": null,
+                    "initializer": "normalized_columns",
+                    "is_training": false,
+                    "loss_weight": 1.0,
+                    "name": "v_head_params",
+                    "num_output_head_copies": 1,
+                    "output_bias_initializer": null,
+                    "parameterized_class_name": "VHead",
+                    "rescale_gradient_from_head_by_factor": 1.0,
+                    "__class__": "VHeadParameters"
+                },
+                "1": {
+                    "activation_function": "tanh",
+                    "dense_layer": null,
+                    "is_training": false,
+                    "loss_weight": 1.0,
+                    "name": "ppo_head_params",
+                    "num_output_head_copies": 1,
+                    "parameterized_class_name": "PPOHead",
+                    "rescale_gradient_from_head_by_factor": 1.0,
+                    "__class__": "PPOHeadParameters"
+                }
+            },
+            "input_embedders_parameters": {
+                "FRONT_FACING_CAMERA": {
+                    "activation_function": "relu",
+                    "batchnorm": false,
+                    "dense_layer": null,
+                    "dropout_rate": 0.0,
+                    "input_clipping": null,
+                    "input_offset": {
+                        "image": 0.0,
+                        "tensor": 0.0,
+                        "vector": 0.0
+                    },
+                    "input_rescaling": {
+                        "image": 255.0,
+                        "tensor": 1.0,
+                        "vector": 1.0
+                    },
+                    "is_training": false,
+                    "name": "embedder",
+                    "scheme": {
+                        "0": {
+                            "kernel_size": 8,
+                            "num_filters": 32,
+                            "strides": 4,
+                            "__class__": "Conv2d"
+                        },
+                        "1": {
+                            "kernel_size": 4,
+                            "num_filters": 64,
+                            "strides": 2,
+                            "__class__": "Conv2d"
+                        },
+                        "2": {
+                            "kernel_size": 3,
+                            "num_filters": 64,
+                            "strides": 1,
+                            "__class__": "Conv2d"
+                        }
+                    },
+                    "__class__": "InputEmbedderParameters"
+                }
+            },
+            "l2_regularization": 0,
+            "learning_rate": 0.0003,
+            "learning_rate_decay_rate": 0,
+            "learning_rate_decay_steps": 0,
+            "middleware_parameters": {
+                "activation_function": "relu",
+                "batchnorm": false,
+                "dense_layer": null,
+                "dropout_rate": 0.0,
+                "is_training": false,
+                "name": "middleware_fc_embedder",
+                "num_streams": 1,
+                "parameterized_class_name": "FCMiddleware",
+                "scheme": {
+                    "0": {
+                        "units": 512,
+                        "__class__": "Dense"
+                    }
+                },
+                "__class__": "FCMiddlewareParameters"
+            },
+            "optimizer_epsilon": 1e-05,
+            "optimizer_type": "Adam",
+            "replace_mse_with_huber_loss": true,
+            "rms_prop_optimizer_decay": 0.9,
+            "scale_down_gradients_by_number_of_workers_for_sync_training": true,
+            "sess": null,
+            "shared_optimizer": true,
+            "softmax_temperature": 1,
+            "tensorflow_support": true,
+            "use_separate_networks_per_head": true,
+            "__class__": "ClippedPPONetworkParameters"
+        }
+    },
+    "output_filter": {
+        "_action_filters": {},
+        "i_am_a_reference_filter": false,
+        "name": "output_filter",
+        "__class__": "NoOutputFilter"
+    },
+    "pre_network_filter": {
+        "_observation_filters": {},
+        "_reward_filters": {},
+        "i_am_a_reference_filter": false,
+        "name": "pre_network_filter",
+        "__class__": "NoInputFilter"
+    },
+    "task_parameters": {
+        "apply_stop_condition": false,
+        "checkpoint_restore_path": null,
+        "checkpoint_save_dir": "./checkpoint_sagemaker",
+        "checkpoint_save_secs": 20,
+        "evaluate_only": null,
+        "experiment_path": "/opt/ml/model",
+        "export_onnx_graph": false,
+        "framework_type": {
+            "_value_": "TensorFlow",
+            "_name_": "tensorflow",
+            "__objclass__": "<enum 'Frameworks'>"
+        },
+        "num_gpu": 1,
+        "seed": null,
+        "task_index": 0,
+        "use_cpu": false,
+        "__class__": "TaskParameters"
+    },
+    "visualization": {
+        "add_rendered_image_to_env_response": false,
+        "dump_csv": true,
+        "dump_gifs": false,
+        "dump_in_episode_signals": false,
+        "dump_mp4": false,
+        "dump_parameters_documentation": true,
+        "dump_signals_to_csv_every_x_episodes": 5,
+        "max_fps_for_human_control": 10,
+        "native_rendering": false,
+        "print_networks_summary": false,
+        "render": false,
+        "tensorboard": false,
+        "video_dump_filters": {
+            "0": {
+                "run_phases": {
+                    "0": {
+                        "_value_": "Testing",
+                        "_name_": "TEST",
+                        "__objclass__": "<enum 'RunPhase'>"
+                    }
+                },
+                "__class__": "SelectedPhaseOnlyDumpFilter"
+            },
+            "1": {
+                "max_reward_achieved": -Infinity,
+                "__class__": "MaxDumpFilter"
+            }
+        },
+        "__class__": "VisualizationParameters"
+    }
+}
+
+
+agent_params: 
+"DeepRacerClippedPPOAgentParams" {
+    "algorithm": {
+        "act_for_full_episodes": true,
+        "apply_gradients_every_x_episodes": 5,
+        "beta_entropy": 0.01,
+        "clip_likelihood_ratio_using_epsilon": 0.2,
+        "clipping_decay_schedule": {
+            "current_value": 1,
+            "initial_value": 1,
+            "__class__": "ConstantSchedule"
+        },
+        "discount": 0.999,
+        "distributed_coach_synchronization_type": {
+            "_value_": "sync",
+            "_name_": "SYNC",
+            "__objclass__": "<enum 'DistributedCoachSynchronizationType'>"
+        },
+        "estimate_state_value_using_gae": true,
+        "gae_lambda": 0.95,
+        "heatup_using_network_decisions": false,
+        "in_action_space": null,
+        "load_memory_from_file_path": null,
+        "n_step": -1,
+        "normalization_stats": null,
+        "num_consecutive_playing_steps": {
+            "_num_steps": 20,
+            "__class__": "EnvironmentEpisodes"
+        },
+        "num_consecutive_training_steps": 1,
+        "num_episodes_in_experience_replay": 1000000,
+        "num_steps_between_copying_online_weights_to_target": {
+            "_num_steps": 20,
+            "__class__": "EnvironmentEpisodes"
+        },
+        "optimization_epochs": 10,
+        "policy_gradient_rescaler": {
+            "_value_": 8,
+            "_name_": "GAE",
+            "__objclass__": "<enum 'PolicyGradientRescaler'>"
+        },
+        "rate_for_copying_weights_to_target": 1.0,
+        "share_statistics_between_workers": true,
+        "store_transitions_only_when_episodes_are_terminated": false,
+        "supports_parameter_noise": false,
+        "use_accumulated_reward_as_measurement": false,
+        "use_kl_regularization": false,
+        "__class__": "ClippedPPOAlgorithmParameters"
+    },
+    "current_episode": 0,
+    "env_agent": {
+        "_ctrl_": {
+            "_action_space_": {
+                "_high": "array([1., 1.])",
+                "_low": "array([-1., -1.])",
+                "_shape": "array([2])",
+                "default_action": "array([0., 0.])",
+                "descriptions": {},
+                "max_abs_range": "array([1., 1.])",
+                "num_dimensions": 1,
+                "num_elements": 2,
+                "scale_action_space": true,
+                "scaled_up_action_space_bounds": {
+                    "high": "array([30.,  1.])",
+                    "low": "array([-30. ,   0.5])"
+                },
+                "__class__": "ScalableBoxActionSpace"
+            },
+            "_agent_name_": "racecar",
+            "_model_metadata_": {
+                "_bucket": "aws-deepracer-data-us-east-1-1",
+                "_local_dir": "./custom_files/agent",
+                "_local_path": "./custom_files/agent/model_metadata.json",
+                "_model_metadata": {
+                    "action_space": {
+                        "speed": {
+                            "high": 1.0,
+                            "low": 0.5
+                        },
+                        "steering_angle": {
+                            "high": 30.0,
+                            "low": -30.0
+                        }
+                    },
+                    "action_space_type": "continuous",
+                    "lidar_config": {
+                        "clipping_dist": 2.0,
+                        "num_sectors": 8,
+                        "num_values_per_sector": 8
+                    },
+                    "neural_network": "DEEP_CONVOLUTIONAL_NETWORK_SHALLOW",
+                    "sensor": {
+                        "0": "FRONT_FACING_CAMERA"
+                    },
+                    "training_algorithm": "clipped_ppo",
+                    "version": 5.0
+                },
+                "_s3_client": {
+                    "_backoff_time_sec": 1.0,
+                    "_boto_client_name": "s3",
+                    "_log_and_cont": false,
+                    "_max_retry_attempts": 5,
+                    "_region_name": "us-east-1",
+                    "_session": null,
+                    "__class__": "S3Client"
+                },
+                "_s3_key": "data-9babcdaa-3fd8-4d3c-a7bc-b195bebd6811/models/7a42c0c5-e13b-49c6-955e-18e3b64dba4b/model_metadata.json",
+                "__class__": "ModelMetadata"
+            },
+            "__class__": "TrainingCtrl"
+        },
+        "_network_settings_": {
+            "activation_function": "relu",
+            "embedder_type": "scheme",
+            "input_embedders": {
+                "FRONT_FACING_CAMERA": {
+                    "bn_info_conv": {
+                        "0": false,
+                        "1": "relu",
+                        "2": 0.0
+                    },
+                    "bn_info_dense": {
+                        "0": false,
+                        "1": "relu",
+                        "2": 0.0
+                    },
+                    "conv_info_list": {
+                        "0": {
+                            "0": 32,
+                            "1": 8,
+                            "2": 4
+                        },
+                        "1": {
+                            "0": 64,
+                            "1": 4,
+                            "2": 2
+                        },
+                        "2": {
+                            "0": 64,
+                            "1": 3,
+                            "2": 1
+                        }
+                    },
+                    "dense_layer__hidden_unit_list": {},
+                    "is_first_layer_bn": false
+                }
+            },
+            "middleware_embedders": {
+                "bn_info_conv": {
+                    "0": false,
+                    "1": "relu",
+                    "2": 0.0
+                },
+                "bn_info_dense": {
+                    "0": false,
+                    "1": "relu",
+                    "2": 0.0
+                },
+                "conv_info_list": {},
+                "dense_layer__hidden_unit_list": {
+                    "0": 512
+                },
+                "is_first_layer_bn": false
+            }
+        },
+        "_sensor_": {
+            "sensors": {
+                "0": {
+                    "__class__": "Camera"
+                }
+            },
+            "__class__": "CompositeSensor"
+        },
+        "__class__": "Agent"
+    },
+    "exploration": {
+        "action_space": {
+            "_high": "array([1., 1.])",
+            "_low": "array([-1., -1.])",
+            "_shape": "array([2])",
+            "default_action": "array([0., 0.])",
+            "descriptions": {},
+            "max_abs_range": "array([1., 1.])",
+            "num_dimensions": 1,
+            "num_elements": 2,
+            "scale_action_space": true,
+            "scaled_up_action_space_bounds": {
+                "high": "array([30.,  1.])",
+                "low": "array([-30. ,   0.5])"
+            },
+            "__class__": "ScalableBoxActionSpace"
+        },
+        "evaluation_noise": 0.05,
+        "noise_as_percentage_from_action_space": true,
+        "noise_schedule": {
+            "current_value": 0.1,
+            "decay_delta": 0.0,
+            "decay_steps": 50000,
+            "final_value": 0.1,
+            "initial_value": 0.1,
+            "__class__": "LinearSchedule"
+        },
+        "__class__": "AdditiveNoiseParameters"
+    },
+    "full_name_id": "main_level/agent",
+    "input_filter": {
+        "_observation_filters": {
+            "FRONT_FACING_CAMERA": {
+                "to_grayscale": {
+                    "name": null,
+                    "supports_batching": false,
+                    "__class__": "ObservationRGBToYFilter"
+                },
+                "to_uint8": {
+                    "input_high": 255,
+                    "input_low": 0,
+                    "name": null,
+                    "supports_batching": false,
+                    "__class__": "ObservationToUInt8Filter"
+                },
+                "stacking": {
+                    "input_observation_space": null,
+                    "name": null,
+                    "stack": {},
+                    "stack_size": 1,
+                    "stacking_axis": -1,
+                    "supports_batching": false,
+                    "__class__": "ObservationStackingFilter"
+                }
+            }
+        },
+        "_reward_filters": {},
+        "i_am_a_reference_filter": false,
+        "name": "input_filter",
+        "__class__": "InputFilter"
+    },
+    "is_a_highest_level_agent": true,
+    "is_a_lowest_level_agent": true,
+    "is_batch_rl_training": false,
+    "memory": {
+        "load_memory_from_file_path": null,
+        "max_size": [
+            "<MemoryGranularity.Transitions: 0>",
+            1000000
+        ],
+        "n_step": -1,
+        "shared_memory": false,
+        "train_to_eval_ratio": 1,
+        "__class__": "DeepRacerMemoryParameters"
+    },
+    "name": "agent",
+    "network_wrappers": {
+        "main": {
+            "adam_optimizer_beta1": 0.9,
+            "adam_optimizer_beta2": 0.999,
+            "async_training": false,
+            "batch_size": 64,
+            "clip_gradients": null,
+            "create_target_network": true,
+            "embedding_merger_type": {
+                "_value_": 0,
+                "_name_": "Concat",
+                "__objclass__": "<enum 'EmbeddingMergerType'>"
+            },
+            "force_cpu": false,
+            "framework": {
+                "_value_": "TensorFlow",
+                "_name_": "tensorflow",
+                "__objclass__": "<enum 'Frameworks'>"
+            },
+            "gradients_clipping_method": {
+                "_value_": 0,
+                "_name_": "ClipByGlobalNorm",
+                "__objclass__": "<enum 'GradientClippingMethod'>"
+            },
+            "heads_parameters": {
+                "0": {
+                    "activation_function": "relu",
+                    "dense_layer": null,
+                    "initializer": "normalized_columns",
+                    "is_training": false,
+                    "loss_weight": 1.0,
+                    "name": "v_head_params",
+                    "num_output_head_copies": 1,
+                    "output_bias_initializer": null,
+                    "parameterized_class_name": "VHead",
+                    "rescale_gradient_from_head_by_factor": 1.0,
+                    "__class__": "VHeadParameters"
+                },
+                "1": {
+                    "activation_function": "tanh",
+                    "dense_layer": null,
+                    "is_training": false,
+                    "loss_weight": 1.0,
+                    "name": "ppo_head_params",
+                    "num_output_head_copies": 1,
+                    "parameterized_class_name": "PPOHead",
+                    "rescale_gradient_from_head_by_factor": 1.0,
+                    "__class__": "PPOHeadParameters"
+                }
+            },
+            "input_embedders_parameters": {
+                "FRONT_FACING_CAMERA": {
+                    "activation_function": "relu",
+                    "batchnorm": false,
+                    "dense_layer": null,
+                    "dropout_rate": 0.0,
+                    "input_clipping": null,
+                    "input_offset": {
+                        "image": 0.0,
+                        "tensor": 0.0,
+                        "vector": 0.0
+                    },
+                    "input_rescaling": {
+                        "image": 255.0,
+                        "tensor": 1.0,
+                        "vector": 1.0
+                    },
+                    "is_training": false,
+                    "name": "embedder",
+                    "scheme": {
+                        "0": {
+                            "kernel_size": 8,
+                            "num_filters": 32,
+                            "strides": 4,
+                            "__class__": "Conv2d"
+                        },
+                        "1": {
+                            "kernel_size": 4,
+                            "num_filters": 64,
+                            "strides": 2,
+                            "__class__": "Conv2d"
+                        },
+                        "2": {
+                            "kernel_size": 3,
+                            "num_filters": 64,
+                            "strides": 1,
+                            "__class__": "Conv2d"
+                        }
+                    },
+                    "__class__": "InputEmbedderParameters"
+                }
+            },
+            "l2_regularization": 0,
+            "learning_rate": 0.0003,
+            "learning_rate_decay_rate": 0,
+            "learning_rate_decay_steps": 0,
+            "middleware_parameters": {
+                "activation_function": "relu",
+                "batchnorm": false,
+                "dense_layer": null,
+                "dropout_rate": 0.0,
+                "is_training": false,
+                "name": "middleware_fc_embedder",
+                "num_streams": 1,
+                "parameterized_class_name": "FCMiddleware",
+                "scheme": {
+                    "0": {
+                        "units": 512,
+                        "__class__": "Dense"
+                    }
+                },
+                "__class__": "FCMiddlewareParameters"
+            },
+            "optimizer_epsilon": 1e-05,
+            "optimizer_type": "Adam",
+            "replace_mse_with_huber_loss": true,
+            "rms_prop_optimizer_decay": 0.9,
+            "scale_down_gradients_by_number_of_workers_for_sync_training": true,
+            "sess": null,
+            "shared_optimizer": true,
+            "softmax_temperature": 1,
+            "tensorflow_support": true,
+            "use_separate_networks_per_head": true,
+            "__class__": "ClippedPPONetworkParameters"
+        }
+    },
+    "output_filter": {
+        "_action_filters": {},
+        "i_am_a_reference_filter": false,
+        "name": "output_filter",
+        "__class__": "NoOutputFilter"
+    },
+    "pre_network_filter": {
+        "_observation_filters": {},
+        "_reward_filters": {},
+        "i_am_a_reference_filter": false,
+        "name": "pre_network_filter",
+        "__class__": "NoInputFilter"
+    },
+    "task_parameters": {
+        "apply_stop_condition": false,
+        "checkpoint_restore_path": null,
+        "checkpoint_save_dir": "./checkpoint_sagemaker",
+        "checkpoint_save_secs": 20,
+        "evaluate_only": null,
+        "experiment_path": "/opt/ml/model",
+        "export_onnx_graph": false,
+        "framework_type": {
+            "_value_": "TensorFlow",
+            "_name_": "tensorflow",
+            "__objclass__": "<enum 'Frameworks'>"
+        },
+        "num_gpu": 1,
+        "seed": null,
+        "task_index": 0,
+        "use_cpu": false,
+        "__class__": "TaskParameters"
+    },
+    "visualization": {
+        "add_rendered_image_to_env_response": false,
+        "dump_csv": true,
+        "dump_gifs": false,
+        "dump_in_episode_signals": false,
+        "dump_mp4": false,
+        "dump_parameters_documentation": true,
+        "dump_signals_to_csv_every_x_episodes": 5,
+        "max_fps_for_human_control": 10,
+        "native_rendering": false,
+        "print_networks_summary": false,
+        "render": false,
+        "tensorboard": false,
+        "video_dump_filters": {
+            "0": {
+                "run_phases": {
+                    "0": {
+                        "_value_": "Testing",
+                        "_name_": "TEST",
+                        "__objclass__": "<enum 'RunPhase'>"
+                    }
+                },
+                "__class__": "SelectedPhaseOnlyDumpFilter"
+            },
+            "1": {
+                "max_reward_achieved": -Infinity,
+                "__class__": "MaxDumpFilter"
+            }
+        },
+        "__class__": "VisualizationParameters"
+    }
+}
+
+memory_backend_params: 
+<markov.deepracer_memory.DeepRacerRedisPubSubMemoryBackendParameters object at 0x7fe5d4d6f6d8>
+data_store_params: 
+<markov.s3_boto_data_store.S3BotoDataStoreParameters object at 0x7fe5d4a9cb38>
