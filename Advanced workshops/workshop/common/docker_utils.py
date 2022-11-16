@@ -28,6 +28,16 @@ import json
 
 IMAGE_TEMPLATE = "{account}.dkr.ecr.{region}.amazonaws.com/{image_name}:{version}"
 
+def build_docker_image(repository_name, dockerfile='Dockerfile', build_args={}):
+    """Builds a docker image from the specified dockerfile, and pushes it to
+    ECR.  Handles things like ECR login, creating the repository.
+
+    Returns the name of the created docker image in ECR
+    """
+    base_image = _find_base_image_in_dockerfile(dockerfile)
+    _ecr_login_if_needed(base_image)
+    _build_from_dockerfile(repository_name, dockerfile, build_args)
+    return
 
 def build_and_push_docker_image(repository_name, dockerfile='Dockerfile', build_args={}):
     """Builds a docker image from the specified dockerfile, and pushes it to

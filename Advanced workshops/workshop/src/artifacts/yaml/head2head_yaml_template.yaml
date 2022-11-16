@@ -63,11 +63,11 @@ MP4_S3_OBJECT_PREFIX:
 RACE_TYPE:                            "TIME_TRIAL"
 VIDEO_JOB_TYPE:                       "RACING"
 DISPLAY_NAME:
- - Racer1LongLongRacerNameBlaBlaBla
- - Racer2LongLongRacerNameBlaBlaBla
+ - Racer1LongLongRacerName
+ - Racer2LongLongRacerName
 RACER_NAME:
- - RacerAlias1LongLongRacerNameBlaBlaBla
- - RacerAlias2LongLongRacerNameBlaBlaBla
+ - RacerAlias1LongLongRacerName
+ - RacerAlias2LongLongRacerName
 MODEL_NAME:
  - model1-created-in-console
  - model2-created-in-console
