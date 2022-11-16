@@ -81,10 +81,10 @@ DISPLAY_NAME:
  - Racer3
  - Racer4
 RACER_NAME:
- - RacerAlias1LongLongRacerNameBlaBlaBla
- - RacerAlias2LongLongRacerNameBlaBlaBla
- - RacerAlias3LongLongRacerNameBlaBlaBla
- - RacerAlias4LongLongRacerNameBlaBlaBla
+ - RacerAlias1LongLongRacerName
+ - RacerAlias2LongLongRacerName
+ - RacerAlias3LongLongRacerName
+ - RacerAlias4LongLongRacerName
 MODEL_NAME:
  - model1-created-in-console
  - model2-created-in-console
