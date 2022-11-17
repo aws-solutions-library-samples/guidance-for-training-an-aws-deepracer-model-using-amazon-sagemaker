@@ -1,0 +1,19 @@
+{
+  "action_space" : {
+    "steering_angle" : {
+      "high" : 30.0,
+      "low" : -30.0
+    },
+    "speed" : {
+      "high" : 1.0,
+      "low" : 0.5
+    }
+  },
+  "sensor" : [ "FRONT_FACING_CAMERA" ],
+  "neural_network" : "DEEP_CONVOLUTIONAL_NETWORK_SHALLOW",
+  "training_algorithm" : "sac",
+  "action_space_type" : "continuous",
+  "preprocess_type" : "GREY_SCALE",
+  "regional_parameters" : [ 0, 0, 0, 0 ]
+}
+
