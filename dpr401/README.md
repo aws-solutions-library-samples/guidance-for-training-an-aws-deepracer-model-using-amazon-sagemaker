@@ -1,16 +1,7 @@
-# DeepRacer notebook using Amazon SageMaker RL and AWS RoboMaker services
+# AWS DeepRacer notebook using Amazon SageMaker for reinforcement learning (RL) and AWS RoboMaker services
 
-This folder contains examples of how to use RL to train an autonomous deepracer. This is a jailbreaker for the AWS DeepRacer. This gives a glimse of architecture used to get the DeepRacer working.
+This folder contains examples and resources for using Amazon SageMaker notebooks to train and evaluate AWS DeepRacer RL models. The example notebook provides a closer look at the architecture and services underpinning AWS DeepRacer and allows you to get under the hood and directly manipulate the code. In addition to training and evaluating models, you can also use the notebook to customize training and simulation environments. 
 
-## How to use the notebook
+## How to get started
 
-1. Login to your AWS account - SageMaker service ([SageMaker Link](https://us-west-2.console.aws.amazon.com/sagemaker/home?region=us-west-2#/dashboard))
-2. On the left tab select `Notebook instances`
-3. Select `Create notebook instance`
-4. Fill up the notebook instance name. In the Additional configuration select atleast 25GB. This is because docker gets installed and takes up space.
-5. Create a new IAM role. Give root permission
-6. Select the git repository and clone this repository.
-7. Then click create notebook instance button at the button
-8. This takes like 2 min to create your notebook instance. Then click on the newly created instance and click on the juypter notebook.
-9. You will see all the github files and now run `deepracer_rl.ipynb`
-10. Run clean robomaker & sagemaker commands in the script only when you are done with training.
+To get started, follow the link for complete instructions: https://deepracer400.workshops.aws.dev/ 
