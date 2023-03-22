@@ -22,6 +22,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import re
 
 import boto3
 import json
@@ -136,7 +137,7 @@ def _ecr_login_if_needed(image):
     ecr_client = boto3.client('ecr')
 
     # Only ECR images need login
-    if not ('dkr.ecr' in image and 'amazonaws.com' in image):
+    if not re.compile(r'\d+\.dkr\.ecr\.[a-z0-9\-]*?\.amazonaws\.com/').match(image):
         return
 
     # do we have the image?
