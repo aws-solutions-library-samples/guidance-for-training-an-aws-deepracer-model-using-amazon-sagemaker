@@ -1,0 +1,53 @@
+Description: This template creates a Sagemaker Notebook instance for training an AWS DeepRacer model using Amazon Sagemaker (SO9337)
+
+Resources:
+  DPR401Role:
+    Type: AWS::IAM::Role
+    Properties: 
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - sagemaker.amazonaws.com
+                - robomaker.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Description: Role for DPR401
+      RoleName: DPR401Role
+      ManagedPolicyArns: 
+        - arn:aws:iam::aws:policy/AmazonKinesisVideoStreamsFullAccess
+        - arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
+        - arn:aws:iam::aws:policy/AmazonElasticContainerRegistryPublicReadOnly
+        - arn:aws:iam::aws:policy/EC2InstanceProfileForImageBuilderECRContainerBuilds
+        - arn:aws:iam::aws:policy/service-role/AWSDeepRacerServiceRolePolicy
+      Policies:
+        - PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'iam:PassRole'
+                Resource: !Sub 'arn:aws:iam::${AWS::AccountId}:role/DPR401Role'
+              - Effect: Allow
+                Action:
+                  - 'ecr:DeleteRepository'
+                Resource:
+                  - !Sub 'arn:aws:ecr:${AWS::Region}:${AWS::AccountId}:repository/sagemaker-docker-cpu'
+                  - !Sub 'arn:aws:ecr:${AWS::Region}:${AWS::AccountId}:repository/deepracer-sim-local-notebook'
+          PolicyName: DPR401InlinePolicy
+      MaxSessionDuration: 43200
+
+  DPR401Notebook:
+    Type: AWS::SageMaker::NotebookInstance
+    Properties: 
+      PlatformIdentifier: notebook-al2-v1
+      DefaultCodeRepository: https://github.com/aws-solutions-library-samples/guidance-for-training-an-aws-deepracer-model-using-amazon-sagemaker.git
+      DirectInternetAccess: Enabled
+      InstanceType: ml.t3.2xlarge
+      NotebookInstanceName: DPR401-notebook
+      RoleArn: !GetAtt DPR401Role.Arn
+      RootAccess: Enabled
+      VolumeSizeInGB: 25
+
