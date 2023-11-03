@@ -61,17 +61,19 @@ To deploy the dpr401 AWS CloudFormation stack in order to run the DPR401-noteboo
 
 ### Deployment validation ###
 
-To validate your stack and notebook instance were created successfully:
+To validate that your AWS CloudFormation stack and Amazon Sagemaker notebook instance were created successfully:
 
-1. Log in to your personal AWS account in the AWS Console.
-1. Search for `Amazon Sagemaker` in the search bar on the top of the page.
-1. If it's collapsed, expand left navigation menu.
-1. Expand the **Notebook** section and select **Notebook instances**.
-1. On the **Notebook instances** page, confirm **DPR401-Notebook** is listed under **Name**. 
-1. Next, search for `AWS CloudFormation` in the search bar on the top of the AWS Console page.
+1. To validate that your AWS CloudFormation stack, log in to your personal AWS account in the AWS Console.
+1. Search for `AWS CloudFormation` in the search bar on the top of the AWS Console page.
 1. On the **Stacks** page, under **Stack name**, verify you have a stack titled **dpr401** with a **Status** of **CREATE_COMPLETE**.
 1. Select the stack **dpr401**.
 1. On the **dpr401** page, confirm under the **Resources** tab that **DPR401Notebook** and **DPR401Role** are listed.
+  
+1. Next, to validate your Amazon Sagemaker notebook instance, search for `Amazon Sagemaker` in the search bar at the top of the page.
+1. On the Amazon Sagemaker console homepage, if the left navigation menu is collapsed, expand it.
+1. On the left navigation menu, expand the **Notebook** section and select **Notebook instances**.
+1. On the **Notebook instances** page, confirm **DPR401-Notebook** is listed under **Name**. 
+
 
 ### Running the guidance ###
 
@@ -118,12 +120,25 @@ Select the Workshop Checkpoint #3 cell and click the ▶ Run button until you ha
 
 There are several similarities between the training Simulation Job parameters, including the world_name and race_type. Since you are evaluating a trained model you can run an evaluation against the same world name and race type. You can also run an evaluation using a different world name and race type.
 
-<Screenshot>
+![spain-track](https://github.com/aws-solutions-library-samples/guidance-for-training-an-aws-deepracer-model-using-amazon-sagemaker/assets/58491864/b0963936-d7b0-45ab-a984-24a9b1b65958)
+
   
 There are additional parameters that you can change to customize the evaluation.
 
-<Screenshot>
-<Table></Table>
+![yaml_config](https://github.com/aws-solutions-library-samples/guidance-for-training-an-aws-deepracer-model-using-amazon-sagemaker/assets/58491864/c4e05ecc-8538-4079-8cc9-8fbe0c10fc59)
+
+key	value
+yaml_config['NUMBER_OF_TRIALS']	Set the number of laps for evaluation
+yaml_config['DISPLAY_NAME']	Displayed in the upper left corner to identify the current racer
+yaml_config['LEADERBOARD_TYPE']	*Leave as "LEAGUE"*
+yaml_config['LEADERBOARD_NAME']	Displayed on the bottom area of the media output
+yaml_config['CAR_COLOR']	Controls the color of the racecar
+yaml_config['NUMBER_OF_RESETS']	The number of resets allowed per lap
+yaml_config['PENALTY_SECONDS']	*Leave as "5"*
+yaml_config['OFF_TRACK_PENALTY']	Number of seconds to add to the race time when the race car leaves the track
+yaml_config['COLLISION_PENALTY']	Number of seconds to add to the race time when the race car collides with an obstacle like a box in the OBJECT_AVOIDANCE race type
+
+
 Below is an example of the evaluation job media output using the parameters set in the notebook.
 <Screenshot>
 Plot metrics for evaluation job
