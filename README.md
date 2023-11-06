@@ -70,8 +70,7 @@ To validate that your AWS CloudFormation stack and Amazon Sagemaker notebook ins
 1. On the **dpr401** page, confirm under the **Resources** tab that **DPR401Notebook** and **DPR401Role** are listed.
   
 1. Next, to validate your Amazon Sagemaker notebook instance, search for `Amazon Sagemaker` in the search bar at the top of the page.
-1. On the Amazon Sagemaker console homepage, if the left navigation menu is collapsed, expand it.
-1. On the left navigation menu, expand the **Notebook** section and select **Notebook instances**.
+1. On the Amazon Sagemaker console homepage, on the left navigation menu, expand the **Notebook** section and select **Notebook instances**.
 1. On the **Notebook instances** page, confirm **DPR401-Notebook** is listed under **Name**. 
 
 
@@ -79,10 +78,13 @@ To validate that your AWS CloudFormation stack and Amazon Sagemaker notebook ins
 
 To run the Guidance for training an AWS DeepRacer model using Amazon SageMaker:
 
-1. Locate the DPR401-Notebook notebook and click the Open Jupyter link for the notebook. This will open a new tab and place you in the Jupyter notebook interface.
-2. Browse to the 'aws-deepracer-workshops' folder, then the dpr401 folder.
-3. Find deepracer_rl.ipynb and click on it to open the notebook in a new tab.
-4. Initialize and build the environments: Scroll down to the Workshop Checkpoint #1 cell and click on it. Then select the Cell menu, then Run All Above. This will execute all the cells up to this point in the notebook. This will load in all the modules needed by the notebook, set up the environment, then download and build the docker containers. This will take up to 20 minutes.
+1. On the Amazon Sagemaker console homepage, on the left navigation menu, expand the **Notebook** section and select **Notebook instances**.
+1. On the **Notebook instances** page, find **DPR401-Notebook** under **Name** and select the **Open Jupyter** link for the notebook. This will open a new browser tab and place you in the Jupyter notebook interface.
+1. Select **guidance-for-training-an-aws-deepracer-model-using-amazon-sagemaker** under the **Files** tab.
+1. Under the **files** tab, open the **dpr401** folder.
+1. Choose the **deepracer_rl.ipynb** file to open the notebook in a new tab.
+1. To initialize and build the environments, scroll down to the **Workshop Checkpoint #1** cell and select it.
+1. Select the **Cell** in the menu bar at the top of the notebook and choose **Run All** from the dropdown menu. This will execute all the cells up to this point in the notebook loading in all the modules needed by the notebook, seting up the environment, and downloading and building the docker containers.  Initializing and building the environments will take up to 20 minutes. 
 
 #### Train the RL model ####
 
