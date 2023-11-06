@@ -67,8 +67,7 @@ To validate that your AWS CloudFormation stack and Amazon Sagemaker notebook ins
 1. Search for `AWS CloudFormation` in the search bar on the top of the AWS Console page.
 1. On the **Stacks** page, under **Stack name**, verify you have a stack titled **dpr401** with a **Status** of **CREATE_COMPLETE**.
 1. Select the stack **dpr401**.
-1. On the **dpr401** page, confirm under the **Resources** tab that **DPR401Notebook** and **DPR401Role** are listed.
-  
+1. On the **dpr401** page, confirm under the **Resources** tab that **DPR401Notebook** and **DPR401Role** are listed. 
 1. Next, to validate your Amazon Sagemaker notebook instance, search for `Amazon Sagemaker` in the search bar at the top of the page.
 1. On the Amazon Sagemaker console homepage, on the left navigation menu, expand the **Notebook** section and select **Notebook instances**.
 1. On the **Notebook instances** page, confirm **DPR401-Notebook** is listed under **Name**. 
