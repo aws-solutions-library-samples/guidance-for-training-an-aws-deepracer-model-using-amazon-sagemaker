@@ -213,8 +213,8 @@ This reward function rewards the agent to stay between the track borders and pen
 If you wish to create your own reward function there is a pattern to the function that you must use:
 
 ```
-12345def reward_function(params) :
-
+def reward_function(params) :
+    
     reward = ...
 
     return float(reward)
