@@ -93,18 +93,18 @@ Select the Workshop Checkpoint #1 cell, and click the ▶ Run button until you r
 
 
 1. Configure presets: One can modify the presets to define initial agent parameters. It is commented out by default so the default parameters are used. One can use this to manually "pre-train" the neural network.
-2. Copy custom files to S3 bucket so that sagemaker & robomaker can pick it up: This is where the chosen reward function and model_metadata.json file are copied to S3 where Sagemaker and Robomaker can pick them up. These files are discussed in the later section "Customize Your Training."
+2. Copy custom files to S3 bucket so that Amazon SageMaker and AWS RoboMaker can pick it up: This is where the chosen reward function and model_metadata.json file are copied to S3 where Amazon SageMaker and AWS Robomaker can pick them up. These files are discussed in the later section "Customize Your Training."
 3. Train the RL model using the Python SDK Script mode: This section first defines the metric_definitions and the custom_hyperparameters, then starts the sagemaker training job. Visit the DeepRacer documentation for detailed information on the hyperparameters.
-4. Configure the Robomaker Job: This creates the simulation application from the docker container, and sets up the kinesis video streams.
-5. Launch the Simulation job(s) on RoboMaker: This starts the simulation job.
-6. Visualizing the simulations in RoboMaker: This provides a link for accessing the Robomaker environment, and another for watching the Kinesis Video Stream.
+4. Configure the AWS Robomaker Job: This creates the simulation application from the docker container, and sets up the kinesis video streams.
+5. Launch the Simulation job(s) on AWS RoboMaker: This starts the simulation job.
+6. Visualizing the simulations in AWS RoboMaker: This provides a link for accessing the AWS RoboMaker environment, and another for watching the Kinesis Video Stream.
 7. Creating temporary folder top plot metrics: This creates a local temp folder used for storing metrics from the training job.
 
 #### Allow the job to run ####
 
-1. It will take a few minutes for the Sagemaker job and the Robomaker jobs to boot up and start training. One can see this in the aSagemaker Training and cRoboMaker Simulation Jobsconsoles; a status of 'Preparing' indicates the environment is still starting.
-2. At this point, allow your Sagemaker and Robomaker jobs to perform training. The default is 600 seconds (10 minutes), set by job_duration_in_seconds = 600 earlier in the notebook.
-3. Feel free to visit the Robomaker job and the Kinesis Video stream in the meantime to watch the training progress.
+1. It will take a few minutes for the Amazon SageMaker job and the AWS RoboMaker jobs to boot up and start training. One can see this in the Amazon Sagemaker training and AWS RoboMaker simulation jobs consoles. A status of **Preparing** indicates the environment is still starting.
+2. At this point, allow your Amazon SageMaker and AWS RoboMaker jobs to perform training. The default is 600 seconds (10 minutes), set by job_duration_in_seconds = 600 earlier in the notebook.
+3. Feel free to visit the AWS RoboMaker job and the Kinesis Video stream in the meantime to watch the training progress.
 
 #### After training is complete ####
 
@@ -128,114 +128,122 @@ There are additional parameters that you can change to customize the evaluation.
 
 ![yaml_config](https://github.com/aws-solutions-library-samples/guidance-for-training-an-aws-deepracer-model-using-amazon-sagemaker/assets/58491864/c4e05ecc-8538-4079-8cc9-8fbe0c10fc59)
 
-key	value
-yaml_config['NUMBER_OF_TRIALS']	Set the number of laps for evaluation
-yaml_config['DISPLAY_NAME']	Displayed in the upper left corner to identify the current racer
-yaml_config['LEADERBOARD_TYPE']	*Leave as "LEAGUE"*
-yaml_config['LEADERBOARD_NAME']	Displayed on the bottom area of the media output
-yaml_config['CAR_COLOR']	Controls the color of the racecar
-yaml_config['NUMBER_OF_RESETS']	The number of resets allowed per lap
-yaml_config['PENALTY_SECONDS']	*Leave as "5"*
-yaml_config['OFF_TRACK_PENALTY']	Number of seconds to add to the race time when the race car leaves the track
-yaml_config['COLLISION_PENALTY']	Number of seconds to add to the race time when the race car collides with an obstacle like a box in the OBJECT_AVOIDANCE race type
+#### Key	value pairs ####
 
+| Key | Value |
+| ------------- | ------------- |
+| yaml_config['NUMBER_OF_TRIALS']	| Set the number of laps for evaluation |
+| yaml_config['DISPLAY_NAME']	| Displayed in the upper left corner to identify the current racer |
+| yaml_config['LEADERBOARD_TYPE']	| **Leave as "LEAGUE"** |
+| yaml_config['LEADERBOARD_NAME']	| Displayed on the bottom area of the media output |
+| yaml_config['CAR_COLOR']	| Controls the color of the racecar |
+| yaml_config['NUMBER_OF_RESETS']	| The number of resets allowed per lap |
+| yaml_config['PENALTY_SECONDS']	| **Leave as "5"** |
+| yaml_config['OFF_TRACK_PENALTY']	| Number of seconds to add to the race time when the race car leaves the track |
+| yaml_config['COLLISION_PENALTY']	| Number of seconds to add to the race time when the race car collides with an obstacle like a box in the OBJECT_AVOIDANCE race type |
 
 Below is an example of the evaluation job media output using the parameters set in the notebook.
-<Screenshot>
-Plot metrics for evaluation job
+![image (13)](https://github.com/aws-solutions-library-samples/guidance-for-training-an-aws-deepracer-model-using-amazon-sagemaker/assets/58491864/8dcb92df-cea3-43e7-8bb4-db760240cfb4)
+
+#### Plot metrics for evaluation job ####
 
 For evaluation jobs the metrics you plot are based on the time your race car takes to go around the track including the penalties. This is different than the training job because the evaluation jobs are evaluating the model training not the rewards returned during training.
 
+![image (13)](https://github.com/aws-solutions-library-samples/guidance-for-training-an-aws-deepracer-model-using-amazon-sagemaker/assets/58491864/03a47258-5a83-4a5e-badc-4dfc68dc572f)
 
-
-Head to Head Evaluation
+#### Head to head evaluation ####
 
 One will note after Workshop Checkpoint #4 that the notebook contains a Head-to-head evaluation. This is out of scope for the DPR401 workshop, but if you have two models you want to train, you can configure the s3 path to the second model and perform a head-to-head evaluation.
 
 
-View your output logs and videos
+#### View your output logs and videos ####
 
-Open up the Amazon S3 Consoleand browse into your sagemaker-us-east-1-<ACCOUNTID> bucket.
-Click into the deepracer-notebook-sagemaker-<DATE>-<TIME> prefix and explore:
+Open up the Amazon S3 Console and select your **sagemaker-us-east-1-<ACCOUNTID>** bucket.
+Select the **deepracer-notebook-sagemaker-<DATE>-<TIME>** prefix and explore:
 
-1. The training_metrics.json and evaluation_metrics.json files contain metrics on the behavior of the model, mainly suitable for showing progress during training or evaluation.
-2. The sim-<jobid> folders contain the simulation logs for the RoboMaker environment.
-3. The iteration-data folder contains videos of the training and evaluation jobs and the simulation trace logs. The logs are much more detailed than the json files mentioned above, and are suitable for analysis. There are three video vides: a top-down view, a 45 degree from behind view, and the same 45 degree from behind view but with a track overlay.
-4. The model folder contains the unfrozen tensorflow graph. This is what is trained further or imported into the DeepRacer console.
-5. The train-output folder (a few folders deep) contains the model.tar.gz file, appropriate for loading onto a physical DeepRacer vehicle and optimization with the Intel OpenVino toolkit.
+1. The **training_metrics.json** and **evaluation_metrics.json** files contain metrics on the behavior of the model, mainly suitable for showing progress during training or evaluation.
+2. The **sim-<jobid>** folders contain the simulation logs for the AWS RoboMaker environment.
+3. The **iteration-data** folder contains videos of the training and evaluation jobs and the simulation trace logs. The logs are much more detailed than the json files mentioned above, and are suitable for analysis. There are three video vides: a top-down view, a 45 degree from behind view, and the same 45 degree from behind view but with a track overlay.
+4. The **model** folder contains the unfrozen tensorflow graph. This is what is trained further or imported into the DeepRacer console.
+5. The **train-output** folder (a few folders deep) contains the **model.tar.gz** file, appropriate for loading onto a physical AWS DeepRacer vehicle and optimization with the Intel OpenVino toolkit.
 
 
 
-### Next Steps ###
-Now that one has successfully trained and evaluated a DeepRacer model using the notebook, one can explore how to customize training in a variety of areas in this section.
+### Next steps ###
+Now that one has successfully trained and evaluated a AWS DeepRacer model using the notebook, one can explore how to customize training in a variety of areas in this section.
 
 This section will show one what areas to modify for customizations; once one makes the modifications one will need to go back and re-run the appropriate sections of the notebook to apply the modifications. It is intended as a general guidebook for one to pursue their own path for customization, not a prescriptive set of steps. Feel free to "think big" and brainstorm on the possibilities.
 
-Create a reward function
+#### Create a reward function ####
 
 In general, you design your reward function to act like an incentive plan. You can customize your reward function with relevant input parameters passed into the reward function.
 Reward function files
 
-1. Explore to src/artifacts/rewards/ in the notebook to see example reward functions.
+1. Explore to **src/artifacts/rewards/** in the notebook to see example reward functions.
 
-1. Once you pick or modify one, locate the cell in the notebook labeled Copy custom files to S3 bucket so that sagemaker & robomaker can pick it up and modify this line as appropriate to copy your new reward function appropriately.
-2. !aws s3 cp ./src/artifacts/rewards/default.py {s3_location}/customer_reward_function.py
+   ![image (14)](https://github.com/aws-solutions-library-samples/guidance-for-training-an-aws-deepracer-model-using-amazon-sagemaker/assets/58491864/a1b9419b-385a-4c6b-9c76-b93f50f0e7fe)
 
-Example reward functions
+
+1. Once you pick or modify one, locate the cell in the notebook labeled **Copy custom files to S3 bucket** so that Amazon SageMaker and AWS RoboMaker can pick it up and modify this line as appropriate to copy your new reward function appropriately.
+2. `!aws s3 cp ./src/artifacts/rewards/default.py {s3_location}/customer_reward_function.py`
+
+#### Example reward functions ####
+```
 Follow the Center Line in Time Trials
 follow_center_line.py
-
+```
 
 This example determines how far away the agent is from the center line, and gives higher reward if it is closer to the center of the track, encouraging the agent to closely follow the center line.
 
-Stay Inside the Two Borders in Time Trials
-stay_inside_two_border.py
+
+**Stay inside the two borders in time trials**
+`stay_inside_two_border.py`
 This example simply gives high rewards if the agent stays inside the borders, and let the agent figure out what is the best path to finish a lap. It is easy to program and understand, but likely takes longer to converge.
 
-Prevent Zig-Zag in Time Trials
-prevent_zig_zag.py
+**Prevent zig-zag in time trials**
+`prevent_zig_zag.py`
 This example incentivizes the agent to follow the center line but penalizes with lower reward if it steers too much, which helps prevent zig-zag behavior. The agent learns to drive smoothly in the simulator and likely keeps the same behavior when deployed in the physical vehicle.
 
-Stay On One Lane without Crashing into Stationary Obstacles or Moving Vehicles
-object_avoidance_head_to_head.py
+**Stay On One Lane without Crashing into Stationary Obstacles or Moving Vehicles**
+`object_avoidance_head_to_head.py`
 This reward function rewards the agent to stay between the track borders and penalizes the agent for getting too close to the next object in the front. The agent can move from lane to lane to avoid crashes. The total reward is a weighted sum of the reward and penalty. The example gives more weight to the penalty term to focus more on safety by avoiding crashes. You can play with different averaging weights to train the agent with different driving behaviors and to achieve different driving performances.
 
-Create your own reward function
+#### Create your own reward function ####
 
-If you wish to create your own reward function there is a pattern to the function that you must use.
+If you wish to create your own reward function there is a pattern to the function that you must use:
 
-
+```
 12345def reward_function(params) :
 
     reward = ...
 
     return float(reward)
+```
 
+A list of parameters and their definitions is located here: [https://docs.aws.amazon.com/deepracer/latest/developerguide/deepracer-reward-function-input.html]
 
-A list of parameters and their definitions is located here 
+#### Add additional python modules ####
 
-Add additional python modules
+Several python modules are included in the AWS RoboMaker simapp, but if you want to add more, locate the cell labeled Run these commands if you wish to modify the Amazon SageMaker and AWS Robomaker code and add in additional `!docker cp` commands to copy the modules you want into the container.
 
-Several python modules are included in the robomaker simapp, but if you want to add more, locate the cell labeled Run these commands if you wish to modify the SageMaker and Robomaker code and add in additional !docker cp commands to copy the modules you want into the container.
-
-Use another programming language
+#### Use another programming language ####
 
 If one wants to use another programming language for their reward function, one can the python boto3 library to invoke an Amazon Lambda function. Such a method may look like the following:
 
-
+```
 import boto3,jsonlambdaservice = boto3.client('lambda')
 def reward_function(params):
     response = lambdaservice.invoke(FunctionName='YourFunctionHere',
                       Payload=json.dumps(params))
         return(float(response["Payload"]))
-
+```
 
 One will need to modify the IAM role for the notebook to have Lambda invoke permissions.
 
 Alternatively, one could load the alternate program and any required interpreters and libraries into the docker container, then call out from the python reward function with an os.system() or subprocesses.run() call. In such a case, one needs to consider how to pass the parameters and receive the return value, perhaps by writing temp files to disk or by assigning environmental variables. Note that the reward function is run 10 to 15 times a second during training, so the overhead introduced by calling another executable may be an issue. Due to this overhead, most reinforcement learning researchers stick to Python, as this is the language the rl_coach framework is written in.
 
 
-Modify the training algorithm
+#### Modify the training algorithm ####
 
 Training adjusts the weights and biases of the neural network so that the correct decisions are made. There are many methods, or algorithms, for how to determine which weights and biases should be adjusted and by how much.
 
@@ -243,21 +251,20 @@ The default algorithm for DeepRacer training is PPO, or Proximal Policy Optimiza
 
 The SAC, or Soft Actor Critic, algorithm is also available. This algorithm only works with a continuous action spaces, and is less stable but also requires less training to learn.
 
-Read more about PPO versus SAC at https://docs.aws.amazon.com/deepracer/latest/developerguide/deepracer-how-it-works-reinforcement-learning-algorithm.html 
+Read more about PPO versus SAC at [https://docs.aws.amazon.com/deepracer/latest/developerguide/deepracer-how-it-works-reinforcement-learning-algorithm.html] 
 
 
-How to set an algorithm
+#### How to set an algorithm ####
 
-PPO Policy
+#### PPO policy ####
 
 The default algorithm is PPO; if no training algorithm is set in the model_metadata.json file, this is the algorithm used. The metric_definitions and customer_hyperparameter in the notebook in the Train the RL model using the Python SDK Script mode cells are coded for PPO.
 
-
-SAC Policy
+#### SAC policy ####
 
 If you want to change the training algorithm to SAC, first modify the model_metadata.json file with "training_algorithm" : "sac" and a continuous action space, such as:
 
-
+```
 {  "action_space" : {
     "steering_angle" : {
       "high" : 30.0,
@@ -276,14 +283,15 @@ If you want to change the training algorithm to SAC, first modify the model_meta
   "preprocess_type" : null,
   "regional_parameters" : null
 }
+```
 
-Find example model_metadata.json files in src/artifacts/actions, such as the front-shallow-continuous-sac.json file. After choosing an example, modifying it, or creating a new one, locate the cell labeled Copy custom files to S3 bucket so that sagemaker & robomaker can pick it up and modify the following line to instead copy the file you intend:
+Find example model_metadata.json files in **src/artifacts/actions**, such as the **front-shallow-continuous-sac.json** file. After choosing an example, modifying it, or creating a new one, locate the cell labeled **Copy custom files to S3 bucket** so that Amazon SageMaker and AWS RoboMaker can pick it up and modify the following line to instead copy the file you intend:
 
-!aws s3 cp ./src/artifacts/actions/default.json {s3_location}/model/model_metadata.json
+`!aws s3 cp ./src/artifacts/actions/default.json {s3_location}/model/model_metadata.json`
 
-Additionally, modify the hyperparameters in the notebook (Look two cells below the label Train the RL model using the Python SDK Script mode) to include the SAC hyperparameters instead:
+Additionally, modify the hyperparameters in the notebook (Look two cells below the label **Train the RL model using the Python SDK Script** mode) to include the SAC hyperparameters instead:
 
-
+```
 custom_hyperparameter = {    "s3_bucket": s3_bucket,
     "s3_prefix": s3_prefix,
     "aws_region": aws_region,
@@ -302,30 +310,30 @@ custom_hyperparameter = {    "s3_bucket": s3_bucket,
     "term_cond_avg_score": "100000.0",
     "term_cond_max_episodes": "100000"
 }
-
+```
 
 ### Cleanup ###
 Deprovision resources so your account does not continue to be charged after completing the workshop.
-In the notebook, scroll down and select the cell for Workshop Checkpoint #5. Click the ▶ Run button to execute the rest of the cells in the notebook. This will cancel the RoboMaker and SageMaker jobs (if still running), delete the kinesis video streams, delete the ECR repositories, and delete the RoboMaker simapp.
+In the notebook, scroll down and select the cell for **Workshop Checkpoint #5**. Click the **▶ Run** button to execute the rest of the cells in the notebook. This will cancel the AWS RoboMaker and Amazon SageMaker jobs (if still running), delete the Amazon Kinesis video streams, delete the Amazon Elastic Container (ECR) repositories, and delete the AWS RoboMaker simapp.
 
-Clean up the S3 bucket
+#### Clean up the Amazon S3 bucket ####
 
-Consider uncommenting the Clean your S3 bucket cell and executing it if you want to empty the S3 bucket of generated logs and data, including the trained model. You may also choose to visit the  S3 Consoleand delete the bucket.
+Consider uncommenting the **Clean your S3 bucket** cell and executing it if you want to empty the Amazon S3 bucket of generated logs and data, including the trained model. You may also choose to visit the  S3 Console  [https://s3.console.aws.amazon.com/s3/buckets] and delete the bucket.
 
 If you choose not to do this, you may incur S3 storage costs.
 
-Delete any imported DeepRacer models
+#### Delete any imported DeepRacer models ####
 
-If you imported a model into the DeepRacer console, delete it by visiting DeepRacer Your Models, selecting the model, and choosing Delete under the Actions menu. If you choose not to do this, you may incur DeepRacer model storage costs.
+If you imported a model into the DeepRacer console, delete it by visiting **DeepRacer** > **Your Models**, selecting the model, and choosing **Delete** under the **Actions** menu. If you choose not to do this, you may incur AWS DeepRacer model storage costs.
 
-Terminate and Delete the Role and Notebook
+#### Terminate and Delete the Role and Notebook ####
 
-Visit a CloudFormation Stacks and select the radio button for the dpr401 stack. Click the Delete button. This will terminate and delete the Sagemaker notebook and delete the IAM role.
+Visit **CloudFormation Stacks** and select the radio button for the **dpr401** stack. Select the **Delete button**. This will terminate and delete the Amazon Sagemaker notebook and delete the IAM role.
 
-## Developer Tools
+## Developer tools
 
 [Log Analyzer and Visualizations](https://github.com/aws-samples/aws-deepracer-workshops/tree/master/log-analysis/)
 
-## License Summary
+## License summary
 
 This sample code is made available under a modified MIT license. See the LICENSE file.
