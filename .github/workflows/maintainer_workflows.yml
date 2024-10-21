@@ -3,9 +3,9 @@ name: Maintainer Workflows
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
     types: [opened, reopened, edited]
 
 jobs:
