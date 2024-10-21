@@ -1,0 +1,19 @@
+# Workflows managed by aws-solutions-library-samples maintainers
+name: Maintainer Workflows
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    types: [opened, reopened, edited]
+
+jobs:
+  CheckSolutionId:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run solutionid validator
+        run: |
+          chmod u+x ./.github/solutionid_validator.sh
+          ./.github/solutionid_validator.sh ${{ vars.SOLUTIONID }}
